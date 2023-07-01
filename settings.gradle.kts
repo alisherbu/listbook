@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":app")
+include(":common:root")
+
 pluginManagement {
     repositories {
         google()
@@ -15,4 +18,3 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "listbook"
-include(":app")
