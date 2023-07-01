@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.screens
+package kaa.alisherbu.listbook.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,19 +37,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.pop
 import kaa.alisherbu.listbook.R
 import kaa.alisherbu.listbook.ui.theme.Hint
 import kaa.alisherbu.listbook.ui.theme.Orange
 
 @Composable
-fun SignupScreen(navigation: StackNavigation<Screen>) {
+fun SignupScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Orange)
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
             .statusBarsPadding()
     ) {
         Box(
@@ -58,8 +56,9 @@ fun SignupScreen(navigation: StackNavigation<Screen>) {
         ) {
             IconButton(
                 onClick = {
-                    navigation.pop()
-                }
+//                    navigation.pop()
+                },
+                modifier = Modifier.padding(top = 10.dp)
             ) {
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,
@@ -70,10 +69,11 @@ fun SignupScreen(navigation: StackNavigation<Screen>) {
 
             Text(
                 text = "Registration",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
-                color = Color.White
+                color = Color.White,
+
             )
         }
         Column(
@@ -196,4 +196,3 @@ fun SignupTextField(
         maxLines = 1,
     )
 }
-

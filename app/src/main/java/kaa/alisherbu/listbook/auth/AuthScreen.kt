@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.screens
+package kaa.alisherbu.listbook.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,13 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.push
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kaa.alisherbu.listbook.ui.theme.Orange
 
 @Composable
-fun AuthScreen(navigation: StackNavigation<Screen>) {
+fun AuthScreen(component: ListbookAuth) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(Color.Transparent, darkIcons = true)
     Column(
@@ -32,7 +30,7 @@ fun AuthScreen(navigation: StackNavigation<Screen>) {
     ) {
         Button(
             onClick = {
-                navigation.push(Screen.Signup)
+                component.onSignupClicked()
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
         ) {
@@ -46,7 +44,7 @@ fun AuthScreen(navigation: StackNavigation<Screen>) {
 
         Button(
             onClick = {
-                navigation.push(Screen.Home("Sign in"))
+                component.onSignInClicked()
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
         ) {

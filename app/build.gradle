@@ -65,8 +65,10 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
-    implementation 'com.arkivanov.decompose:decompose:1.0.0'
-    implementation "com.arkivanov.decompose:extensions-compose-jetpack:1.0.0"
+    implementation 'com.arkivanov.decompose:decompose:2.0.0'
+    implementation "com.arkivanov.decompose:extensions-compose-jetpack:2.0.0"
     implementation 'com.google.accompanist:accompanist-systemuicontroller:0.30.1'
+    implementation 'com.arkivanov.mvikotlin:mvikotlin:3.2.1'
+    implementation 'com.arkivanov.mvikotlin:mvikotlin-main:3.2.1'
 
 }
