@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId = "kaa.alisherbu.listbook"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -42,7 +42,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.2"
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += setOf("/META-INF/{AL2.0,LGPL2.1}")
         }
@@ -67,9 +67,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation("com.arkivanov.decompose:decompose:2.0.0")
-    implementation("com.arkivanov.decompose:extensions-compose-jetpack:2.0.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
-    implementation("com.arkivanov.mvikotlin:mvikotlin:3.2.1")
-    implementation("com.arkivanov.mvikotlin:mvikotlin-main:3.2.1")
+    implementation(libs.arkivanov.decompose.decompose)
+    implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
+    implementation(libs.arkivanov.mvikotlin.mvikotlin)
+    implementation(libs.arkivanov.mvikotlin.main)
 }

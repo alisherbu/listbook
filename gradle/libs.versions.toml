@@ -1,14 +1,25 @@
 [versions]
+#android
+minSdk = "24"
+compileSdk = "33"
+targetSdk = "33"
+versionCode = "1"
+versionName = "1.0"
+
+#libraries
 kotlin = "1.7.20"
 androidGradlePlugin = "8.0.1"
 mvikotlin = "3.2.1"
+decompose = "2.0.0"
 
 
 [libraries]
-mvikotlin-base = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "mvikotlin" }
-mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "mvikotlin" }
-mvikotlin-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
-mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "mvikotlin" }
+arkivanov-mvikotlin-mvikotlin = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "mvikotlin" }
+arkivanov-mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "mvikotlin" }
+arkivanov-mvikotlin-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
+arkivanov-mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "mvikotlin" }
+arkivanov-decompose-decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+arkivanov-decompose-extensionsComposeJetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -17,7 +28,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 
 [bundles]
-mvikotlin = [
-    "mvikotlin-base",
-    "mvikotlin-coroutines",
+arkivanov-mvikotlin = [
+    "arkivanov-mvikotlin-mvikotlin",
+    "arkivanov-mvikotlin-coroutines",
 ]
