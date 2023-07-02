@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.root
+package kaa.alisherbu.listbook.common.root
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -8,10 +8,10 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import kaa.alisherbu.listbook.auth.ListbookAuth
-import kaa.alisherbu.listbook.auth.ListbookAuthComponent
-import kaa.alisherbu.listbook.root.ListbookRoot.Child
-import kaa.alisherbu.listbook.utils.Consumer
+import kaa.alisherbu.listbook.common.auth.ListbookAuth
+import kaa.alisherbu.listbook.common.auth.ListbookAuthComponent
+import kaa.alisherbu.listbook.common.root.ListbookRoot.Child
+import kaa.alisherbu.listbook.core.util.Consumer
 import kotlinx.parcelize.Parcelize
 
 class ListbookRootComponent(

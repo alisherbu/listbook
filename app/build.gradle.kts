@@ -51,14 +51,20 @@ android {
 
 dependencies {
 
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycle.runtimeKtx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.foundation)
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
     implementation(libs.androidx.compose.material3)
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.main)
+
+    implementation(projects.core.util)
+
+    implementation(projects.common.root)
+    implementation(projects.common.auth)
+    implementation(projects.common.home)
 }

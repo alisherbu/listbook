@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.utils
+package kaa.alisherbu.listbook.core.util
 
 @Suppress("FunctionName") // Factory function
 inline fun <T> Consumer(crossinline block: (T) -> Unit): Consumer<T> =

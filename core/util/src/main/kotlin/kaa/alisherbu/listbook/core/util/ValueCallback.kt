@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.utils
+package kaa.alisherbu.listbook.core.util
 
 /**
  * A common callback for listening for values

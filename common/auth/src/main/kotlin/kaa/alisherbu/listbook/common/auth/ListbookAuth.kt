@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.auth
+package kaa.alisherbu.listbook.common.auth
 
 interface ListbookAuth {
     fun onSignupClicked()

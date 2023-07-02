@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.utils
+package kaa.alisherbu.listbook.core.util
 
 /**
  * Convenience method for [ValueCallback.onNext]

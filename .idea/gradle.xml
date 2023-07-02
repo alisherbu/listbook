@@ -12,7 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common/auth" />
+            <option value="$PROJECT_DIR$/common/home" />
             <option value="$PROJECT_DIR$/common/root" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/util" />
           </set>
         </option>
       </GradleProjectSettings>

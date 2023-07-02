@@ -1,10 +1,10 @@
-package kaa.alisherbu.listbook.auth
+package kaa.alisherbu.listbook.common.auth
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import kaa.alisherbu.listbook.auth.ListbookAuth.Output
-import kaa.alisherbu.listbook.utils.Consumer
-import kaa.alisherbu.listbook.utils.invoke
+import kaa.alisherbu.listbook.common.auth.ListbookAuth.Output
+import kaa.alisherbu.listbook.core.util.Consumer
+import kaa.alisherbu.listbook.core.util.invoke
 
 class ListbookAuthComponent(
     componentContext: ComponentContext,
