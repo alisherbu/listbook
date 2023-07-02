@@ -30,10 +30,46 @@ internal class SignupStoreProvider(
         override fun executeIntent(intent: Intent, getState: () -> SignupState) {
             val state = getState()
             when (intent) {
-                is Intent.EmailTextChanged -> dispatch(Message.EmailTextChanged(intent.text))
-                is Intent.NameTextChanged -> dispatch(Message.NameTextChanged(intent.text))
-                is Intent.PasswordTextChanged -> dispatch(Message.PasswordTextChanged(intent.text))
-                is Intent.SurnameTextChanged -> dispatch(Message.SurnameTextChanged(intent.text))
+                is Intent.EmailTextChanged -> {
+                    val isCreateAccountButtonEnabled = isNotBlank(
+                        state.name,
+                        state.surname,
+                        intent.text,
+                        state.password
+                    )
+                    dispatch(Message.EmailTextChanged(intent.text, isCreateAccountButtonEnabled))
+                }
+
+                is Intent.NameTextChanged -> {
+                    val isCreateAccountButtonEnabled = isNotBlank(
+                        intent.text,
+                        state.surname,
+                        state.email,
+                        state.password
+                    )
+                    dispatch(Message.NameTextChanged(intent.text, isCreateAccountButtonEnabled))
+                }
+
+                is Intent.PasswordTextChanged -> {
+                    val isCreateAccountButtonEnabled = isNotBlank(
+                        state.name,
+                        state.surname,
+                        state.email,
+                        intent.text
+                    )
+                    dispatch(Message.PasswordTextChanged(intent.text, isCreateAccountButtonEnabled))
+                }
+
+                is Intent.SurnameTextChanged -> {
+                    val isCreateAccountButtonEnabled = isNotBlank(
+                        state.name,
+                        intent.text,
+                        state.email,
+                        state.password
+                    )
+                    dispatch(Message.SurnameTextChanged(intent.text, isCreateAccountButtonEnabled))
+                }
+
                 Intent.CreateAccountClicked -> scope.launch {
                     authManager.createUserWithEmailAndPassword(state.email, state.password)
                         .onSuccess {
@@ -45,15 +81,48 @@ internal class SignupStoreProvider(
                 }
             }
         }
+
+        private fun isNotBlank(
+            name: String,
+            surname: String,
+            email: String,
+            password: String
+        ): Boolean {
+            return name.isNotBlank() && surname.isNotBlank() &&
+                email.isNotBlank() && password.isNotBlank()
+        }
     }
 
     internal object SignReducer : Reducer<SignupState, Message> {
         override fun SignupState.reduce(msg: Message): SignupState {
             return when (msg) {
-                is Message.EmailTextChanged -> copy(email = msg.text)
-                is Message.NameTextChanged -> copy(name = msg.text)
-                is Message.PasswordTextChanged -> copy(password = msg.text)
-                is Message.SurnameTextChanged -> copy(surname = msg.text)
+                is Message.EmailTextChanged -> {
+                    copy(
+                        email = msg.text,
+                        isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    )
+                }
+
+                is Message.NameTextChanged -> {
+                    copy(
+                        name = msg.text,
+                        isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    )
+                }
+
+                is Message.PasswordTextChanged -> {
+                    copy(
+                        password = msg.text,
+                        isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    )
+                }
+
+                is Message.SurnameTextChanged -> {
+                    copy(
+                        surname = msg.text,
+                        isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    )
+                }
             }
         }
     }

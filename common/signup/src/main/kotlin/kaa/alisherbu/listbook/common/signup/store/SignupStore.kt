@@ -14,10 +14,10 @@ internal sealed interface Intent {
 internal sealed interface Label
 
 internal sealed interface Message {
-    class NameTextChanged(val text: String) : Message
-    class SurnameTextChanged(val text: String) : Message
-    class EmailTextChanged(val text: String) : Message
-    class PasswordTextChanged(val text: String) : Message
+    class NameTextChanged(val text: String, val isCreateAccountButtonEnabled: Boolean) : Message
+    class SurnameTextChanged(val text: String, val isCreateAccountButtonEnabled: Boolean) : Message
+    class EmailTextChanged(val text: String, val isCreateAccountButtonEnabled: Boolean) : Message
+    class PasswordTextChanged(val text: String, val isCreateAccountButtonEnabled: Boolean) : Message
 }
 
 internal interface SignupStore : Store<Intent, SignupState, Label>

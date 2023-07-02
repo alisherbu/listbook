@@ -23,7 +23,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kaa.alisherbu.listbook.common.signup.store.SignupState
 import kaa.alisherbu.listbook.core.resource.R
+import kaa.alisherbu.listbook.core.util.theme.MineShaft
 import kaa.alisherbu.listbook.core.util.theme.Hint
 import kaa.alisherbu.listbook.core.util.theme.Orange
 
@@ -135,12 +135,15 @@ private fun SignupContent(
                 modifier = Modifier,
                 onClick = onCreateAccountClicked,
                 colors = buttonColors(
-                    containerColor = Color.Black
-                )
+                    containerColor = Color.Black,
+                    disabledContainerColor = MineShaft
+                ),
+                enabled = state.isCreateAccountButtonEnabled,
             ) {
                 Text(
                     text = "Create account",
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = Color.White,
                 )
             }
             Text(
