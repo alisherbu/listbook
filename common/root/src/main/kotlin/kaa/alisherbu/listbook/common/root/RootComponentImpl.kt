@@ -12,6 +12,8 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import kaa.alisherbu.listbook.common.auth.component.AuthComponent
 import kaa.alisherbu.listbook.common.auth.component.AuthComponentImpl
 import kaa.alisherbu.listbook.common.root.RootComponent.Child
+import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
+import kaa.alisherbu.listbook.common.sign_in.component.SignInComponentImpl
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kaa.alisherbu.listbook.common.signup.component.SignupComponentImpl
 import kotlinx.parcelize.Parcelize
@@ -20,6 +22,7 @@ class RootComponentImpl(
     componentContext: ComponentContext,
     private val authComponent: (ComponentContext, (AuthComponent.Output) -> Unit) -> AuthComponent,
     private val signupComponent: (ComponentContext, (SignupComponent.Output) -> Unit) -> SignupComponent,
+    private val signInComponent: (ComponentContext, (SignInComponent.Output) -> Unit) -> SignInComponent,
 ) : RootComponent, ComponentContext by componentContext {
 
     constructor(
@@ -32,6 +35,9 @@ class RootComponentImpl(
         },
         signupComponent = { childContext, output ->
             SignupComponentImpl(childContext, storeFactory, output)
+        },
+        signInComponent = { childContext, output ->
+            SignInComponentImpl(childContext, storeFactory, output)
         }
     )
 
@@ -48,19 +54,27 @@ class RootComponentImpl(
         configuration: Configuration,
         componentContext: ComponentContext,
     ): Child = when (configuration) {
-        is Configuration.Auth -> {
+        Configuration.Auth -> {
             Child.Auth(authComponent(componentContext, ::onAuthOutput))
         }
 
-        is Configuration.Home -> Child.Home("")
+        Configuration.Home -> {
+            Child.Home("")
+        }
+
         Configuration.Signup -> {
             Child.Signup(signupComponent(componentContext, ::onSignupOutput))
+        }
+
+        Configuration.SignIn -> {
+            Child.SignIn(signInComponent(componentContext, ::onSignInOutput))
         }
     }
 
     private fun onAuthOutput(output: AuthComponent.Output) {
         when (output) {
             AuthComponent.Output.Signup -> navigation.push(Configuration.Signup)
+            AuthComponent.Output.SignIn -> navigation.push(Configuration.SignIn)
         }
     }
 
@@ -70,14 +84,23 @@ class RootComponentImpl(
         }
     }
 
+    private fun onSignInOutput(output: SignInComponent.Output) {
+        when (output) {
+            SignInComponent.Output.Back -> navigation.pop()
+        }
+    }
+
     private sealed class Configuration : Parcelable {
         @Parcelize
         object Auth : Configuration()
 
         @Parcelize
-        data class Home(val text: String) : Configuration()
+        object Home : Configuration()
 
         @Parcelize
         object Signup : Configuration()
+
+        @Parcelize
+        object SignIn : Configuration()
     }
 }

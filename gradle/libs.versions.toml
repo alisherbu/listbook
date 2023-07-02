@@ -13,6 +13,7 @@ mvikotlin = "3.2.1"
 decompose = "2.0.0"
 androidXCoreKtx = "1.8.0"
 androidxLifecycleRuntimeKtx = "2.3.1"
+googleServices = "4.3.15"
 
 #androidx.compose
 composeFoundation = "1.4.3"
@@ -21,6 +22,7 @@ composeActivity = "1.5.1"
 
 #firebase
 firebaseAuth = "22.0.0"
+firebaseCore = "21.1.1"
 
 #koin
 koinCore = "3.4.2"
@@ -44,6 +46,7 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 
 #firebase
 google-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuth" }
+google-firebase-core = { module = "com.google.firebase:firebase-core", version.ref = "firebaseCore" }
 
 #koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
@@ -58,6 +61,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 
 [bundles]
 arkivanov-mvikotlin = [

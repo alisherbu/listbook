@@ -21,5 +21,6 @@ class AuthComponentImpl(
     }
 
     override fun onSignInClicked() {
+        output(Output.SignIn)
     }
 }

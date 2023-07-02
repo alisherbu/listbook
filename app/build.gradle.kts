@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -62,8 +63,8 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.logging)
     implementation(libs.arkivanov.mvikotlin.main)
+    implementation(libs.google.firebase.core)
     implementation(libs.koin.core)
-
     implementation(projects.common.root)
     implementation(projects.authManager)
 }

@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.signup.ui
+package kaa.alisherbu.listbook.common.sign_in.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,35 +34,31 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.common.signup.component.SignupComponent
-import kaa.alisherbu.listbook.common.signup.store.SignupState
+import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
+import kaa.alisherbu.listbook.common.sign_in.store.SignInState
 import kaa.alisherbu.listbook.core.resource.R
 import kaa.alisherbu.listbook.core.util.theme.Hint
 import kaa.alisherbu.listbook.core.util.theme.Orange
 
 @Composable
-fun SignupScreen(component: SignupComponent) {
+fun SignInScreen(component: SignInComponent) {
     val state by component.state.collectAsState()
-    SignupContent(
+    SignInContent(
         state = state,
         onBackClicked = component::onBackClicked,
-        onNameTextChanged = component::onNameTextChanged,
-        onSurnameTextChanged = component::onSurnameTextChanged,
         onEmailTextChanged = component::onEmailTextChanged,
         onPasswordTextChanged = component::onPasswordTextChanged,
-        onCreateAccountClicked = component::onCreateAccountClicked
+        onLogInClicked = component::onLogInClicked
     )
 }
 
 @Composable
-private fun SignupContent(
-    state: SignupState,
+private fun SignInContent(
+    state: SignInState,
     onBackClicked: () -> Unit,
-    onNameTextChanged: (String) -> Unit,
-    onSurnameTextChanged: (String) -> Unit,
     onEmailTextChanged: (String) -> Unit,
     onPasswordTextChanged: (String) -> Unit,
-    onCreateAccountClicked: () -> Unit
+    onLogInClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -88,7 +83,7 @@ private fun SignupContent(
             }
 
             Text(
-                text = "Registration",
+                text = "Sign in",
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
@@ -101,23 +96,13 @@ private fun SignupContent(
                 .fillMaxWidth()
                 .padding(top = 32.dp)
         ) {
-            SignupTextField(
-                value = state.name,
-                hintText = "Name",
-                onValueChange = onNameTextChanged
-            )
-            SignupTextField(
-                value = state.surname,
-                hintText = "Surname",
-                onValueChange = onSurnameTextChanged
-            )
-            SignupTextField(
+            SignInTextField(
                 value = state.email,
                 hintText = "Email",
                 keyboardType = KeyboardType.Email,
                 onValueChange = onEmailTextChanged
             )
-            SignupTextField(
+            SignInTextField(
                 value = state.password,
                 hintText = "Password",
                 keyboardType = KeyboardType.Password,
@@ -133,13 +118,13 @@ private fun SignupContent(
         ) {
             Button(
                 modifier = Modifier,
-                onClick = onCreateAccountClicked,
+                onClick = onLogInClicked,
                 colors = buttonColors(
                     containerColor = Color.Black
                 )
             ) {
                 Text(
-                    text = "Create account",
+                    text = "Log in",
                     fontSize = 18.sp
                 )
             }
@@ -175,7 +160,7 @@ private fun SignupContent(
 }
 
 @Composable
-private fun SignupTextField(
+private fun SignInTextField(
     value: String,
     hintText: String,
     keyboardType: KeyboardType = KeyboardType.Text,

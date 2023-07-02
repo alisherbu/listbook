@@ -5,5 +5,6 @@ interface AuthComponent {
     fun onSignInClicked()
     sealed class Output {
         object Signup : Output()
+        object SignIn : Output()
     }
 }

@@ -41,4 +41,8 @@ class SignupComponentImpl(
     override fun onBackClicked() {
         output(SignupComponent.Output.Back)
     }
+
+    override fun onCreateAccountClicked() {
+        store.accept(Intent.CreateAccountClicked)
+    }
 }

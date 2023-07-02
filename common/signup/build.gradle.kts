@@ -19,7 +19,9 @@ dependencies {
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.coroutines)
+    implementation(libs.koin.core)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)
+    implementation(projects.authManager)
 }

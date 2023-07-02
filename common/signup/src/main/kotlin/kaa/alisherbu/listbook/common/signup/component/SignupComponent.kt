@@ -12,6 +12,8 @@ interface SignupComponent {
     fun onPasswordTextChanged(text: String)
     fun onBackClicked()
 
+    fun onCreateAccountClicked()
+
     sealed class Output {
         object Back : Output()
     }

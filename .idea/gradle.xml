@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/common/auth" />
             <option value="$PROJECT_DIR$/common/home" />
             <option value="$PROJECT_DIR$/common/root" />
+            <option value="$PROJECT_DIR$/common/sign-in" />
             <option value="$PROJECT_DIR$/common/signup" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/resource" />
