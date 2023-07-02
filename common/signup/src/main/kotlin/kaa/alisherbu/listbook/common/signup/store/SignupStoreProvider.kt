@@ -13,7 +13,7 @@ internal class SignupStoreProvider(
         object :
             AuthStore,
             Store<Intent, SignupState, Label> by storeFactory.create(
-                name = "AuthStore",
+                name = "SignupStore",
                 executorFactory = ::SignupExecutor,
                 reducer = SignReducer,
                 initialState = SignupState()
