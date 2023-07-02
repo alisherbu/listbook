@@ -1,6 +1,6 @@
 package kaa.alisherbu.listbook.common.auth.integration
 
-interface ListbookAuth {
+interface AuthComponent {
     fun onSignupClicked()
     fun onSignInClicked()
     sealed class Output {

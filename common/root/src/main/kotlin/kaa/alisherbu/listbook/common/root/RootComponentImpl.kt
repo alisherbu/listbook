@@ -4,21 +4,24 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import kaa.alisherbu.listbook.common.auth.integration.ListbookAuth
-import kaa.alisherbu.listbook.common.auth.integration.ListbookAuthComponent
-import kaa.alisherbu.listbook.common.root.ListbookRoot.Child
-import kaa.alisherbu.listbook.core.util.Consumer
+import kaa.alisherbu.listbook.common.auth.integration.AuthComponent
+import kaa.alisherbu.listbook.common.auth.integration.AuthComponentImpl
+import kaa.alisherbu.listbook.common.root.RootComponent.Child
+import kaa.alisherbu.listbook.common.signup.SignupComponent
+import kaa.alisherbu.listbook.common.signup.SignupComponentImpl
 import kotlinx.parcelize.Parcelize
 
-class ListbookRootComponent(
+class RootComponentImpl(
     componentContext: ComponentContext,
     storeFactory: StoreFactory,
-    private val listbookAuth: (ComponentContext, Consumer<ListbookAuth.Output>) -> ListbookAuth,
-) : ListbookRoot, ComponentContext by componentContext {
+    private val authComponent: (ComponentContext, (AuthComponent.Output) -> Unit) -> AuthComponent,
+    private val signupComponent: (ComponentContext, (SignupComponent.Output) -> Unit) -> SignupComponent,
+) : RootComponent, ComponentContext by componentContext {
 
     constructor(
         componentContext: ComponentContext,
@@ -26,8 +29,11 @@ class ListbookRootComponent(
     ) : this(
         componentContext,
         storeFactory,
-        listbookAuth = { childContext, output ->
-            ListbookAuthComponent(childContext, storeFactory, output)
+        authComponent = { childContext, output ->
+            AuthComponentImpl(childContext, storeFactory, output)
+        },
+        signupComponent = { childContext, output ->
+            SignupComponentImpl(childContext, storeFactory, output)
         }
     )
 
@@ -45,16 +51,24 @@ class ListbookRootComponent(
         componentContext: ComponentContext,
     ): Child = when (configuration) {
         is Configuration.Auth -> {
-            Child.Auth(listbookAuth(componentContext, Consumer(::onAuthOutput)))
+            Child.Auth(authComponent(componentContext, ::onAuthOutput))
         }
 
         is Configuration.Home -> Child.Home("")
-        Configuration.Signup -> Child.Signup
+        Configuration.Signup -> {
+            Child.Signup(signupComponent(componentContext, ::onSignupOutput))
+        }
     }
 
-    private fun onAuthOutput(output: ListbookAuth.Output) {
+    private fun onAuthOutput(output: AuthComponent.Output) {
         when (output) {
-            ListbookAuth.Output.Signup -> navigation.push(Configuration.Signup)
+            AuthComponent.Output.Signup -> navigation.push(Configuration.Signup)
+        }
+    }
+
+    private fun onSignupOutput(output: SignupComponent.Output) {
+        when (output) {
+            SignupComponent.Output.Back -> navigation.pop()
         }
     }
 

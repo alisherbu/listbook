@@ -7,19 +7,19 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import kaa.alisherbu.listbook.common.auth.ui.AuthScreen
-import kaa.alisherbu.listbook.common.signup.SignupScreen
 import kaa.alisherbu.listbook.common.home.HomeScreen
+import kaa.alisherbu.listbook.common.signup.SignupScreen
 
 @Composable
-fun RootContent(component: ListbookRoot) {
+fun RootContent(component: RootComponent) {
     Children(
         stack = component.childStack,
         animation = stackAnimation(fade() + scale()),
     ) {
         when (val child = it.instance) {
-            is ListbookRoot.Child.Auth -> AuthScreen(child.component)
-            is ListbookRoot.Child.Home -> HomeScreen("screen.text")
-            ListbookRoot.Child.Signup -> SignupScreen()
+            is RootComponent.Child.Auth -> AuthScreen(child.component)
+            is RootComponent.Child.Home -> HomeScreen("screen.text")
+            is RootComponent.Child.Signup -> SignupScreen(child.component)
         }
     }
 }

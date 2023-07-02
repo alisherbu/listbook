@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.common.auth.integration.ListbookAuth
+import kaa.alisherbu.listbook.common.auth.integration.AuthComponent
 import kaa.alisherbu.listbook.core.util.theme.Orange
 
 @Composable
-fun AuthScreen(component: ListbookAuth) {
+fun AuthScreen(component: AuthComponent) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

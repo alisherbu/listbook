@@ -16,6 +16,8 @@ android {
 dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.arkivanov.decompose.decompose)
+    implementation(libs.arkivanov.mvikotlin.mvikotlin)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

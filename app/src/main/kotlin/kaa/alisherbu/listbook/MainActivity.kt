@@ -7,8 +7,8 @@ import androidx.core.view.WindowCompat
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import kaa.alisherbu.listbook.common.root.ListbookRoot
-import kaa.alisherbu.listbook.common.root.ListbookRootComponent
+import kaa.alisherbu.listbook.common.root.RootComponent
+import kaa.alisherbu.listbook.common.root.RootComponentImpl
 import kaa.alisherbu.listbook.common.root.RootContent
 import kaa.alisherbu.listbook.ui.theme.ListbookTheme
 
@@ -24,8 +24,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun listbookRoot(componentContext: ComponentContext): ListbookRoot =
-        ListbookRootComponent(
+    private fun listbookRoot(componentContext: ComponentContext): RootComponent =
+        RootComponentImpl(
             componentContext,
             DefaultStoreFactory()
         )

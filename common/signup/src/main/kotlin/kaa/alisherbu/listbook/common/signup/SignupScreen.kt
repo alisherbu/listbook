@@ -41,7 +41,7 @@ import kaa.alisherbu.listbook.core.util.theme.Hint
 import kaa.alisherbu.listbook.core.util.theme.Orange
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(component: SignupComponent) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,9 +54,7 @@ fun SignupScreen() {
                 .fillMaxWidth()
         ) {
             IconButton(
-                onClick = {
-//                    navigation.pop()
-                },
+                onClick = component::onBackClicked,
                 modifier = Modifier.padding(top = 10.dp)
             ) {
                 Icon(
