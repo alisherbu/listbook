@@ -1,9 +1,9 @@
-package kaa.alisherbu.listbook.common.auth.integration
+package kaa.alisherbu.listbook.common.auth.component
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import kaa.alisherbu.listbook.common.auth.integration.AuthComponent.Output
+import kaa.alisherbu.listbook.common.auth.component.AuthComponent.Output
 import kaa.alisherbu.listbook.common.auth.store.AuthStoreProvider
 
 class AuthComponentImpl(

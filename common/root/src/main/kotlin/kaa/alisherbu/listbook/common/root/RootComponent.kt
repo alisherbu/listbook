@@ -2,8 +2,8 @@ package kaa.alisherbu.listbook.common.root
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import kaa.alisherbu.listbook.common.auth.integration.AuthComponent
-import kaa.alisherbu.listbook.common.signup.SignupComponent
+import kaa.alisherbu.listbook.common.auth.component.AuthComponent
+import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 
 interface RootComponent {
     val childStack: Value<ChildStack<*, Child>>

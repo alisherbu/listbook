@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.auth.integration
+package kaa.alisherbu.listbook.common.auth.component
 
 interface AuthComponent {
     fun onSignupClicked()

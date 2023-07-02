@@ -9,16 +9,15 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import kaa.alisherbu.listbook.common.auth.integration.AuthComponent
-import kaa.alisherbu.listbook.common.auth.integration.AuthComponentImpl
+import kaa.alisherbu.listbook.common.auth.component.AuthComponent
+import kaa.alisherbu.listbook.common.auth.component.AuthComponentImpl
 import kaa.alisherbu.listbook.common.root.RootComponent.Child
-import kaa.alisherbu.listbook.common.signup.SignupComponent
-import kaa.alisherbu.listbook.common.signup.SignupComponentImpl
+import kaa.alisherbu.listbook.common.signup.component.SignupComponent
+import kaa.alisherbu.listbook.common.signup.component.SignupComponentImpl
 import kotlinx.parcelize.Parcelize
 
 class RootComponentImpl(
     componentContext: ComponentContext,
-    storeFactory: StoreFactory,
     private val authComponent: (ComponentContext, (AuthComponent.Output) -> Unit) -> AuthComponent,
     private val signupComponent: (ComponentContext, (SignupComponent.Output) -> Unit) -> SignupComponent,
 ) : RootComponent, ComponentContext by componentContext {
@@ -28,7 +27,6 @@ class RootComponentImpl(
         storeFactory: StoreFactory,
     ) : this(
         componentContext,
-        storeFactory,
         authComponent = { childContext, output ->
             AuthComponentImpl(childContext, storeFactory, output)
         },

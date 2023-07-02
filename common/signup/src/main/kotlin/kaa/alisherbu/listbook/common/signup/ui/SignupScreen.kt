@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.signup
+package kaa.alisherbu.listbook.common.signup.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,9 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +35,34 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kaa.alisherbu.listbook.common.signup.component.SignupComponent
+import kaa.alisherbu.listbook.common.signup.store.SignupState
 import kaa.alisherbu.listbook.core.resource.R
 import kaa.alisherbu.listbook.core.util.theme.Hint
 import kaa.alisherbu.listbook.core.util.theme.Orange
 
 @Composable
 fun SignupScreen(component: SignupComponent) {
+    val state by component.state.collectAsState()
+    SignupContent(
+        state = state,
+        onBackClicked = component::onBackClicked,
+        onNameTextChanged = component::onNameTextChanged,
+        onSurnameTextChanged = component::onSurnameTextChanged,
+        onEmailTextChanged = component::onEmailTextChanged,
+        onPasswordTextChanged = component::onPasswordTextChanged
+    )
+}
+
+@Composable
+private fun SignupContent(
+    state: SignupState,
+    onBackClicked: () -> Unit,
+    onNameTextChanged: (String) -> Unit,
+    onSurnameTextChanged: (String) -> Unit,
+    onEmailTextChanged: (String) -> Unit,
+    onPasswordTextChanged: (String) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +75,7 @@ fun SignupScreen(component: SignupComponent) {
                 .fillMaxWidth()
         ) {
             IconButton(
-                onClick = component::onBackClicked,
+                onClick = onBackClicked,
                 modifier = Modifier.padding(top = 10.dp)
             ) {
                 Icon(
@@ -78,31 +99,27 @@ fun SignupScreen(component: SignupComponent) {
                 .fillMaxWidth()
                 .padding(top = 32.dp)
         ) {
-            var name by remember { mutableStateOf("") }
-            var surname by remember { mutableStateOf("") }
-            var email by remember { mutableStateOf("") }
-            var password by remember { mutableStateOf("") }
             SignupTextField(
-                value = name,
+                value = state.name,
                 hintText = "Name",
-                onValueChange = { text -> name = text }
+                onValueChange = onNameTextChanged
             )
             SignupTextField(
-                value = surname,
+                value = state.surname,
                 hintText = "Surname",
-                onValueChange = { text -> surname = text }
+                onValueChange = onSurnameTextChanged
             )
             SignupTextField(
-                value = email,
+                value = state.email,
                 hintText = "Email",
                 keyboardType = KeyboardType.Email,
-                onValueChange = { text -> email = text }
+                onValueChange = onEmailTextChanged
             )
             SignupTextField(
-                value = password,
+                value = state.password,
                 hintText = "Password",
                 keyboardType = KeyboardType.Password,
-                onValueChange = { text -> password = text }
+                onValueChange = onPasswordTextChanged
             )
         }
         Column(
@@ -156,7 +173,7 @@ fun SignupScreen(component: SignupComponent) {
 }
 
 @Composable
-fun SignupTextField(
+private fun SignupTextField(
     value: String,
     hintText: String,
     keyboardType: KeyboardType = KeyboardType.Text,

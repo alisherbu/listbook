@@ -8,7 +8,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import kaa.alisherbu.listbook.common.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.common.home.HomeScreen
-import kaa.alisherbu.listbook.common.signup.SignupScreen
+import kaa.alisherbu.listbook.common.signup.ui.SignupScreen
 
 @Composable
 fun RootContent(component: RootComponent) {
