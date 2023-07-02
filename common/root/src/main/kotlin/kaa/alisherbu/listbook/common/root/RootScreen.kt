@@ -6,8 +6,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
-import kaa.alisherbu.listbook.common.auth.AuthScreen
-import kaa.alisherbu.listbook.common.root.ListbookRoot
+import kaa.alisherbu.listbook.common.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.common.signup.SignupScreen
 import kaa.alisherbu.listbook.common.home.HomeScreen
 

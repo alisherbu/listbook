@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.main)
+    implementation(libs.koin.core)
 
     implementation(projects.common.root)
+    implementation(projects.authManager)
 }

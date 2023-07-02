@@ -5,6 +5,7 @@
     <disabledRules>
       <list>
         <option value="trailing-comma-on-call-site" />
+        <option value="package-name" />
       </list>
     </disabledRules>
   </component>

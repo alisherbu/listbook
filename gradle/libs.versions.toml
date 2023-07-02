@@ -19,6 +19,12 @@ composeFoundation = "1.4.3"
 composeMaterial3 = "1.1.1"
 composeActivity = "1.5.1"
 
+#firebase
+firebaseAuth = "22.0.0"
+
+#koin
+koinCore = "3.4.2"
+
 [libraries]
 
 #mvikotlin
@@ -35,6 +41,12 @@ arkivanov-decompose-extensionsComposeJetpack = { module = "com.arkivanov.decompo
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeFoundation" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+
+#firebase
+google-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuth" }
+
+#koin
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 
 #libraries
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidXCoreKtx" }
