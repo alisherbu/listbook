@@ -9,7 +9,7 @@ import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import kaa.alisherbu.listbook.common.root.ListbookRoot
 import kaa.alisherbu.listbook.common.root.ListbookRootComponent
-import kaa.alisherbu.listbook.root.RootContent
+import kaa.alisherbu.listbook.common.root.RootContent
 import kaa.alisherbu.listbook.ui.theme.ListbookTheme
 
 class MainActivity : ComponentActivity() {

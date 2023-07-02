@@ -8,10 +8,16 @@ plugins {
 android {
     namespace = "kaa.alisherbu.listbook.common.auth"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    buildFeatures {
+        compose = true
+    }
 }
 dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.decompose.decompose)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
 
     implementation(projects.core.util)
+    implementation(projects.core.resource)
 }

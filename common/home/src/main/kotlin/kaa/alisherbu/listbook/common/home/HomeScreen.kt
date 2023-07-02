@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.home
+package kaa.alisherbu.listbook.common.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

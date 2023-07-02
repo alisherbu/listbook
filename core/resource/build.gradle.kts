@@ -6,10 +6,6 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.core.util"
+    namespace = "kaa.alisherbu.listbook.core.resource"
     compileSdk = libs.versions.compileSdk.get().toInt()
-}
-
-dependencies {
-    implementation(libs.androidx.compose.material3)
 }

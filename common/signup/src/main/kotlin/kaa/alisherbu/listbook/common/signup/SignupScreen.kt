@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.signup
+package kaa.alisherbu.listbook.common.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,9 +37,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.R
-import kaa.alisherbu.listbook.ui.theme.Hint
-import kaa.alisherbu.listbook.ui.theme.Orange
+import kaa.alisherbu.listbook.core.resource.R
+import kaa.alisherbu.listbook.core.util.theme.Hint
+import kaa.alisherbu.listbook.core.util.theme.Orange
 
 @Composable
 fun SignupScreen() {
@@ -181,11 +181,13 @@ fun SignupTextField(
                 color = Hint
             )
         },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Orange,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Orange,
+            unfocusedContainerColor = Orange,
+            disabledContainerColor = Orange,
+            cursorColor = Color.White,
             focusedIndicatorColor = Color.White,
             unfocusedIndicatorColor = Color.White,
-            cursorColor = Color.White
         ),
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.Sentences,

@@ -62,9 +62,5 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.main)
 
-    implementation(projects.core.util)
-
     implementation(projects.common.root)
-    implementation(projects.common.auth)
-    implementation(projects.common.home)
 }

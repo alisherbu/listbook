@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.common.home"
+    namespace = "kaa.alisherbu.listbook.common.signup"
     compileSdk = libs.versions.compileSdk.get().toInt()
     buildFeatures {
         compose = true
@@ -16,4 +16,7 @@ android {
 dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
+
+    implementation(projects.core.util)
+    implementation(projects.core.resource)
 }
