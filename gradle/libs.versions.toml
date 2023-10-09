@@ -1,5 +1,6 @@
 [versions]
 #android
+accompanistSystemuicontroller = "0.30.1"
 minSdk = "24"
 compileSdk = "33"
 targetSdk = "33"
@@ -43,6 +44,7 @@ arkivanov-decompose-extensionsComposeJetpack = { module = "com.arkivanov.decompo
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeFoundation" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 
 #firebase
 google-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuth" }

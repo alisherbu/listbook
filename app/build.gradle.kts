@@ -52,7 +52,7 @@ android {
 
 dependencies {
 
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycle.runtimeKtx)
     implementation(libs.androidx.activity.compose)
@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.main)
     implementation(libs.google.firebase.core)
     implementation(libs.koin.core)
+    implementation(projects.core.util)
     implementation(projects.common.root)
     implementation(projects.authManager)
 }

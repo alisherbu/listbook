@@ -10,6 +10,7 @@ include(":common:auth")
 include(":common:home")
 include(":common:signup")
 include(":common:sign-in")
+include(":common:dialog")
 
 pluginManagement {
     repositories {

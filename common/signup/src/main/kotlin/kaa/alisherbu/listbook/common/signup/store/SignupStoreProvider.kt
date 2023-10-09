@@ -1,6 +1,5 @@
 package kaa.alisherbu.listbook.common.signup.store
 
-import android.util.Log
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
@@ -71,13 +70,13 @@ internal class SignupStoreProvider(
                 }
 
                 Intent.CreateAccountClicked -> scope.launch {
-                    authManager.createUserWithEmailAndPassword(state.email, state.password)
-                        .onSuccess {
-                            Log.d("SignupExecutor", it.toString())
-                        }
-                        .onFailure {
-                            Log.d("SignupExecutor", it.message.toString())
-                        }
+                    try {
+                        val user = authManager.createUser(state.email, state.password)
+                        if (user != null) publish(Label.AccountSuccessfullyCreated)
+                    } catch (e: Exception) {
+                        publish(Label.ErrorOccurred(e.message.toString()))
+                    }
+
                 }
             }
         }
@@ -89,7 +88,7 @@ internal class SignupStoreProvider(
             password: String
         ): Boolean {
             return name.isNotBlank() && surname.isNotBlank() &&
-                email.isNotBlank() && password.isNotBlank()
+                    email.isNotBlank() && password.isNotBlank()
         }
     }
 

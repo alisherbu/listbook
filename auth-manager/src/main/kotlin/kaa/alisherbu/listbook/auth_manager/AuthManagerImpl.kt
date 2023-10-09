@@ -2,22 +2,27 @@ package kaa.alisherbu.listbook.auth_manager
 
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 internal class AuthManagerImpl(private val auth: FirebaseAuth) : AuthManager {
-    override suspend fun createUserWithEmailAndPassword(
+    override suspend fun createUser(
         email: String,
         password: String,
-    ): Result<User> {
-        val completableDeferred = CompletableDeferred<Result<User>>()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                val user = it.user
-                completableDeferred.complete(Result.success(User(user?.email.toString())))
-            }
-            .addOnFailureListener {
-                completableDeferred.complete(Result.failure(it))
-            }
-
-        return completableDeferred.await()
+    ): User? {
+        return suspendCoroutine { continuation ->
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    val user = it.user
+                    if (user != null) continuation.resume(User(user.email.toString()))
+                    else continuation.resume(null)
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
     }
 }

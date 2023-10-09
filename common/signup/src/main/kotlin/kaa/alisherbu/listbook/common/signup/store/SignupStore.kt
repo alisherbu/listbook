@@ -11,7 +11,10 @@ internal sealed interface Intent {
     object CreateAccountClicked : Intent
 }
 
-internal sealed interface Label
+internal sealed interface Label {
+    object AccountSuccessfullyCreated : Label
+    class ErrorOccurred(val message: String) : Label
+}
 
 internal sealed interface Message {
     class NameTextChanged(val text: String, val isCreateAccountButtonEnabled: Boolean) : Message

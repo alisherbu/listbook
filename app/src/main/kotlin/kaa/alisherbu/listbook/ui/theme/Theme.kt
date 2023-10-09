@@ -6,13 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kaa.alisherbu.listbook.core.util.theme.Orange
 
 @Composable
 fun ListbookTheme(
     content: @Composable () -> Unit,
 ) {
     val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(Color.Transparent, darkIcons = true)
+    systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = true)
     val colorScheme = dynamicLightColorScheme(LocalContext.current)
 
     MaterialTheme(

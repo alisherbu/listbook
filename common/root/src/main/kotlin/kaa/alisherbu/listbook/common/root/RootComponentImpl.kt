@@ -41,66 +41,72 @@ class RootComponentImpl(
         }
     )
 
-    private val navigation = StackNavigation<Configuration>()
+    private val stackNavigation = StackNavigation<ScreenConfig>()
 
     override val childStack: Value<ChildStack<*, Child>> = childStack(
-        source = navigation,
-        initialConfiguration = Configuration.Auth,
+        source = stackNavigation,
+        initialConfiguration = ScreenConfig.Auth,
         handleBackButton = true,
         childFactory = ::createChild
     )
 
+
     private fun createChild(
-        configuration: Configuration,
+        configuration: ScreenConfig,
         componentContext: ComponentContext,
     ): Child = when (configuration) {
-        Configuration.Auth -> {
+        ScreenConfig.Auth -> {
             Child.Auth(authComponent(componentContext, ::onAuthOutput))
         }
 
-        Configuration.Home -> {
+        ScreenConfig.Home -> {
             Child.Home("")
         }
 
-        Configuration.Signup -> {
+        ScreenConfig.Signup -> {
             Child.Signup(signupComponent(componentContext, ::onSignupOutput))
         }
 
-        Configuration.SignIn -> {
+        ScreenConfig.SignIn -> {
             Child.SignIn(signInComponent(componentContext, ::onSignInOutput))
         }
     }
 
     private fun onAuthOutput(output: AuthComponent.Output) {
         when (output) {
-            AuthComponent.Output.Signup -> navigation.push(Configuration.Signup)
-            AuthComponent.Output.SignIn -> navigation.push(Configuration.SignIn)
+            AuthComponent.Output.Signup -> stackNavigation.push(ScreenConfig.Signup)
+            AuthComponent.Output.SignIn -> stackNavigation.push(ScreenConfig.SignIn)
         }
     }
 
     private fun onSignupOutput(output: SignupComponent.Output) {
         when (output) {
-            SignupComponent.Output.Back -> navigation.pop()
+            SignupComponent.Output.Back -> stackNavigation.pop()
         }
     }
 
     private fun onSignInOutput(output: SignInComponent.Output) {
         when (output) {
-            SignInComponent.Output.Back -> navigation.pop()
+            SignInComponent.Output.Back -> stackNavigation.pop()
         }
     }
 
-    private sealed class Configuration : Parcelable {
+    private sealed class ScreenConfig : Parcelable {
         @Parcelize
-        object Auth : Configuration()
+        object Auth : ScreenConfig()
 
         @Parcelize
-        object Home : Configuration()
+        object Home : ScreenConfig()
 
         @Parcelize
-        object Signup : Configuration()
+        object Signup : ScreenConfig()
 
         @Parcelize
-        object SignIn : Configuration()
+        object SignIn : ScreenConfig()
     }
+
+    @Parcelize
+    private data class DialogConfig(
+        val message: String,
+    ) : Parcelable
 }

@@ -34,6 +34,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import kaa.alisherbu.listbook.common.dialog.ui.DialogScreen
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kaa.alisherbu.listbook.common.signup.store.SignupState
 import kaa.alisherbu.listbook.core.resource.R
@@ -53,6 +55,10 @@ fun SignupScreen(component: SignupComponent) {
         onPasswordTextChanged = component::onPasswordTextChanged,
         onCreateAccountClicked = component::onCreateAccountClicked
     )
+    val dialogSlot by component.dialogSlot.subscribeAsState()
+    dialogSlot.child?.instance?.also {
+        DialogScreen(dialogComponent = it)
+    }
 }
 
 @Composable
@@ -89,12 +95,14 @@ private fun SignupContent(
 
             Text(
                 text = "Registration",
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 color = Color.White,
 
-            )
+                )
         }
         Column(
             modifier = Modifier

@@ -27,9 +27,7 @@ fun AuthScreen(component: AuthComponent) {
             .background(Orange)
     ) {
         Button(
-            onClick = {
-                component.onSignupClicked()
-            },
+            onClick = component::onSignupClicked,
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
         ) {
             Text(
