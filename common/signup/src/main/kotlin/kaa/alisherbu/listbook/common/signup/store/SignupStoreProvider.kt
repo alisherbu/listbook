@@ -73,6 +73,7 @@ internal class SignupStoreProvider(
                     try {
                         val user = authManager.createUser(state.email, state.password)
                         if (user != null) publish(Label.AccountSuccessfullyCreated)
+                        else publish(Label.ErrorOccurred("Something wrong"))
                     } catch (e: Exception) {
                         publish(Label.ErrorOccurred(e.message.toString()))
                     }

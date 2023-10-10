@@ -9,7 +9,10 @@ internal sealed interface Intent {
     object LogInClicked : Intent
 }
 
-internal sealed interface Label
+internal sealed interface Label {
+    object SuccessfullySigned : Label
+    class ErrorOccurred(val message: String) : Label
+}
 
 internal sealed interface Message {
     class EmailTextChanged(val text: String) : Message

@@ -84,6 +84,7 @@ class RootComponent(
     private fun onSignInOutput(output: SignInComponent.Output) {
         when (output) {
             SignInComponent.Output.Back -> stackNavigation.pop()
+            SignInComponent.Output.Home -> stackNavigation.push(ScreenConfig.Home)
         }
     }
 

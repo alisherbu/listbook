@@ -15,11 +15,24 @@ internal class AuthManagerImpl(private val auth: FirebaseAuth) : AuthManager {
     ): User? {
         return suspendCoroutine { continuation ->
             auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    val user = it.user
+                .addOnSuccessListener { result ->
+                    val user = result.user
                     if (user != null) continuation.resume(User(user.email.toString()))
                     else continuation.resume(null)
                 }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+    }
+
+    override suspend fun signInUser(email: String, password: String): User? {
+        return suspendCoroutine { continuation ->
+            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener { result ->
+                val user = result.user
+                if (user != null) continuation.resume(User(user.email.toString()))
+                else continuation.resume(null)
+            }
                 .addOnFailureListener {
                     continuation.resumeWithException(it)
                 }

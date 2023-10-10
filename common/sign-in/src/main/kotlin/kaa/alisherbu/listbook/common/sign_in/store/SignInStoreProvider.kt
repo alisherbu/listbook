@@ -32,7 +32,13 @@ internal class SignInStoreProvider(
                 is Intent.EmailTextChanged -> dispatch(Message.EmailTextChanged(intent.text))
                 is Intent.PasswordTextChanged -> dispatch(Message.PasswordTextChanged(intent.text))
                 Intent.LogInClicked -> scope.launch {
-
+                    try {
+                        val user = authManager.signInUser(state.email, state.password)
+                        if (user != null) publish(Label.SuccessfullySigned)
+                        else publish(Label.ErrorOccurred("Something wrong"))
+                    } catch (e: Exception) {
+                        publish(Label.ErrorOccurred(e.message.toString()))
+                    }
                 }
             }
         }
