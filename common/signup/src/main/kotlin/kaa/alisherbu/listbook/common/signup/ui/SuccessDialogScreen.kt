@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.dialog.ui
+package kaa.alisherbu.listbook.common.signup.ui
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
@@ -7,24 +7,20 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kaa.alisherbu.listbook.common.dialog.component.MessageDialogComponent
+import kaa.alisherbu.listbook.common.signup.component.SuccessDialogComponent
 
 @Composable
-fun MessageDialogScreen(dialogComponent: MessageDialogComponent) {
+internal fun SuccessDialogScreen(dialogComponent: SuccessDialogComponent) {
     AlertDialog(
-        onDismissRequest = {
-            dialogComponent.onDismissClicked()
-        },
+        onDismissRequest = dialogComponent::dismiss,
         text = {
             Text(text = dialogComponent.message)
         },
         confirmButton = {
             TextButton(
-                onClick = {
-                    dialogComponent.onDismissClicked()
-                }
+                onClick = dialogComponent::dismiss
             ) {
-                Text("Dismiss")
+                Text("Ok")
             }
         },
         modifier = Modifier.width(300.dp),

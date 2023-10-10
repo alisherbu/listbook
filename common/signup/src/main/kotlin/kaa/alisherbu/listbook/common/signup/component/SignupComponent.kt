@@ -37,16 +37,11 @@ class SignupComponent(
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<SignupState> = store.stateFlow
     private val dialogNavigation = SlotNavigation<DialogConfig>()
-    val dialogSlot: Value<ChildSlot<*, MessageDialogComponent>> = childSlot(
+    internal val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
         source = dialogNavigation,
         handleBackButton = true,
-    ) { config, childComponentContext ->
-        MessageDialogComponent(
-            childComponentContext,
-            config.message,
-            onDismissed = dialogNavigation::dismiss
-        )
-    }
+        childFactory = ::createChildDialog
+    )
 
     init {
         store.labels
@@ -57,11 +52,11 @@ class SignupComponent(
     private fun handleLabel(label: Label) {
         when (label) {
             Label.AccountSuccessfullyCreated -> {
-                dialogNavigation.activate(DialogConfig("Account successfully created"))
+                dialogNavigation.activate(DialogConfig.SuccessDialogConfig("Account successfully created"))
             }
 
             is Label.ErrorOccurred -> {
-                dialogNavigation.activate(DialogConfig(label.message))
+                dialogNavigation.activate(DialogConfig.MessageDialogConfig(label.message))
             }
         }
     }
@@ -90,10 +85,50 @@ class SignupComponent(
         store.accept(Intent.CreateAccountClicked)
     }
 
-    @Parcelize
-    private data class DialogConfig(
-        val message: String,
-    ) : Parcelable
+    private fun createChildDialog(
+        config: DialogConfig,
+        componentContext: ComponentContext
+    ): ChildDialog = when (config) {
+        is DialogConfig.MessageDialogConfig -> {
+            ChildDialog.Message(
+                MessageDialogComponent(
+                    componentContext,
+                    config.message,
+                    onDismissed = dialogNavigation::dismiss
+                )
+            )
+        }
+
+        is DialogConfig.SuccessDialogConfig -> {
+            ChildDialog.Success(
+                SuccessDialogComponent(
+                    componentContext,
+                    config.message,
+                    onDismissed = {
+                        dialogNavigation.dismiss()
+                        output(Output.Back)
+                    }
+                )
+            )
+        }
+    }
+
+    internal sealed interface ChildDialog {
+        class Message(val component: MessageDialogComponent) : ChildDialog
+        class Success(val component: SuccessDialogComponent) : ChildDialog
+    }
+
+    private sealed interface DialogConfig : Parcelable {
+        @Parcelize
+        class MessageDialogConfig(
+            val message: String,
+        ) : DialogConfig
+
+        @Parcelize
+        class SuccessDialogConfig(
+            val message: String,
+        ) : DialogConfig
+    }
 
     sealed class Output {
         object Back : Output()

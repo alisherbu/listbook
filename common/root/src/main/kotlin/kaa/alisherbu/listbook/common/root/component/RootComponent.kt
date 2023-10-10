@@ -101,11 +101,6 @@ class RootComponent(
         object SignIn : ScreenConfig()
     }
 
-    @Parcelize
-    private data class DialogConfig(
-        val message: String,
-    ) : Parcelable
-
     sealed class Child {
         class Auth(val component: AuthComponent) : Child()
 
