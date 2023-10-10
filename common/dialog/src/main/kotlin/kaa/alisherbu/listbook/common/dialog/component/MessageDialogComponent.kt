@@ -1,16 +1,15 @@
 package kaa.alisherbu.listbook.common.dialog.component
 
 import com.arkivanov.decompose.ComponentContext
-import kaa.alisherbu.listbook.common.dialog.component.DialogComponent
 
-class DialogComponentImpl(
+class MessageDialogComponent(
     private val componentContext: ComponentContext,
-    override val message: String,
+    val message: String,
     private val onDismissed: () -> Unit,
-) : DialogComponent, ComponentContext by componentContext {
+) : ComponentContext by componentContext {
 
 
-    override fun onDismissClicked() {
+    fun onDismissClicked() {
         onDismissed()
     }
 }

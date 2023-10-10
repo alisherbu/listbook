@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.root
+package kaa.alisherbu.listbook.common.root.ui
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
@@ -8,6 +8,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import kaa.alisherbu.listbook.common.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.common.home.HomeScreen
+import kaa.alisherbu.listbook.common.root.component.RootComponent
 import kaa.alisherbu.listbook.common.sign_in.ui.SignInScreen
 import kaa.alisherbu.listbook.common.signup.ui.SignupScreen
 

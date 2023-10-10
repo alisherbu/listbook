@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.root
+package kaa.alisherbu.listbook.common.root.component
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -10,20 +10,16 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import kaa.alisherbu.listbook.common.auth.component.AuthComponent
-import kaa.alisherbu.listbook.common.auth.component.AuthComponentImpl
-import kaa.alisherbu.listbook.common.root.RootComponent.Child
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
-import kaa.alisherbu.listbook.common.sign_in.component.SignInComponentImpl
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
-import kaa.alisherbu.listbook.common.signup.component.SignupComponentImpl
 import kotlinx.parcelize.Parcelize
 
-class RootComponentImpl(
+class RootComponent(
     componentContext: ComponentContext,
     private val authComponent: (ComponentContext, (AuthComponent.Output) -> Unit) -> AuthComponent,
     private val signupComponent: (ComponentContext, (SignupComponent.Output) -> Unit) -> SignupComponent,
     private val signInComponent: (ComponentContext, (SignInComponent.Output) -> Unit) -> SignInComponent,
-) : RootComponent, ComponentContext by componentContext {
+) : ComponentContext by componentContext {
 
     constructor(
         componentContext: ComponentContext,
@@ -31,19 +27,19 @@ class RootComponentImpl(
     ) : this(
         componentContext,
         authComponent = { childContext, output ->
-            AuthComponentImpl(childContext, storeFactory, output)
+            AuthComponent(childContext, storeFactory, output)
         },
         signupComponent = { childContext, output ->
-            SignupComponentImpl(childContext, storeFactory, output)
+            SignupComponent(childContext, storeFactory, output)
         },
         signInComponent = { childContext, output ->
-            SignInComponentImpl(childContext, storeFactory, output)
+            SignInComponent(childContext, storeFactory, output)
         }
     )
 
     private val stackNavigation = StackNavigation<ScreenConfig>()
 
-    override val childStack: Value<ChildStack<*, Child>> = childStack(
+    val childStack: Value<ChildStack<*, Child>> = childStack(
         source = stackNavigation,
         initialConfiguration = ScreenConfig.Auth,
         handleBackButton = true,
@@ -109,4 +105,13 @@ class RootComponentImpl(
     private data class DialogConfig(
         val message: String,
     ) : Parcelable
+
+    sealed class Child {
+        class Auth(val component: AuthComponent) : Child()
+
+        data class Home(val text: String) : Child()
+        class Signup(val component: SignupComponent) : Child()
+
+        class SignIn(val component: SignInComponent) : Child()
+    }
 }

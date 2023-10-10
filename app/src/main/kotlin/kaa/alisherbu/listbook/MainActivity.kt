@@ -8,9 +8,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import kaa.alisherbu.listbook.common.root.RootComponent
-import kaa.alisherbu.listbook.common.root.RootComponentImpl
-import kaa.alisherbu.listbook.common.root.RootContent
+import kaa.alisherbu.listbook.common.root.component.RootComponent
+import kaa.alisherbu.listbook.common.root.ui.RootContent
 import kaa.alisherbu.listbook.ui.theme.ListbookTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +25,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun listbookRoot(componentContext: ComponentContext): RootComponent =
-        RootComponentImpl(
+        RootComponent(
             componentContext,
             LoggingStoreFactory(DefaultStoreFactory())
         )
