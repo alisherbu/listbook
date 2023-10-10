@@ -23,7 +23,6 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.coroutines)
     implementation(libs.koin.core)
 
-    implementation(projects.common.dialog)
     implementation(projects.core.util)
     implementation(projects.core.resource)
     implementation(projects.authManager)

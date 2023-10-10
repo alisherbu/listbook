@@ -1,6 +1,11 @@
 package kaa.alisherbu.listbook.common.root.component
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.slot.ChildSlot
+import com.arkivanov.decompose.router.slot.SlotNavigation
+import com.arkivanov.decompose.router.slot.activate
+import com.arkivanov.decompose.router.slot.childSlot
+import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -10,6 +15,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import kaa.alisherbu.listbook.common.auth.component.AuthComponent
+import kaa.alisherbu.listbook.common.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kotlinx.parcelize.Parcelize
@@ -37,77 +43,130 @@ class RootComponent(
         }
     )
 
-    private val stackNavigation = StackNavigation<ScreenConfig>()
+    private val screenNavigation = StackNavigation<ScreenConfig>()
+    private val dialogNavigation = SlotNavigation<DialogConfig>()
 
-    val childStack: Value<ChildStack<*, Child>> = childStack(
-        source = stackNavigation,
+    internal val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
+        source = screenNavigation,
         initialConfiguration = ScreenConfig.Auth,
         handleBackButton = true,
-        childFactory = ::createChild
+        childFactory = ::createChildScreen
+    )
+
+    internal val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
+        source = dialogNavigation,
+        handleBackButton = true,
+        childFactory = ::createChildDialog
     )
 
 
-    private fun createChild(
+    private fun createChildScreen(
         configuration: ScreenConfig,
         componentContext: ComponentContext,
-    ): Child = when (configuration) {
+    ): ChildScreen = when (configuration) {
         ScreenConfig.Auth -> {
-            Child.Auth(authComponent(componentContext, ::onAuthOutput))
+            ChildScreen.Auth(authComponent(componentContext, ::onAuthOutput))
         }
 
         ScreenConfig.Home -> {
-            Child.Home("")
+            ChildScreen.Home("")
         }
 
         ScreenConfig.Signup -> {
-            Child.Signup(signupComponent(componentContext, ::onSignupOutput))
+            ChildScreen.Signup(signupComponent(componentContext, ::onSignupOutput))
         }
 
         ScreenConfig.SignIn -> {
-            Child.SignIn(signInComponent(componentContext, ::onSignInOutput))
+            ChildScreen.SignIn(signInComponent(componentContext, ::onSignInOutput))
+        }
+    }
+
+    private fun createChildDialog(
+        config: DialogConfig,
+        componentContext: ComponentContext
+    ): ChildDialog = when (config) {
+        is DialogConfig.Message -> {
+            ChildDialog.Message(
+                MessageDialogComponent(
+                    componentContext,
+                    config.text,
+                    onDismissed = dialogNavigation::dismiss
+                )
+            )
         }
     }
 
     private fun onAuthOutput(output: AuthComponent.Output) {
         when (output) {
-            AuthComponent.Output.Signup -> stackNavigation.push(ScreenConfig.Signup)
-            AuthComponent.Output.SignIn -> stackNavigation.push(ScreenConfig.SignIn)
+            AuthComponent.Output.Signup -> {
+                screenNavigation.push(ScreenConfig.Signup)
+            }
+
+            AuthComponent.Output.SignIn -> {
+                screenNavigation.push(ScreenConfig.SignIn)
+            }
         }
     }
 
     private fun onSignupOutput(output: SignupComponent.Output) {
         when (output) {
-            SignupComponent.Output.Back -> stackNavigation.pop()
+            SignupComponent.Output.Back -> {
+                screenNavigation.pop()
+            }
+
+            is SignupComponent.Output.Error -> {
+                dialogNavigation.activate(DialogConfig.Message(output.message))
+            }
         }
     }
 
     private fun onSignInOutput(output: SignInComponent.Output) {
         when (output) {
-            SignInComponent.Output.Back -> stackNavigation.pop()
-            SignInComponent.Output.Home -> stackNavigation.push(ScreenConfig.Home)
+            SignInComponent.Output.Back -> {
+                screenNavigation.pop()
+            }
+
+            SignInComponent.Output.Home -> {
+                screenNavigation.push(ScreenConfig.Home)
+            }
+
+            is SignInComponent.Output.Error -> {
+                dialogNavigation.activate(DialogConfig.Message(output.message))
+            }
         }
     }
 
-    private sealed class ScreenConfig : Parcelable {
+    private sealed interface ScreenConfig : Parcelable {
         @Parcelize
-        object Auth : ScreenConfig()
+        object Auth : ScreenConfig
 
         @Parcelize
-        object Home : ScreenConfig()
+        object Home : ScreenConfig
 
         @Parcelize
-        object Signup : ScreenConfig()
+        object Signup : ScreenConfig
 
         @Parcelize
-        object SignIn : ScreenConfig()
+        object SignIn : ScreenConfig
     }
 
-    sealed class Child {
-        class Auth(val component: AuthComponent) : Child()
+    internal sealed interface ChildScreen {
+        class Auth(val component: AuthComponent) : ChildScreen
 
-        data class Home(val text: String) : Child()
-        class Signup(val component: SignupComponent) : Child()
+        data class Home(val text: String) : ChildScreen
+        class Signup(val component: SignupComponent) : ChildScreen
 
-        class SignIn(val component: SignInComponent) : Child()
+        class SignIn(val component: SignInComponent) : ChildScreen
+    }
+
+    internal sealed interface ChildDialog {
+        class Message(val component: MessageDialogComponent) : ChildDialog
+    }
+
+    private sealed interface DialogConfig : Parcelable {
+        @Parcelize
+        class Message(
+            val text: String,
+        ) : DialogConfig
     }
 }

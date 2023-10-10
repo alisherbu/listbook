@@ -1,6 +1,5 @@
 package kaa.alisherbu.listbook.common.signup.component
 
-import kaa.alisherbu.listbook.common.dialog.component.MessageDialogComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
@@ -56,7 +55,7 @@ class SignupComponent(
             }
 
             is Label.ErrorOccurred -> {
-                dialogNavigation.activate(DialogConfig.MessageDialogConfig(label.message))
+                output(Output.Error(label.message))
             }
         }
     }
@@ -89,16 +88,6 @@ class SignupComponent(
         config: DialogConfig,
         componentContext: ComponentContext
     ): ChildDialog = when (config) {
-        is DialogConfig.MessageDialogConfig -> {
-            ChildDialog.Message(
-                MessageDialogComponent(
-                    componentContext,
-                    config.message,
-                    onDismissed = dialogNavigation::dismiss
-                )
-            )
-        }
-
         is DialogConfig.SuccessDialogConfig -> {
             ChildDialog.Success(
                 SuccessDialogComponent(
@@ -114,16 +103,10 @@ class SignupComponent(
     }
 
     internal sealed interface ChildDialog {
-        class Message(val component: MessageDialogComponent) : ChildDialog
         class Success(val component: SuccessDialogComponent) : ChildDialog
     }
 
     private sealed interface DialogConfig : Parcelable {
-        @Parcelize
-        class MessageDialogConfig(
-            val message: String,
-        ) : DialogConfig
-
         @Parcelize
         class SuccessDialogConfig(
             val message: String,
@@ -132,5 +115,6 @@ class SignupComponent(
 
     sealed class Output {
         object Back : Output()
+        class Error(val message: String) : Output()
     }
 }

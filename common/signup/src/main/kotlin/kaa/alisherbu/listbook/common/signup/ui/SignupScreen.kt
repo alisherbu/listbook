@@ -35,7 +35,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
-import kaa.alisherbu.listbook.common.dialog.ui.MessageDialogScreen
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kaa.alisherbu.listbook.common.signup.store.SignupState
 import kaa.alisherbu.listbook.core.resource.R
@@ -58,10 +57,6 @@ fun SignupScreen(component: SignupComponent) {
     val dialogSlot by component.dialogSlot.subscribeAsState()
     dialogSlot.child?.instance?.also { childDialog ->
         when (childDialog) {
-            is SignupComponent.ChildDialog.Message -> {
-                MessageDialogScreen(dialogComponent = childDialog.component)
-            }
-
             is SignupComponent.ChildDialog.Success -> {
                 SuccessDialogScreen(dialogComponent = childDialog.component)
             }
