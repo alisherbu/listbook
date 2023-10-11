@@ -3,7 +3,9 @@ package kaa.alisherbu.listbook.common.signup.store
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kaa.alisherbu.listbook.auth_manager.AuthManager
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Single
 
+@Single
 internal class SignupExecutor(private val authManager: AuthManager) :
     CoroutineExecutor<Intent, Unit, SignupState, Message, Label>() {
     override fun executeIntent(intent: Intent, getState: () -> SignupState) {

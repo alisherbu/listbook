@@ -23,6 +23,8 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.coroutines)
     implementation(libs.koin.core)
+    implementation(libs.koin.annotations)
+    ksp(libs.koin.kspCompiler)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

@@ -13,6 +13,7 @@ include(":common:sign-in")
 include(":common:dialog")
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
