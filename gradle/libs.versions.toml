@@ -61,6 +61,10 @@ koin-kspCompiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = 
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidXCoreKtx" }
 androidx-lifecycle-runtimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
 
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -70,6 +74,10 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+
+# Plugins defined by this project
+listbook-android-application = { id = "listbook.android.application", version = "unspecified" }
+listbook-android-library = { id = "listbook.android.library", version = "unspecified" }
 
 [bundles]
 arkivanov-mvikotlin = [

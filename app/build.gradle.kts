@@ -1,7 +1,7 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.listbook.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.services)
