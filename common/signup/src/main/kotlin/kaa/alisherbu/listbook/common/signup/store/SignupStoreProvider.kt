@@ -11,7 +11,7 @@ import org.koin.core.component.inject
 
 internal class SignupStoreProvider(
     private val storeFactory: StoreFactory,
-    private val executor: SignupExecutor
+    private val executor: SignupExecutor = SignupExecutor()
 ) {
 
     fun provide(): SignupStore =

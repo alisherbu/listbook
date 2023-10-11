@@ -1,7 +1,7 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.devtools.ksp)
@@ -12,6 +12,9 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
 }
 

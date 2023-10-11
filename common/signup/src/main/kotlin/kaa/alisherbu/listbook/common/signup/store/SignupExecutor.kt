@@ -4,10 +4,13 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kaa.alisherbu.listbook.auth_manager.AuthManager
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 @Single
-internal class SignupExecutor(private val authManager: AuthManager) :
-    CoroutineExecutor<Intent, Unit, SignupState, Message, Label>() {
+internal class SignupExecutor :
+    CoroutineExecutor<Intent, Unit, SignupState, Message, Label>(), KoinComponent {
+    private val authManager: AuthManager by inject()
     override fun executeIntent(intent: Intent, getState: () -> SignupState) {
         val state = getState()
         when (intent) {

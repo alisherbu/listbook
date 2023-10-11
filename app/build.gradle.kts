@@ -9,12 +9,9 @@ plugins {
 
 android {
     namespace = "kaa.alisherbu.listbook"
-    compileSdk = 33
 
     defaultConfig {
         applicationId = "kaa.alisherbu.listbook"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
 
@@ -34,7 +31,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
     packaging {
         resources {
