@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "kaa.alisherbu.listbook.common.auth"
-    compileSdk = libs.versions.compileSdk.get().toInt()
     buildFeatures {
         compose = true
     }

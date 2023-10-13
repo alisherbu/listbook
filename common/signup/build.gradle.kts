@@ -4,12 +4,10 @@ plugins {
     alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
     namespace = "kaa.alisherbu.listbook.common.signup"
-    compileSdk = libs.versions.compileSdk.get().toInt()
     buildFeatures {
         compose = true
     }
@@ -26,8 +24,6 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.coroutines)
     implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
-    ksp(libs.koin.kspCompiler)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

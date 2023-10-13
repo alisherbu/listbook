@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "kaa.alisherbu.listbook.auth_manager"
-    compileSdk = libs.versions.compileSdk.get().toInt()
 }
 
 dependencies {

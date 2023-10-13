@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "kaa.alisherbu.listbook.core.util"
-    compileSdk = libs.versions.compileSdk.get().toInt()
 }
 
 dependencies {

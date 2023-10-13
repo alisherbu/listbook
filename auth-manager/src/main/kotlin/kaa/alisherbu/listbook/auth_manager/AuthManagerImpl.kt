@@ -1,9 +1,6 @@
 package kaa.alisherbu.listbook.auth_manager
 
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
