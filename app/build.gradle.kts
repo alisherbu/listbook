@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.listbook.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.services)
 }
 
@@ -58,4 +59,6 @@ dependencies {
     implementation(projects.core.util)
     implementation(projects.feature.root)
     implementation(projects.authManager)
+    implementation(libs.dagger.dagger)
+    kapt(libs.dagger.compiler)
 }

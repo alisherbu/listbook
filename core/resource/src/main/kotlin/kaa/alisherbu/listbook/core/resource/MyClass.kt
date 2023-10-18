@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.common.home
+package kaa.alisherbu.listbook.core.resource
 
 class MyClass {
 }
