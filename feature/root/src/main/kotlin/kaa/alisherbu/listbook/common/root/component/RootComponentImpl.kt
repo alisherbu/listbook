@@ -23,9 +23,9 @@ import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kotlinx.parcelize.Parcelize
 
-class DefaultRootComponent @AssistedInject constructor(
+class RootComponentImpl @AssistedInject constructor(
     @Assisted componentContext: ComponentContext,
-    @Assisted private val storeFactory: StoreFactory
+    private val storeFactory: StoreFactory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
@@ -158,8 +158,7 @@ class DefaultRootComponent @AssistedInject constructor(
     @AssistedFactory
     interface Factory : RootComponent.Factory {
         override fun invoke(
-            componentContext: ComponentContext,
-            storeFactory: StoreFactory
-        ): DefaultRootComponent
+            componentContext: ComponentContext
+        ): RootComponentImpl
     }
 }

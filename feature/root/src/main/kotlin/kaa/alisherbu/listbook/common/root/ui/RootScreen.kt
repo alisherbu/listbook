@@ -11,28 +11,28 @@ import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import kaa.alisherbu.listbook.common.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.common.dialog.ui.MessageDialogScreen
 import kaa.alisherbu.listbook.common.home.HomeScreen
-import kaa.alisherbu.listbook.common.root.component.DefaultRootComponent
+import kaa.alisherbu.listbook.common.root.component.RootComponentImpl
 import kaa.alisherbu.listbook.common.sign_in.ui.SignInScreen
 import kaa.alisherbu.listbook.common.signup.ui.SignupScreen
 
 @Composable
-fun RootContent(component: DefaultRootComponent) {
+fun RootContent(component: RootComponentImpl) {
     Children(
         stack = component.screenStack,
         animation = stackAnimation(fade() + scale()),
     ) {
         when (val child = it.instance) {
-            is DefaultRootComponent.ChildScreen.Auth -> AuthScreen(child.component)
-            is DefaultRootComponent.ChildScreen.Home -> HomeScreen("screen.text")
-            is DefaultRootComponent.ChildScreen.Signup -> SignupScreen(child.component)
-            is DefaultRootComponent.ChildScreen.SignIn -> SignInScreen(child.component)
+            is RootComponentImpl.ChildScreen.Auth -> AuthScreen(child.component)
+            is RootComponentImpl.ChildScreen.Home -> HomeScreen("screen.text")
+            is RootComponentImpl.ChildScreen.Signup -> SignupScreen(child.component)
+            is RootComponentImpl.ChildScreen.SignIn -> SignInScreen(child.component)
         }
     }
 
     val dialogSlot by component.dialogSlot.subscribeAsState()
     dialogSlot.child?.instance?.also { childDialog ->
         when (childDialog) {
-            is DefaultRootComponent.ChildDialog.Message -> {
+            is RootComponentImpl.ChildDialog.Message -> {
                 MessageDialogScreen(childDialog.component)
             }
         }
