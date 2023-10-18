@@ -23,11 +23,11 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
 
-    implementation(projects.common.auth)
-    implementation(projects.common.home)
-    implementation(projects.common.signup)
-    implementation(projects.common.signIn)
-    implementation(projects.common.dialog)
+    implementation(projects.feature.auth)
+    implementation(projects.feature.home)
+    implementation(projects.feature.signup)
+    implementation(projects.feature.signIn)
+    implementation(projects.feature.dialog)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

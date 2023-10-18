@@ -56,6 +56,6 @@ dependencies {
     implementation(libs.google.firebase.core)
     implementation(libs.koin.core)
     implementation(projects.core.util)
-    implementation(projects.common.root)
+    implementation(projects.feature.root)
     implementation(projects.authManager)
 }
