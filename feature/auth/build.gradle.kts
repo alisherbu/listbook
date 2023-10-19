@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -20,7 +21,8 @@ dependencies {
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.koin.core)
+    implementation(libs.dagger.dagger)
+    kapt(libs.dagger.compiler)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

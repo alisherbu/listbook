@@ -13,21 +13,20 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.mvikotlin.core.store.StoreFactory
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.common.auth.component.AuthComponent
 import kaa.alisherbu.listbook.common.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
-import kaa.alisherbu.listbook.common.sign_in.component.SignInComponentImpl
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
-import kaa.alisherbu.listbook.common.signup.component.SignupComponentImpl
+import kaa.alisherbu.listbook.common.root.component.RootComponent.ChildScreen
+import kaa.alisherbu.listbook.common.root.component.RootComponent.ChildDialog
 import kotlinx.parcelize.Parcelize
 
 class RootComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
-    private val storeFactory: StoreFactory,
+    private val authFactory: AuthComponent.Factory,
     private val signInFactory: SignInComponent.Factory,
     private val signupFactory: SignupComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
@@ -35,14 +34,14 @@ class RootComponentImpl @AssistedInject internal constructor(
     private val screenNavigation = StackNavigation<ScreenConfig>()
     private val dialogNavigation = SlotNavigation<DialogConfig>()
 
-    internal val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
+    override val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
         source = screenNavigation,
         initialConfiguration = ScreenConfig.Auth,
         handleBackButton = true,
         childFactory = ::createChildScreen
     )
 
-    internal val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
+    override val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
         source = dialogNavigation,
         handleBackButton = true,
         childFactory = ::createChildDialog
@@ -54,7 +53,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         componentContext: ComponentContext,
     ): ChildScreen = when (configuration) {
         ScreenConfig.Auth -> {
-            ChildScreen.Auth(AuthComponent(componentContext, storeFactory, ::onAuthOutput))
+            ChildScreen.Auth(authFactory(componentContext, ::onAuthOutput))
         }
 
         ScreenConfig.Home -> {
@@ -62,15 +61,11 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
 
         ScreenConfig.Signup -> {
-            ChildScreen.Signup(
-                signupFactory(componentContext, ::onSignupOutput)
-            )
+            ChildScreen.Signup(signupFactory(componentContext, ::onSignupOutput))
         }
 
         ScreenConfig.SignIn -> {
-            ChildScreen.SignIn(
-                signInFactory(componentContext, ::onSignInOutput)
-            )
+            ChildScreen.SignIn(signInFactory(componentContext, ::onSignInOutput))
         }
     }
 
@@ -101,29 +96,29 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onSignupOutput(output: SignupComponentImpl.Output) {
+    private fun onSignupOutput(output: SignupComponent.Output) {
         when (output) {
-            SignupComponentImpl.Output.Back -> {
+            SignupComponent.Output.Back -> {
                 screenNavigation.pop()
             }
 
-            is SignupComponentImpl.Output.Error -> {
+            is SignupComponent.Output.Error -> {
                 dialogNavigation.activate(DialogConfig.Message(output.message))
             }
         }
     }
 
-    private fun onSignInOutput(output: SignInComponentImpl.Output) {
+    private fun onSignInOutput(output: SignInComponent.Output) {
         when (output) {
-            SignInComponentImpl.Output.Back -> {
+            SignInComponent.Output.Back -> {
                 screenNavigation.pop()
             }
 
-            SignInComponentImpl.Output.Home -> {
+            SignInComponent.Output.Home -> {
                 screenNavigation.push(ScreenConfig.Home)
             }
 
-            is SignInComponentImpl.Output.Error -> {
+            is SignInComponent.Output.Error -> {
                 dialogNavigation.activate(DialogConfig.Message(output.message))
             }
         }
@@ -143,18 +138,8 @@ class RootComponentImpl @AssistedInject internal constructor(
         object SignIn : ScreenConfig
     }
 
-    internal sealed interface ChildScreen {
-        class Auth(val component: AuthComponent) : ChildScreen
 
-        class Home(val text: String) : ChildScreen
-        class Signup(val component: SignupComponent) : ChildScreen
 
-        class SignIn(val component: SignInComponent) : ChildScreen
-    }
-
-    internal sealed interface ChildDialog {
-        class Message(val component: MessageDialogComponent) : ChildDialog
-    }
 
     private sealed interface DialogConfig : Parcelable {
         @Parcelize

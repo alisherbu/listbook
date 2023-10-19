@@ -2,7 +2,6 @@
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-include(":auth-manager")
 include(":core:util")
 include(":core:resource")
 include(":feature:root")

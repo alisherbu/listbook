@@ -27,7 +27,6 @@ dependencies {
 
     implementation(projects.core.util)
     implementation(projects.core.resource)
-    implementation(projects.authManager)
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.google.firebase.auth)

@@ -56,11 +56,13 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.main)
     implementation(libs.google.firebase.core)
     implementation(libs.google.firebase.auth)
-    implementation(projects.core.util)
-    implementation(projects.feature.root)
-    implementation(projects.feature.signIn)
-    implementation(projects.feature.signup)
-    implementation(projects.authManager)
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
+
+    implementation(projects.core.util)
+    implementation(projects.feature.root)
+    implementation(projects.feature.auth)
+    implementation(projects.feature.signIn)
+    implementation(projects.feature.signup)
+
 }

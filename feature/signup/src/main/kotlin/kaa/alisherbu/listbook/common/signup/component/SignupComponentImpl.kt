@@ -18,6 +18,7 @@ import kaa.alisherbu.listbook.common.signup.store.Intent
 import kaa.alisherbu.listbook.common.signup.store.Label
 import kaa.alisherbu.listbook.common.signup.store.SignupState
 import kaa.alisherbu.listbook.common.signup.store.SignupStore
+import kaa.alisherbu.listbook.common.signup.component.SignupComponent.Output
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.StateFlow
@@ -116,10 +117,7 @@ class SignupComponentImpl @AssistedInject internal constructor(
         ) : DialogConfig
     }
 
-    sealed class Output {
-        object Back : Output()
-        class Error(val message: String) : Output()
-    }
+
 
     @AssistedFactory
     interface Factory : SignupComponent.Factory {

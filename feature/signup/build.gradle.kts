@@ -30,5 +30,4 @@ dependencies {
 
     implementation(projects.core.util)
     implementation(projects.core.resource)
-    implementation(projects.authManager)
 }

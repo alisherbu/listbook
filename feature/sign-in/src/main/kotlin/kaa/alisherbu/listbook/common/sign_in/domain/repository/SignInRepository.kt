@@ -1,7 +1,7 @@
 package kaa.alisherbu.listbook.common.sign_in.domain.repository
 
-import kaa.alisherbu.listbook.auth_manager.User
+import kaa.alisherbu.listbook.common.sign_in.domain.model.User
 
-interface SignInRepository {
+internal interface SignInRepository {
     suspend fun signIn(email: String, password: String): User?
 }

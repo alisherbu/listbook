@@ -4,7 +4,7 @@ import kaa.alisherbu.listbook.common.sign_in.domain.model.SignInResult
 import kaa.alisherbu.listbook.common.sign_in.domain.repository.SignInRepository
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor(
+internal class SignInUseCase @Inject constructor(
     private val signInRepository: SignInRepository
 ) {
     suspend operator fun invoke(email: String, password: String): SignInResult {

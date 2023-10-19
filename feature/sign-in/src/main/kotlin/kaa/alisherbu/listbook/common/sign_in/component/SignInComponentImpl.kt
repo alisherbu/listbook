@@ -11,6 +11,7 @@ import kaa.alisherbu.listbook.common.sign_in.store.Intent
 import kaa.alisherbu.listbook.common.sign_in.store.Label
 import kaa.alisherbu.listbook.common.sign_in.store.SignInState
 import kaa.alisherbu.listbook.common.sign_in.store.SignInStore
+import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent.Output
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.StateFlow
@@ -62,11 +63,6 @@ class SignInComponentImpl @AssistedInject internal constructor(
         store.accept(Intent.LogInClicked)
     }
 
-    sealed interface Output {
-        object Back : Output
-        object Home : Output
-        class Error(val message: String) : Output
-    }
 
     @AssistedFactory
     interface Factory : SignInComponent.Factory {

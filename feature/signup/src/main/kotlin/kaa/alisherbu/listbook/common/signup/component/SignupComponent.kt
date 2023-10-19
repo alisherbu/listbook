@@ -21,10 +21,16 @@ interface SignupComponent {
     fun onBackClicked()
 
     fun onCreateAccountClicked()
+
+    sealed class Output {
+        object Back : Output()
+        class Error(val message: String) : Output()
+    }
+
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            output: (SignupComponentImpl.Output) -> Unit
+            output: (Output) -> Unit
         ): SignupComponent
     }
 }

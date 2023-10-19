@@ -15,10 +15,17 @@ interface SignInComponent {
     fun onPasswordTextChanged(text: String)
 
     fun onLogInClicked()
+
+    sealed interface Output {
+        object Back : Output
+        object Home : Output
+        class Error(val message: String) : Output
+    }
+
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            output: (SignInComponentImpl.Output) -> Unit
+            output: (Output) -> Unit
         ): SignInComponent
     }
 }

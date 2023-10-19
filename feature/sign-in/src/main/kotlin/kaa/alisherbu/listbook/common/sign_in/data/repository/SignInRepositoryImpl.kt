@@ -1,7 +1,7 @@
 package kaa.alisherbu.listbook.common.sign_in.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
-import kaa.alisherbu.listbook.auth_manager.User
+import kaa.alisherbu.listbook.common.sign_in.domain.model.User
 import kaa.alisherbu.listbook.common.sign_in.domain.repository.SignInRepository
 import javax.inject.Inject
 import kotlin.coroutines.resume
