@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kaa.alisherbu.listbook.common.sign_in.domain.repository.SignInRepository
 import javax.inject.Inject
 
-class SignInRepositoryImpl @Inject constructor(
+internal class SignInRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : SignInRepository {
     override fun signIn(email: String, password: String) {

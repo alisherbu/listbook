@@ -1,8 +1,8 @@
 package kaa.alisherbu.listbook.common.sign_in.component
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
-import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dagger.assisted.Assisted
@@ -11,21 +11,20 @@ import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.common.sign_in.store.Intent
 import kaa.alisherbu.listbook.common.sign_in.store.Label
 import kaa.alisherbu.listbook.common.sign_in.store.SignInState
-import kaa.alisherbu.listbook.common.sign_in.store.SignInStoreProvider
+import kaa.alisherbu.listbook.common.sign_in.store.SignInStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Provider
 
-class SignInComponentImpl @AssistedInject constructor(
+class SignInComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
-    private val storeFactory: StoreFactory
+    private val storeProvider: Provider<SignInStore>
 ) : SignInComponent, ComponentContext by componentContext {
-    private val store = instanceKeeper.getStore {
-        SignInStoreProvider(storeFactory).provide()
-    }
+    private val store = instanceKeeper.getStore { storeProvider.get() }
 
     init {
         store.labels
