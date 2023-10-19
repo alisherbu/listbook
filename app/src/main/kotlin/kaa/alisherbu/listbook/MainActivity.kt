@@ -15,8 +15,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val component = DaggerMainComponent.create().rootComponentFactory(
-            defaultComponentContext())
+        val component = DaggerMainComponent.create().rootComponentFactory(defaultComponentContext())
         setContent {
             ListbookTheme {
                 RootContent(component)

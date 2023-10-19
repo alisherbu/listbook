@@ -18,12 +18,12 @@ internal class SignInStoreProvider(
             SignInStore,
             Store<Intent, SignInState, Label> by storeFactory.create(
                 name = "SignInStore",
-                executorFactory = ::SignupExecutor,
-                reducer = SignReducer,
+                executorFactory = ::SignInExecutor,
+                reducer = SignInReducer,
                 initialState = SignInState()
             ) {}
 
-    private inner class SignupExecutor :
+    private inner class SignInExecutor :
         CoroutineExecutor<Intent, Unit, SignInState, Message, Label>(), KoinComponent {
         private val authManager: AuthManager by inject()
         override fun executeIntent(intent: Intent, getState: () -> SignInState) {
@@ -44,7 +44,7 @@ internal class SignInStoreProvider(
         }
     }
 
-    internal object SignReducer : Reducer<SignInState, Message> {
+    internal object SignInReducer : Reducer<SignInState, Message> {
         override fun SignInState.reduce(msg: Message): SignInState {
             return when (msg) {
                 is Message.EmailTextChanged -> copy(email = msg.text)
