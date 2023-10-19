@@ -1,11 +1,14 @@
 package kaa.alisherbu.listbook.common.signup.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import kaa.alisherbu.listbook.common.signup.domain.model.SignupResult
 import kaa.alisherbu.listbook.common.signup.domain.usecase.SignUpUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class SignupExecutor constructor(private val signUpUse: SignUpUseCase) :
-    CoroutineExecutor<Intent, Unit, SignupState, Message, Label>() {
+internal class SignupExecutor @Inject constructor(
+    private val signUp: SignUpUseCase
+) : CoroutineExecutor<Intent, Unit, SignupState, Message, Label>() {
     override fun executeIntent(intent: Intent, getState: () -> SignupState) {
         val state = getState()
         when (intent) {
@@ -50,14 +53,10 @@ internal class SignupExecutor constructor(private val signUpUse: SignUpUseCase) 
             }
 
             Intent.CreateAccountClicked -> scope.launch {
-                try {
-                    val user = signUpUse(state.email, state.password)
-                    if (user != null) publish(Label.AccountSuccessfullyCreated)
-                    else publish(Label.ErrorOccurred("Something wrong"))
-                } catch (e: Exception) {
-                    publish(Label.ErrorOccurred(e.message.toString()))
+                when (val result = signUp(state.email, state.password)) {
+                    is SignupResult.Error -> publish(Label.ErrorOccurred(result.message))
+                    is SignupResult.Success -> publish(Label.AccountSuccessfullyCreated)
                 }
-
             }
         }
     }

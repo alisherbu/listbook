@@ -1,7 +1,19 @@
 package kaa.alisherbu.listbook.common.signup.domain.usecase
 
-class SignUpUseCase {
-    suspend operator fun invoke(email:String, password:String){
+import kaa.alisherbu.listbook.common.signup.domain.model.SignupResult
+import kaa.alisherbu.listbook.common.signup.domain.repository.SignupRepository
+import javax.inject.Inject
 
+internal class SignUpUseCase @Inject constructor(
+    private val signupRepository: SignupRepository
+) {
+    suspend operator fun invoke(email: String, password: String): SignupResult {
+        return try {
+            val user = signupRepository.signUp(email, password)
+            if (user != null) SignupResult.Success(user)
+            else SignupResult.Error("Something went wrong")
+        } catch (e: Exception) {
+            SignupResult.Error(e.message.toString())
+        }
     }
 }

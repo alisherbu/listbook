@@ -22,12 +22,14 @@ import kaa.alisherbu.listbook.common.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponentImpl
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
+import kaa.alisherbu.listbook.common.signup.component.SignupComponentImpl
 import kotlinx.parcelize.Parcelize
 
 class RootComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     private val storeFactory: StoreFactory,
-    private val signInFactory: SignInComponent.Factory
+    private val signInFactory: SignInComponent.Factory,
+    private val signupFactory: SignupComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
@@ -60,7 +62,9 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
 
         ScreenConfig.Signup -> {
-            ChildScreen.Signup(SignupComponent(componentContext, storeFactory, ::onSignupOutput))
+            ChildScreen.Signup(
+                signupFactory(componentContext, ::onSignupOutput)
+            )
         }
 
         ScreenConfig.SignIn -> {
@@ -97,13 +101,13 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onSignupOutput(output: SignupComponent.Output) {
+    private fun onSignupOutput(output: SignupComponentImpl.Output) {
         when (output) {
-            SignupComponent.Output.Back -> {
+            SignupComponentImpl.Output.Back -> {
                 screenNavigation.pop()
             }
 
-            is SignupComponent.Output.Error -> {
+            is SignupComponentImpl.Output.Error -> {
                 dialogNavigation.activate(DialogConfig.Message(output.message))
             }
         }
@@ -142,7 +146,7 @@ class RootComponentImpl @AssistedInject internal constructor(
     internal sealed interface ChildScreen {
         class Auth(val component: AuthComponent) : ChildScreen
 
-        data class Home(val text: String) : ChildScreen
+        class Home(val text: String) : ChildScreen
         class Signup(val component: SignupComponent) : ChildScreen
 
         class SignIn(val component: SignInComponent) : ChildScreen
