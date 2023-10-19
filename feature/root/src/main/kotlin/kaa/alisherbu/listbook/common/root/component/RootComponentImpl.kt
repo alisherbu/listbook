@@ -20,12 +20,14 @@ import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.common.auth.component.AuthComponent
 import kaa.alisherbu.listbook.common.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
+import kaa.alisherbu.listbook.common.sign_in.component.SignInComponentImpl
 import kaa.alisherbu.listbook.common.signup.component.SignupComponent
 import kotlinx.parcelize.Parcelize
 
-class RootComponentImpl @AssistedInject constructor(
+class RootComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
-    private val storeFactory: StoreFactory
+    private val storeFactory: StoreFactory,
+    private val signInFactory: SignInComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
@@ -62,7 +64,9 @@ class RootComponentImpl @AssistedInject constructor(
         }
 
         ScreenConfig.SignIn -> {
-            ChildScreen.SignIn(SignInComponent(componentContext, storeFactory, ::onSignInOutput))
+            ChildScreen.SignIn(
+                signInFactory(componentContext, ::onSignInOutput)
+            )
         }
     }
 
@@ -105,17 +109,17 @@ class RootComponentImpl @AssistedInject constructor(
         }
     }
 
-    private fun onSignInOutput(output: SignInComponent.Output) {
+    private fun onSignInOutput(output: SignInComponentImpl.Output) {
         when (output) {
-            SignInComponent.Output.Back -> {
+            SignInComponentImpl.Output.Back -> {
                 screenNavigation.pop()
             }
 
-            SignInComponent.Output.Home -> {
+            SignInComponentImpl.Output.Home -> {
                 screenNavigation.push(ScreenConfig.Home)
             }
 
-            is SignInComponent.Output.Error -> {
+            is SignInComponentImpl.Output.Error -> {
                 dialogNavigation.activate(DialogConfig.Message(output.message))
             }
         }

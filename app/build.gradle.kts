@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(projects.core.util)
     implementation(projects.feature.root)
+    implementation(projects.feature.signIn)
     implementation(projects.authManager)
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -29,6 +30,6 @@ dependencies {
     implementation(projects.core.resource)
     implementation(projects.authManager)
     implementation(libs.dagger.dagger)
-    implementation(libs.dagger.compiler)
+    kapt(libs.dagger.compiler)
     implementation(libs.google.firebase.auth)
 }
