@@ -34,5 +34,10 @@ gradlePlugin {
             id = "listbook.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+
+        register("androidDagger") {
+            id = "listbook.android.dagger"
+            implementationClass = "AndroidDaggerConventionPlugin"
+        }
     }
 }

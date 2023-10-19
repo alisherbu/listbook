@@ -82,6 +82,7 @@ google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersio
 # Plugins defined by this project
 listbook-android-application = { id = "listbook.android.application", version = "unspecified" }
 listbook-android-library = { id = "listbook.android.library", version = "unspecified" }
+listbook-android-dagger = { id = "listbook.android.dagger", version = "unspecified" }
 
 [bundles]
 arkivanov-mvikotlin = [

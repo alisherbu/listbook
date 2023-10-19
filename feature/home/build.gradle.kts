@@ -2,7 +2,6 @@
 
 plugins {
     alias(libs.plugins.listbook.android.library)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
