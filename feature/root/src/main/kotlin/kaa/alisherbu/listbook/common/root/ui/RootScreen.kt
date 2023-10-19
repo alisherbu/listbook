@@ -12,6 +12,8 @@ import kaa.alisherbu.listbook.common.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.common.dialog.ui.MessageDialogScreen
 import kaa.alisherbu.listbook.common.home.HomeScreen
 import kaa.alisherbu.listbook.common.root.component.RootComponent
+import kaa.alisherbu.listbook.common.root.component.RootComponent.ChildScreen
+import kaa.alisherbu.listbook.common.root.component.RootComponent.ChildDialog
 import kaa.alisherbu.listbook.common.sign_in.ui.SignInScreen
 import kaa.alisherbu.listbook.common.signup.ui.SignupScreen
 
@@ -22,17 +24,17 @@ fun RootContent(component: RootComponent) {
         animation = stackAnimation(fade() + scale()),
     ) {
         when (val child = it.instance) {
-            is RootComponent.ChildScreen.Auth -> AuthScreen(child.component)
-            is RootComponent.ChildScreen.Home -> HomeScreen("screen.text")
-            is RootComponent.ChildScreen.Signup -> SignupScreen(child.component)
-            is RootComponent.ChildScreen.SignIn -> SignInScreen(child.component)
+            is ChildScreen.Auth -> AuthScreen(child.component)
+            is ChildScreen.Home -> HomeScreen("screen.text")
+            is ChildScreen.Signup -> SignupScreen(child.component)
+            is ChildScreen.SignIn -> SignInScreen(child.component)
         }
     }
 
     val dialogSlot by component.dialogSlot.subscribeAsState()
     dialogSlot.child?.instance?.also { childDialog ->
         when (childDialog) {
-            is RootComponent.ChildDialog.Message -> {
+            is ChildDialog.Message -> {
                 MessageDialogScreen(childDialog.component)
             }
         }

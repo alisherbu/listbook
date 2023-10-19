@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kaa.alisherbu.listbook.common.sign_in.component.SignInComponent
+import kaa.alisherbu.listbook.common.sign_in.component.SignInComponentImpl
 import kaa.alisherbu.listbook.common.sign_in.store.SignInState
 import kaa.alisherbu.listbook.core.resource.R
 import kaa.alisherbu.listbook.core.util.theme.Hint

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -31,4 +32,6 @@ dependencies {
 
     implementation(projects.core.util)
     implementation(projects.core.resource)
+    implementation(libs.dagger.dagger)
+    kapt(libs.dagger.compiler)
 }
