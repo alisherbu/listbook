@@ -10,8 +10,8 @@ internal class SignInStoreImpl @Inject constructor(
     executorProvider: Provider<SignInExecutor>,
     reducer: SignInReducer
 ) : SignInStore, Store<Intent, SignInState, Label> by storeFactory.create(
-    name = "SignInStore",
+    name = SignInStore::class.simpleName,
     initialState = SignInState(),
-    executorFactory = { executorProvider.get() },
+    executorFactory = executorProvider::get,
     reducer = reducer
 )

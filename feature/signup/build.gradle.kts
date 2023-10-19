@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -23,7 +24,9 @@ dependencies {
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.coroutines)
-    implementation(libs.koin.core)
+    implementation(libs.google.firebase.auth)
+    implementation(libs.dagger.dagger)
+    kapt(libs.dagger.compiler)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

@@ -56,7 +56,6 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.main)
     implementation(libs.google.firebase.core)
     implementation(libs.google.firebase.auth)
-    implementation(libs.koin.core)
     implementation(projects.core.util)
     implementation(projects.feature.root)
     implementation(projects.feature.signIn)

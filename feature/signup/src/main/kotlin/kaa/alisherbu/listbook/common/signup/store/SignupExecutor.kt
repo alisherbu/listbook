@@ -1,14 +1,11 @@
 package kaa.alisherbu.listbook.common.signup.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kaa.alisherbu.listbook.auth_manager.AuthManager
+import kaa.alisherbu.listbook.common.signup.domain.usecase.SignUpUseCase
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-internal class SignupExecutor :
-    CoroutineExecutor<Intent, Unit, SignupState, Message, Label>(), KoinComponent {
-    private val authManager: AuthManager by inject()
+internal class SignupExecutor constructor(private val signUpUse: SignUpUseCase) :
+    CoroutineExecutor<Intent, Unit, SignupState, Message, Label>() {
     override fun executeIntent(intent: Intent, getState: () -> SignupState) {
         val state = getState()
         when (intent) {
@@ -54,7 +51,7 @@ internal class SignupExecutor :
 
             Intent.CreateAccountClicked -> scope.launch {
                 try {
-                    val user = authManager.createUser(state.email, state.password)
+                    val user = signUpUse(state.email, state.password)
                     if (user != null) publish(Label.AccountSuccessfullyCreated)
                     else publish(Label.ErrorOccurred("Something wrong"))
                 } catch (e: Exception) {
