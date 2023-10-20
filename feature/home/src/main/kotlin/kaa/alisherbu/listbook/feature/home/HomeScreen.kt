@@ -10,16 +10,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import kaa.alisherbu.listbook.feature.home.component.HomeComponent
 
 @Composable
-fun HomeScreen(text: String) {
+fun HomeScreen(component:HomeComponent) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize().background(Color.Magenta)
     ) {
         Text(
-            text = text,
+            text = "Hello",
             fontSize = 30.sp
         )
     }

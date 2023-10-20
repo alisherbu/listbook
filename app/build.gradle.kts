@@ -63,5 +63,6 @@ dependencies {
     implementation(projects.feature.signIn)
     implementation(projects.feature.signup)
     implementation(projects.feature.main)
+    implementation(projects.feature.home)
 
 }

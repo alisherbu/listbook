@@ -9,16 +9,19 @@ import com.arkivanov.decompose.value.Value
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kaa.alisherbu.listbook.feature.home.component.HomeComponent
+import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
 import kotlinx.parcelize.Parcelize
 
 class MainComponentImpl @AssistedInject constructor(
     @Assisted componentContext: ComponentContext,
-    @Assisted private val output: (MainComponent.Output) -> Unit
+    @Assisted private val output: (MainComponent.Output) -> Unit,
+    private val homeFactory: HomeComponent.Factory
 ) : MainComponent, ComponentContext by componentContext {
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
 
-    override val screenStack: Value<ChildStack<*, MainComponent.ChildScreen>> = childStack(
+    override val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
         screenNavigation,
         initialConfiguration = ScreenConfig.Home,
         handleBackButton = false,
@@ -29,8 +32,14 @@ class MainComponentImpl @AssistedInject constructor(
     private fun createChildScreen(
         config: ScreenConfig,
         componentContext: ComponentContext
-    ): MainComponent.ChildScreen {
-        error("")
+    ): ChildScreen {
+        return when (config) {
+            ScreenConfig.Home -> {
+                ChildScreen.Home(homeFactory(componentContext))
+            }
+
+            ScreenConfig.Profile -> TODO()
+        }
     }
 
     private sealed interface ScreenConfig : Parcelable {

@@ -7,6 +7,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
+import kaa.alisherbu.listbook.feature.home.HomeScreen
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
 
@@ -21,7 +22,7 @@ fun MainScreen(component: MainComponent) {
         content = { padding ->
             Children(stack = component.screenStack, modifier = Modifier.padding(padding)) {
                 when (val child = it.instance) {
-                    is ChildScreen.Home -> TODO()
+                    is ChildScreen.Home -> HomeScreen(child.component)
                     is ChildScreen.Profile -> TODO()
                 }
             }
