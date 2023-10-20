@@ -8,6 +8,7 @@ import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
+import kaa.alisherbu.listbook.feature.main.component.MainComponent
 
 interface RootComponent {
 
@@ -16,7 +17,7 @@ interface RootComponent {
 
     sealed interface ChildScreen {
         class Auth(val component: AuthComponent) : ChildScreen
-        class Home(val text: String) : ChildScreen
+        class Main(val component: MainComponent) : ChildScreen
         class Signup(val component: SignupComponent) : ChildScreen
         class SignIn(val component: SignInComponent) : ChildScreen
     }

@@ -18,6 +18,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
+import kaa.alisherbu.listbook.feature.main.component.MainComponent
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
@@ -28,7 +29,8 @@ class RootComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     private val authFactory: AuthComponent.Factory,
     private val signInFactory: SignInComponent.Factory,
-    private val signupFactory: SignupComponent.Factory
+    private val signupFactory: SignupComponent.Factory,
+    private val mainFactory: MainComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
@@ -56,8 +58,8 @@ class RootComponentImpl @AssistedInject internal constructor(
             ChildScreen.Auth(authFactory(componentContext, ::onAuthOutput))
         }
 
-        ScreenConfig.Home -> {
-            ChildScreen.Home("")
+        ScreenConfig.Main -> {
+            ChildScreen.Main(mainFactory(componentContext, ::onMainOutput))
         }
 
         ScreenConfig.Signup -> {
@@ -115,7 +117,7 @@ class RootComponentImpl @AssistedInject internal constructor(
             }
 
             SignInComponent.Output.Home -> {
-                screenNavigation.push(ScreenConfig.Home)
+                screenNavigation.push(ScreenConfig.Main)
             }
 
             is SignInComponent.Output.Error -> {
@@ -124,12 +126,16 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
+    private fun onMainOutput(output: MainComponent.Output) {
+
+    }
+
     private sealed interface ScreenConfig : Parcelable {
         @Parcelize
         object Auth : ScreenConfig
 
         @Parcelize
-        object Home : ScreenConfig
+        object Main : ScreenConfig
 
         @Parcelize
         object Signup : ScreenConfig
@@ -137,8 +143,6 @@ class RootComponentImpl @AssistedInject internal constructor(
         @Parcelize
         object SignIn : ScreenConfig
     }
-
-
 
 
     private sealed interface DialogConfig : Parcelable {

@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MainModule {
+class AppModule {
     @Provides
     fun provideStoreFactory(): StoreFactory {
         return LoggingStoreFactory(DefaultStoreFactory())

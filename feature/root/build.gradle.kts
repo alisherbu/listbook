@@ -24,7 +24,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     implementation(projects.feature.auth)
-    implementation(projects.feature.home)
+    implementation(projects.feature.main)
     implementation(projects.feature.signup)
     implementation(projects.feature.signIn)
     implementation(projects.feature.dialog)

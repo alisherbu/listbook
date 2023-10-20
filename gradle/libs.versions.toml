@@ -20,7 +20,8 @@ kspVersion = "1.8.21-1.0.11"
 
 #androidx.compose
 composeFoundation = "1.4.3"
-composeMaterial3 = "1.1.1"
+composeMaterial = "1.5.4"
+composeMaterial3 = "1.1.2"
 composeActivity = "1.5.1"
 
 #firebase
@@ -30,6 +31,11 @@ firebaseCore = "21.1.1"
 #koin
 koinCore = "3.5.0"
 koinKsp = "1.2.1"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 [libraries]
 
@@ -45,6 +51,7 @@ arkivanov-decompose-extensionsComposeJetpack = { module = "com.arkivanov.decompo
 
 #jetpackcompose
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeFoundation" }
+androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "composeMaterial" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
@@ -67,6 +74,11 @@ androidx-lifecycle-runtimeKtx = { module = "androidx.lifecycle:lifecycle-runtime
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]

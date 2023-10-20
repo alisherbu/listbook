@@ -10,7 +10,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackA
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import kaa.alisherbu.listbook.feature.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.feature.dialog.ui.MessageDialogScreen
-import kaa.alisherbu.listbook.feature.home.HomeScreen
+import kaa.alisherbu.listbook.feature.main.ui.MainScreen
 import kaa.alisherbu.listbook.feature.root.component.RootComponent
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildDialog
@@ -25,7 +25,7 @@ fun RootContent(component: RootComponent) {
     ) {
         when (val child = it.instance) {
             is ChildScreen.Auth -> AuthScreen(child.component)
-            is ChildScreen.Home -> HomeScreen("screen.text")
+            is ChildScreen.Main -> MainScreen(child.component)
             is ChildScreen.Signup -> SignupScreen(child.component)
             is ChildScreen.SignIn -> SignInScreen(child.component)
         }

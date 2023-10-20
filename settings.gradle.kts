@@ -1,10 +1,13 @@
 @file:Suppress("UnstableApiUsage")
 
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":core:util")
 include(":core:resource")
 include(":feature:root")
+include(":feature:main")
 include(":feature:auth")
 include(":feature:home")
 include(":feature:signup")
