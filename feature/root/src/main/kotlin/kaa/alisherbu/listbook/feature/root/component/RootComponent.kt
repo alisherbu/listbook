@@ -20,6 +20,7 @@ interface RootComponent {
         class Main(val component: MainComponent) : ChildScreen
         class Signup(val component: SignupComponent) : ChildScreen
         class SignIn(val component: SignInComponent) : ChildScreen
+        object Undefined : ChildScreen
     }
 
     sealed interface ChildDialog {

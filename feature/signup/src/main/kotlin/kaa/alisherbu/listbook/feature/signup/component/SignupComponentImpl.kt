@@ -33,9 +33,7 @@ class SignupComponentImpl @AssistedInject internal constructor(
     private val storeProvider: Provider<SignupStore>
 ) : SignupComponent, ComponentContext by componentContext {
 
-    private val store = instanceKeeper.getStore {
-        storeProvider.get()
-    }
+    private val store = instanceKeeper.getStore(storeProvider::get)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val state: StateFlow<SignupState> = store.stateFlow
@@ -116,7 +114,6 @@ class SignupComponentImpl @AssistedInject internal constructor(
             val message: String,
         ) : DialogConfig
     }
-
 
 
     @AssistedFactory

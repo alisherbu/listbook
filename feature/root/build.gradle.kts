@@ -20,8 +20,10 @@ dependencies {
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
+    implementation(libs.arkivanov.mvikotlin.coroutines)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.google.firebase.auth)
 
     implementation(projects.feature.auth)
     implementation(projects.feature.main)

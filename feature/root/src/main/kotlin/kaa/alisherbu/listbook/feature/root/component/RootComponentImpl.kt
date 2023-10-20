@@ -13,6 +13,8 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -23,24 +25,44 @@ import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildDialog
+import kaa.alisherbu.listbook.feature.root.store.Label
+import kaa.alisherbu.listbook.feature.root.store.RootStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
+import javax.inject.Provider
 
 class RootComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     private val authFactory: AuthComponent.Factory,
     private val signInFactory: SignInComponent.Factory,
     private val signupFactory: SignupComponent.Factory,
-    private val mainFactory: MainComponent.Factory
+    private val mainFactory: MainComponent.Factory,
+    private val storeProvider: Provider<RootStore>
 ) : RootComponent, ComponentContext by componentContext {
+
+    private val store = instanceKeeper.getStore(storeProvider::get)
+    private val mainScope = MainScope()
+
+    init {
+        store.labels
+            .onEach(::handleLabel)
+            .launchIn(mainScope)
+    }
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
     private val dialogNavigation = SlotNavigation<DialogConfig>()
 
     override val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
         source = screenNavigation,
-        initialConfiguration = ScreenConfig.Auth,
+        initialConfiguration = ScreenConfig.Undefined,
         handleBackButton = true,
-        childFactory = ::createChildScreen
+        childFactory = ::createChildScreen,
     )
 
     override val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
@@ -48,6 +70,13 @@ class RootComponentImpl @AssistedInject internal constructor(
         handleBackButton = true,
         childFactory = ::createChildDialog
     )
+
+    private fun handleLabel(label: Label) {
+        when (label) {
+            Label.UserAlreadySigned -> screenNavigation.push(ScreenConfig.Main)
+            Label.UserNotSigned -> screenNavigation.push(ScreenConfig.Auth)
+        }
+    }
 
 
     private fun createChildScreen(
@@ -68,6 +97,10 @@ class RootComponentImpl @AssistedInject internal constructor(
 
         ScreenConfig.SignIn -> {
             ChildScreen.SignIn(signInFactory(componentContext, ::onSignInOutput))
+        }
+
+        ScreenConfig.Undefined -> {
+            ChildScreen.Undefined
         }
     }
 
@@ -142,6 +175,9 @@ class RootComponentImpl @AssistedInject internal constructor(
 
         @Parcelize
         object SignIn : ScreenConfig
+
+        @Parcelize
+        object Undefined : ScreenConfig
     }
 
 

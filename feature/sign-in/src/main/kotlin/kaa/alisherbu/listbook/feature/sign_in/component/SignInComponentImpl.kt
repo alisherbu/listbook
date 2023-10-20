@@ -24,7 +24,7 @@ class SignInComponentImpl @AssistedInject internal constructor(
     @Assisted private val output: (Output) -> Unit,
     private val storeProvider: Provider<SignInStore>
 ) : SignInComponent, ComponentContext by componentContext {
-    private val store = instanceKeeper.getStore { storeProvider.get() }
+    private val store = instanceKeeper.getStore(storeProvider::get)
 
     init {
         store.labels

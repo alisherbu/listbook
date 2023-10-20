@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.arkivanov.decompose.defaultComponentContext
 import kaa.alisherbu.listbook.di.DaggerAppComponent
-import kaa.alisherbu.listbook.feature.root.ui.RootContent
+import kaa.alisherbu.listbook.feature.root.ui.RootScreen
 import kaa.alisherbu.listbook.ui.theme.ListbookTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         val component = DaggerAppComponent.create().rootComponentFactory(defaultComponentContext())
         setContent {
             ListbookTheme {
-                RootContent(component)
+                RootScreen(component)
             }
         }
     }
