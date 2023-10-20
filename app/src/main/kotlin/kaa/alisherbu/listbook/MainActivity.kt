@@ -5,9 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.arkivanov.decompose.defaultComponentContext
-import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
-import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import kaa.alisherbu.listbook.common.root.ui.RootContent
+import kaa.alisherbu.listbook.feature.root.ui.RootContent
 import kaa.alisherbu.listbook.di.DaggerMainComponent
 import kaa.alisherbu.listbook.ui.theme.ListbookTheme
 

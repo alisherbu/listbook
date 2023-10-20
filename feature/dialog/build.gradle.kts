@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.common.dialog"
+    namespace = "kaa.alisherbu.listbook.feature.dialog"
     buildFeatures {
         compose = true
     }

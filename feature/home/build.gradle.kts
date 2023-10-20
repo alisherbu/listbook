@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.common.home"
+    namespace = "kaa.alisherbu.listbook.feature.home"
     buildFeatures {
         compose = true
     }

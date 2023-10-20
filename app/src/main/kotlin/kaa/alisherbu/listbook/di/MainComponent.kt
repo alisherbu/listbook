@@ -1,8 +1,8 @@
 package kaa.alisherbu.listbook.di
 
 import dagger.Component
-import kaa.alisherbu.listbook.common.root.component.RootComponentImpl
-import kaa.alisherbu.listbook.common.root.di.RootModule
+import kaa.alisherbu.listbook.feature.root.component.RootComponentImpl
+import kaa.alisherbu.listbook.feature.root.di.RootModule
 import javax.inject.Singleton
 
 @Singleton

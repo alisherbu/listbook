@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.common.sign_in"
+    namespace = "kaa.alisherbu.listbook.feature.sign_in"
     buildFeatures {
         compose = true
     }
