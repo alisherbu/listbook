@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.main)
     implementation(libs.google.firebase.core)
     implementation(libs.google.firebase.auth)
+    implementation(libs.google.firebase.firestore)
 
     implementation(projects.core.util)
     implementation(projects.core.shared)

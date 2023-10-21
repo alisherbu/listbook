@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent
 import kaa.alisherbu.listbook.feature.home.component.HomeComponentImpl
+import kaa.alisherbu.listbook.feature.home.data.repository.AudioBookRepositoryImpl
+import kaa.alisherbu.listbook.feature.home.domain.repository.AudioBooksRepository
 import kaa.alisherbu.listbook.feature.home.store.HomeStore
 import kaa.alisherbu.listbook.feature.home.store.HomeStoreImpl
 
@@ -15,4 +17,7 @@ internal interface HomeModuleBinds {
 
     @Binds
     fun homeStore(impl: HomeStoreImpl): HomeStore
+
+    @Binds
+    fun audioBooksRepository(impl: AudioBookRepositoryImpl): AudioBooksRepository
 }

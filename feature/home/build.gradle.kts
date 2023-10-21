@@ -22,4 +22,7 @@ dependencies {
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
     implementation(libs.arkivanov.mvikotlin.mvikotlin)
     implementation(libs.arkivanov.mvikotlin.coroutines)
+    implementation(libs.google.firebase.firestore)
+
+    implementation(projects.core.shared)
 }

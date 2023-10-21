@@ -27,6 +27,7 @@ composeActivity = "1.5.1"
 #firebase
 firebaseAuth = "22.0.0"
 firebaseCore = "21.1.1"
+firebaseFirestore = "24.9.0"
 
 #koin
 koinCore = "3.5.0"
@@ -61,6 +62,7 @@ dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuth" }
 google-firebase-core = { module = "com.google.firebase:firebase-core", version.ref = "firebaseCore" }
+google-firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore" }
 
 #koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }

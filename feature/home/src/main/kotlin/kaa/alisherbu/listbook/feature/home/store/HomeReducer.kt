@@ -5,6 +5,10 @@ import javax.inject.Inject
 
 internal class HomeReducer @Inject constructor() : Reducer<HomeState, Message> {
     override fun HomeState.reduce(msg: Message): HomeState {
-        return this
+        return when (msg) {
+            is Message.UpdateAudioBooks -> {
+                copy(audioBooks = msg.audioBooks)
+            }
+        }
     }
 }
