@@ -6,4 +6,7 @@ import javax.inject.Inject
 internal class HomeExecutor @Inject constructor(
 
 ) : CoroutineExecutor<Intent, Action, HomeState, Message, Label>() {
+    override fun executeAction(action: Action, getState: () -> HomeState) {
+
+    }
 }
