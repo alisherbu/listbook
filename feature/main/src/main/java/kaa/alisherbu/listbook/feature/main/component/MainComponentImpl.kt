@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import dagger.assisted.Assisted
@@ -11,12 +12,14 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
+import kaa.alisherbu.listbook.feature.profile.component.ProfileComponent
 import kotlinx.parcelize.Parcelize
 
 class MainComponentImpl @AssistedInject constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (MainComponent.Output) -> Unit,
-    private val homeFactory: HomeComponent.Factory
+    private val homeFactory: HomeComponent.Factory,
+    private val profileFactory: ProfileComponent.Factory
 ) : MainComponent, ComponentContext by componentContext {
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
@@ -38,8 +41,18 @@ class MainComponentImpl @AssistedInject constructor(
                 ChildScreen.Home(homeFactory(componentContext))
             }
 
-            ScreenConfig.Profile -> TODO()
+            ScreenConfig.Profile -> {
+                ChildScreen.Profile(profileFactory(componentContext))
+            }
         }
+    }
+
+    override fun onHomeClicked() {
+        screenNavigation.bringToFront(ScreenConfig.Home)
+    }
+
+    override fun onProfileClicked() {
+        screenNavigation.bringToFront(ScreenConfig.Profile)
     }
 
     private sealed interface ScreenConfig : Parcelable {

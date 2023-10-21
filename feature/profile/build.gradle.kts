@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.feature.main"
+    namespace = "kaa.alisherbu.listbook.feature.profile"
     buildFeatures {
         compose = true
     }
@@ -24,5 +24,4 @@ dependencies {
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
 
     implementation(projects.feature.home)
-    implementation(projects.feature.profile)
 }
