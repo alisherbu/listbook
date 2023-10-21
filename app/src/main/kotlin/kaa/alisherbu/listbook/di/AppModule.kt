@@ -8,6 +8,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
+import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
 
 @Module
 class AppModule {
@@ -19,5 +21,10 @@ class AppModule {
     @Provides
     fun provideFirebaseAuth(): FirebaseAuth {
         return Firebase.auth
+    }
+
+    @Provides
+    fun provideAppDispatchers(): AppDispatchers {
+        return DefaultAppDispatchers()
     }
 }

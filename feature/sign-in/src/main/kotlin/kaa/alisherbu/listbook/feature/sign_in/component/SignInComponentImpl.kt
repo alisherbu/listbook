@@ -1,19 +1,22 @@
 package kaa.alisherbu.listbook.feature.sign_in.component
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.feature.sign_in.store.Intent
 import kaa.alisherbu.listbook.feature.sign_in.store.Label
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInState
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInStore
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent.Output
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,14 +25,16 @@ import javax.inject.Provider
 class SignInComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
-    private val storeProvider: Provider<SignInStore>
+    private val storeProvider: Provider<SignInStore>,
+    dispatchers: AppDispatchers
 ) : SignInComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore(storeProvider::get)
+    private val mainScope = CoroutineScope(dispatchers.main)
 
     init {
         store.labels
             .onEach(::handleLabel)
-            .launchIn(MainScope())
+            .launchIn(mainScope)
     }
 
     private fun handleLabel(label: Label) {
@@ -42,6 +47,7 @@ class SignInComponentImpl @AssistedInject internal constructor(
                 output(Output.Home)
             }
         }
+        lifecycle.doOnDestroy(mainScope::cancel)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

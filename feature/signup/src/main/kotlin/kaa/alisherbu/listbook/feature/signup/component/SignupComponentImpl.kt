@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
@@ -14,13 +15,16 @@ import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.feature.signup.store.Intent
 import kaa.alisherbu.listbook.feature.signup.store.Label
 import kaa.alisherbu.listbook.feature.signup.store.SignupState
 import kaa.alisherbu.listbook.feature.signup.store.SignupStore
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponent.Output
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,10 +34,12 @@ import javax.inject.Provider
 class SignupComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
-    private val storeProvider: Provider<SignupStore>
+    private val storeProvider: Provider<SignupStore>,
+    dispatchers: AppDispatchers
 ) : SignupComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore(storeProvider::get)
+    private val mainScope = CoroutineScope(dispatchers.main)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val state: StateFlow<SignupState> = store.stateFlow
@@ -47,7 +53,8 @@ class SignupComponentImpl @AssistedInject internal constructor(
     init {
         store.labels
             .onEach(::handleLabel)
-            .launchIn(MainScope())
+            .launchIn(mainScope)
+        lifecycle.doOnDestroy(mainScope::cancel)
     }
 
     private fun handleLabel(label: Label) {

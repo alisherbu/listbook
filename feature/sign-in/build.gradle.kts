@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.arkivanov.mvikotlin.coroutines)
 
     implementation(projects.core.util)
+    implementation(projects.core.shared)
     implementation(projects.core.resource)
     implementation(libs.google.firebase.auth)
 }
