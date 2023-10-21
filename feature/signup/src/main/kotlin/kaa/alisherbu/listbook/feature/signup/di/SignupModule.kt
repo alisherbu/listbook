@@ -13,9 +13,4 @@ class SignupModule {
     internal fun provideSignupExecutor(signUpUseCase: SignUpUseCase): SignupExecutor {
         return SignupExecutor(signUpUseCase)
     }
-
-    @Provides
-    internal fun provideSignupReducer(): SignupReducer {
-        return SignupReducer()
-    }
 }

@@ -12,9 +12,4 @@ class SignInModule {
     internal fun provideSignInExecutor(signInUseCase: SignInUseCase): SignInExecutor {
         return SignInExecutor(signInUseCase)
     }
-
-    @Provides
-    internal fun provideSignInReducer(): SignInReducer {
-        return SignInReducer()
-    }
 }

@@ -20,4 +20,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)
+    implementation(libs.arkivanov.mvikotlin.mvikotlin)
+    implementation(libs.arkivanov.mvikotlin.coroutines)
 }
