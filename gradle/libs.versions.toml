@@ -38,6 +38,9 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.10.0"
 
+#media
+exoplayer = "2.19.1"
+
 [libraries]
 
 #mvikotlin
@@ -68,6 +71,9 @@ google-firebase-firestore = { module = "com.google.firebase:firebase-firestore-k
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinKsp" }
 koin-kspCompiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp" }
+
+#media
+google-exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 
 #libraries
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidXCoreKtx" }

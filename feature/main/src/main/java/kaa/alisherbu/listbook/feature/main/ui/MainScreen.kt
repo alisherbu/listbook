@@ -7,6 +7,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -31,6 +32,9 @@ fun MainScreen(component: MainComponent) {
                     onClick = component::onHomeClicked,
                     icon = {
                         Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+                    },
+                    label = {
+                        Text(text = "Home")
                     }
                 )
                 BottomNavigationItem(
@@ -38,6 +42,9 @@ fun MainScreen(component: MainComponent) {
                     onClick = component::onProfileClicked,
                     icon = {
                         Icon(imageVector = Icons.Default.Person, contentDescription = "Profile")
+                    },
+                    label = {
+                        Text(text = "Profile")
                     }
                 )
             }
