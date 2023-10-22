@@ -1,3 +1,11 @@
 package kaa.alisherbu.listbook.feature.home.data.model
 
-internal class AudioBookResponse(val id: String, val name: String)
+import com.google.firebase.firestore.PropertyName
+
+internal class AudioBookResponse(
+    @PropertyName("id")
+    val id: String? = null,
+    @PropertyName("name")
+    val name: String? = null
+) {
+}

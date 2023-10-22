@@ -17,10 +17,7 @@ internal class AudioBookRepositoryImpl @Inject constructor(
             val subscription = firebaseFirestore.collection("audio-books")
                 .addSnapshotListener { snapshot, _ ->
                     snapshot?.documents?.mapNotNull {
-                        AudioBookResponse(
-                            id = it["id"].toString(),
-                            name = it["name"].toString()
-                        )
+                        it.toObject(AudioBookResponse::class.java)
                     }?.also(::trySend)
                 }
             awaitClose(subscription::remove)

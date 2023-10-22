@@ -15,6 +15,6 @@ internal class LoadAudioBooksUseCase @Inject constructor(
     }
 
     private fun toAudioBookList(books: List<AudioBookResponse>): List<AudioBook> {
-        return books.map { AudioBook(it.id, it.name) }
+        return books.map { AudioBook(it.id.toString(), it.name.toString()) }
     }
 }
