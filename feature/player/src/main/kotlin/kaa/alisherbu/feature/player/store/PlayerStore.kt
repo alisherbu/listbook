@@ -5,11 +5,15 @@ import kaa.alisherbu.listbook.core.shared.model.AudioBook
 
 internal sealed interface Intent {
     class Initialize(val audioBook: AudioBook) : Intent
+    object SkipToPreviousAudio : Intent
+    object SkipToNextAudio : Intent
+    object PlayOrPause : Intent
 }
 
 internal sealed interface Action
 internal sealed interface Message {
     class SetAudioBook(val title: String) : Message
+    class PlayOrPause(val isPlaying: Boolean) : Message
 }
 
 internal sealed interface Label

@@ -32,6 +32,27 @@ class PlayerComponentImpl @AssistedInject internal constructor(
         output(Output.Back)
     }
 
+    override fun onPreviousAudio() {
+        store.accept(Intent.SkipToPreviousAudio)
+    }
+
+    override fun onPlayPauseAudio() {
+        store.accept(Intent.PlayOrPause)
+    }
+
+    override fun onNextAudio() {
+        store.accept(Intent.SkipToNextAudio)
+    }
+
+    override fun onUserPositionChange(value: Long) {
+
+    }
+
+    override fun onUserPositionChangeFinished() {
+
+    }
+
+
     @AssistedFactory
     interface Factory : PlayerComponent.Factory {
         override fun invoke(

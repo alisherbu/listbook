@@ -4,18 +4,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import kaa.alisherbu.feature.player.component.PlayerComponent
@@ -29,9 +29,9 @@ fun PlayerScreen(component: PlayerComponent) {
     val state by component.state.collectAsState()
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
-                    Text(text = state.title)
+                    Text(text = "Now Playing")
                 },
                 navigationIcon = {
                     IconButton(onClick = component::onBackClicked) {
@@ -44,17 +44,39 @@ fun PlayerScreen(component: PlayerComponent) {
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            val (playerController) = createRefs()
+            val (playerController, playerSlider, bookName) = createRefs()
 
-            PlayerController(modifier = Modifier.constrainAs(playerController) {
-                width = Dimension.matchParent
+            Text(text = state.title, modifier = Modifier.constrainAs(bookName) {
+                linkTo(start = parent.start, end = parent.end)
+                bottom.linkTo(playerSlider.top, margin = 16.dp)
             })
-            createVerticalChain(playerController)
+            PlayerSlider(
+                position = state.position,
+                positionText = state.positionText,
+                userPosition = state.userPosition,
+                userPositionText = state.userPositionText,
+                duration = state.duration,
+                durationText = state.durationText,
+                onUserPositionChange = component::onUserPositionChange,
+                onUserPositionChangeFinished = component::onUserPositionChangeFinished,
+                modifier = Modifier.constrainAs(playerSlider) {
+                    bottom.linkTo(playerController.top, margin = 16.dp)
+                }
+            )
+            PlayerController(
+                isPlaying = state.isPlaying,
+                onPrevious = component::onPreviousAudio,
+                onPlayPause = component::onPlayPauseAudio,
+                onNext = component::onNextAudio,
+                modifier = Modifier.constrainAs(playerController) {
+                    width = Dimension.matchParent
+                    bottom.linkTo(parent.bottom, margin = 16.dp)
+                })
         }
     }
 }
 
-@Preview(device = Devices.NEXUS_5)
+@Preview
 @Composable
 private fun PlayerScreenPreview() {
     PlayerScreen(PreviewPlayerComponent())
@@ -63,5 +85,10 @@ private fun PlayerScreenPreview() {
 private class PreviewPlayerComponent : PlayerComponent {
     override val state: StateFlow<PlayerState> = MutableStateFlow(PlayerState())
     override fun onBackClicked() = Unit
+    override fun onPreviousAudio() = Unit
+    override fun onPlayPauseAudio() = Unit
+    override fun onNextAudio() = Unit
+    override fun onUserPositionChange(value: Long) = Unit
+    override fun onUserPositionChangeFinished() = Unit
 
 }

@@ -6,6 +6,8 @@ internal class AudioBookResponse(
     @PropertyName("id")
     val id: String? = null,
     @PropertyName("name")
-    val name: String? = null
+    val name: String? = null,
+    @PropertyName("audioUrl")
+    val audioUrl: String? = null
 ) {
 }

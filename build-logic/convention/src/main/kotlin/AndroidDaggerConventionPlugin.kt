@@ -1,4 +1,6 @@
-import kaa.alisherbu.listbook.libs
+import kaa.alisherbu.listbook.implementation
+import kaa.alisherbu.listbook.kapt
+import kaa.alisherbu.listbook.library
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -11,8 +13,8 @@ class AndroidDaggerConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                "implementation"(libs.findLibrary("dagger.dagger").get())
-                "kapt"(libs.findLibrary("dagger.compiler").get())
+                implementation(library("dagger-dagger"))
+                kapt(library("dagger-compiler"))
             }
         }
     }

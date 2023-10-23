@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.google.firebase.core)
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
+    implementation(libs.exoplayer)
 
     implementation(projects.core.util)
     implementation(projects.core.shared)

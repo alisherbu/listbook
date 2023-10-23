@@ -10,6 +10,12 @@ interface PlayerComponent {
 
     fun onBackClicked()
 
+    fun onPreviousAudio()
+    fun onPlayPauseAudio()
+    fun onNextAudio()
+    fun onUserPositionChange(value: Long)
+    fun onUserPositionChangeFinished()
+
     sealed interface Output {
         object Back : Output
     }

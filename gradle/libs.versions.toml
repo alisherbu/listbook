@@ -38,7 +38,7 @@ appcompat = "1.6.1"
 material = "1.10.0"
 
 #media
-exoplayer = "2.19.1"
+exoplayer = "1.1.1"
 
 [libraries]
 
@@ -76,7 +76,7 @@ koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "
 koin-kspCompiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp" }
 
 #media
-google-exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
+exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "exoplayer" }
 
 #libraries
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidXCoreKtx" }
@@ -108,6 +108,7 @@ listbook-android-application-compose = { id = "listbook.android.application.comp
 listbook-android-library = { id = "listbook.android.library", version = "unspecified" }
 listbook-android-library-compose = { id = "listbook.android.library.compose", version = "unspecified" }
 listbook-android-dagger = { id = "listbook.android.dagger", version = "unspecified" }
+listbook-android-feature = { id = "listbook.android.feature", version = "unspecified" }
 
 [bundles]
 arkivanov-mvikotlin = [

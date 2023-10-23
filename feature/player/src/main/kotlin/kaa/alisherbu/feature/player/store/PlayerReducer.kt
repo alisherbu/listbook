@@ -9,6 +9,10 @@ internal class PlayerReducer @Inject constructor() : Reducer<PlayerState, Messag
             is Message.SetAudioBook -> {
                 copy(title = msg.title)
             }
+
+            is Message.PlayOrPause -> {
+                copy(isPlaying = msg.isPlaying)
+            }
         }
     }
 }

@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class AudioBook(val id: String, val name: String) : Parcelable
+data class AudioBook(val id: String, val name: String, val audioUrl: String) : Parcelable

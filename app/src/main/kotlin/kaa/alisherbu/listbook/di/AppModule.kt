@@ -1,5 +1,7 @@
 package kaa.alisherbu.listbook.di
 
+import android.content.Context
+import androidx.media3.exoplayer.ExoPlayer
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
@@ -14,7 +16,7 @@ import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
 
 @Module
-class AppModule {
+class AppModule(private val applicationContext: Context) {
     @Provides
     fun provideStoreFactory(): StoreFactory {
         return LoggingStoreFactory(DefaultStoreFactory())
@@ -33,5 +35,15 @@ class AppModule {
     @Provides
     fun provideAppDispatchers(): AppDispatchers {
         return DefaultAppDispatchers()
+    }
+
+    @Provides
+    fun provideApplicationContext(): Context {
+        return applicationContext
+    }
+
+    @Provides
+    fun provideExoPlayer(context: Context): ExoPlayer {
+        return ExoPlayer.Builder(context).build()
     }
 }
