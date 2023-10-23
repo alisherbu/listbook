@@ -2,16 +2,11 @@
 
 plugins {
     alias(libs.plugins.listbook.android.library)
+    alias(libs.plugins.listbook.android.library.compose)
 }
 
 android {
     namespace = "kaa.alisherbu.listbook.feature.dialog"
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
-    }
 }
 dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)

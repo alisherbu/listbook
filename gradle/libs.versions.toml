@@ -19,10 +19,13 @@ googleServices = "4.3.15"
 kspVersion = "1.8.21-1.0.11"
 
 #androidx.compose
+composeBom = "2023.10.01"
 composeFoundation = "1.4.3"
 composeMaterial = "1.5.4"
 composeMaterial3 = "1.1.2"
 composeActivity = "1.5.1"
+composePreview = "1.5.4"
+composeUI = "1.5.4"
 
 #firebase
 firebaseAuth = "22.0.0"
@@ -54,9 +57,12 @@ arkivanov-decompose-decompose = { module = "com.arkivanov.decompose:decompose", 
 arkivanov-decompose-extensionsComposeJetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
 
 #jetpackcompose
-androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeFoundation" }
-androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "composeMaterial" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-compose-material = { module = "androidx.compose.material:material" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-toolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 
@@ -101,7 +107,9 @@ google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersio
 
 # Plugins defined by this project
 listbook-android-application = { id = "listbook.android.application", version = "unspecified" }
+listbook-android-application-compose = { id = "listbook.android.application.compose", version = "unspecified" }
 listbook-android-library = { id = "listbook.android.library", version = "unspecified" }
+listbook-android-library-compose = { id = "listbook.android.library.compose", version = "unspecified" }
 listbook-android-dagger = { id = "listbook.android.dagger", version = "unspecified" }
 
 [bundles]

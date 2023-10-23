@@ -2,8 +2,8 @@
 
 plugins {
     alias(libs.plugins.listbook.android.application)
+    alias(libs.plugins.listbook.android.application.compose)
     alias(libs.plugins.listbook.android.dagger)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.services)
 }
@@ -28,12 +28,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
-    }
     packaging {
         resources {
             excludes += setOf("/META-INF/{AL2.0,LGPL2.1}")
@@ -47,7 +41,6 @@ dependencies {
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycle.runtimeKtx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.arkivanov.decompose.extensionsComposeJetpack)

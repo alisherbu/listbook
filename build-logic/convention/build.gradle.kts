@@ -29,10 +29,19 @@ gradlePlugin {
             id = "listbook.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidApplicationCompose") {
+            id = "listbook.android.application.compose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
 
         register("androidLibrary") {
             id = "listbook.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
+        }
+
+        register("androidLibraryCompose") {
+            id = "listbook.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
 
         register("androidDagger") {

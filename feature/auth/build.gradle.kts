@@ -2,17 +2,12 @@
 
 plugins {
     alias(libs.plugins.listbook.android.library)
+    alias(libs.plugins.listbook.android.library.compose)
     alias(libs.plugins.listbook.android.dagger)
 }
 
 android {
     namespace = "kaa.alisherbu.listbook.feature.auth"
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
-    }
 }
 dependencies {
     implementation(libs.arkivanov.mvikotlin.mvikotlin)

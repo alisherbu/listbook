@@ -2,6 +2,7 @@
 
 plugins {
     alias(libs.plugins.listbook.android.library)
+    alias(libs.plugins.listbook.android.library.compose)
 }
 
 android {
