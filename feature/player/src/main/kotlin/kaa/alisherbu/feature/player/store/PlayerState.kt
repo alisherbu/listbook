@@ -1,4 +1,5 @@
 package kaa.alisherbu.feature.player.store
 
-class PlayerState {
-}
+data class PlayerState(
+    val title: String = ""
+)

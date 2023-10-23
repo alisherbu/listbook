@@ -22,6 +22,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.feature.player.component.PlayerComponent
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
@@ -91,9 +92,9 @@ class RootComponentImpl @AssistedInject internal constructor(
 
 
     private fun createChildScreen(
-        configuration: ScreenConfig,
+        config: ScreenConfig,
         componentContext: ComponentContext,
-    ): ChildScreen = when (configuration) {
+    ): ChildScreen = when (config) {
         ScreenConfig.Auth -> {
             ChildScreen.Auth(authFactory(componentContext, ::onAuthOutput))
         }
@@ -110,8 +111,8 @@ class RootComponentImpl @AssistedInject internal constructor(
             ChildScreen.SignIn(signInFactory(componentContext, ::onSignInOutput))
         }
 
-        ScreenConfig.Player -> {
-            ChildScreen.Player(playerFactory(componentContext))
+        is ScreenConfig.Player -> {
+            ChildScreen.Player(playerFactory(componentContext, ::onPlayerOutput, config.audioBook))
         }
 
         ScreenConfig.Undefined -> {
@@ -135,48 +136,50 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onAuthOutput(output: AuthComponent.Output) {
-        when (output) {
-            AuthComponent.Output.Signup -> {
-                screenNavigation.push(ScreenConfig.Signup)
-            }
+    private fun onAuthOutput(output: AuthComponent.Output) = when (output) {
+        AuthComponent.Output.Signup -> {
+            screenNavigation.push(ScreenConfig.Signup)
+        }
 
-            AuthComponent.Output.SignIn -> {
-                screenNavigation.push(ScreenConfig.SignIn)
-            }
+        AuthComponent.Output.SignIn -> {
+            screenNavigation.push(ScreenConfig.SignIn)
         }
     }
 
-    private fun onSignupOutput(output: SignupComponent.Output) {
-        when (output) {
-            SignupComponent.Output.Back -> {
-                screenNavigation.pop()
-            }
+    private fun onSignupOutput(output: SignupComponent.Output) = when (output) {
+        SignupComponent.Output.Back -> {
+            screenNavigation.pop()
+        }
 
-            is SignupComponent.Output.Error -> {
-                dialogNavigation.activate(DialogConfig.Message(output.message))
-            }
+        is SignupComponent.Output.Error -> {
+            dialogNavigation.activate(DialogConfig.Message(output.message))
         }
     }
 
-    private fun onSignInOutput(output: SignInComponent.Output) {
-        when (output) {
-            SignInComponent.Output.Back -> {
-                screenNavigation.pop()
-            }
+    private fun onSignInOutput(output: SignInComponent.Output) = when (output) {
+        SignInComponent.Output.Back -> {
+            screenNavigation.pop()
+        }
 
-            SignInComponent.Output.Home -> {
-                screenNavigation.push(ScreenConfig.Main)
-            }
+        SignInComponent.Output.Home -> {
+            screenNavigation.push(ScreenConfig.Main)
+        }
 
-            is SignInComponent.Output.Error -> {
-                dialogNavigation.activate(DialogConfig.Message(output.message))
-            }
+        is SignInComponent.Output.Error -> {
+            dialogNavigation.activate(DialogConfig.Message(output.message))
         }
     }
 
-    private fun onMainOutput(output: MainComponent.Output) {
+    private fun onMainOutput(output: MainComponent.Output) = when (output) {
+        is MainComponent.Output.OpenPlayer -> {
+            screenNavigation.push(ScreenConfig.Player(output.audioBook))
+        }
+    }
 
+    private fun onPlayerOutput(output: PlayerComponent.Output) {
+        when (output) {
+            PlayerComponent.Output.Back -> screenNavigation.pop()
+        }
     }
 
     private sealed interface ScreenConfig : Parcelable {
@@ -196,7 +199,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         object Undefined : ScreenConfig
 
         @Parcelize
-        object Player : ScreenConfig
+        class Player(val audioBook: AudioBook) : ScreenConfig
     }
 
 

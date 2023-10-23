@@ -12,12 +12,13 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
+import kaa.alisherbu.listbook.feature.main.component.MainComponent.Output
 import kaa.alisherbu.listbook.feature.profile.component.ProfileComponent
 import kotlinx.parcelize.Parcelize
 
 class MainComponentImpl @AssistedInject constructor(
     @Assisted componentContext: ComponentContext,
-    @Assisted private val output: (MainComponent.Output) -> Unit,
+    @Assisted private val output: (Output) -> Unit,
     private val homeFactory: HomeComponent.Factory,
     private val profileFactory: ProfileComponent.Factory
 ) : MainComponent, ComponentContext by componentContext {
@@ -38,7 +39,7 @@ class MainComponentImpl @AssistedInject constructor(
     ): ChildScreen {
         return when (config) {
             ScreenConfig.Home -> {
-                ChildScreen.Home(homeFactory(componentContext))
+                ChildScreen.Home(homeFactory(componentContext, ::onHomeOutput))
             }
 
             ScreenConfig.Profile -> {
@@ -55,6 +56,12 @@ class MainComponentImpl @AssistedInject constructor(
         screenNavigation.bringToFront(ScreenConfig.Profile)
     }
 
+    private fun onHomeOutput(output: HomeComponent.Output) = when (output) {
+        is HomeComponent.Output.AudioBookItemClick -> {
+            output(Output.OpenPlayer(output.audioBook))
+        }
+    }
+
     private sealed interface ScreenConfig : Parcelable {
         @Parcelize
         object Home : ScreenConfig
@@ -67,7 +74,7 @@ class MainComponentImpl @AssistedInject constructor(
     interface Factory : MainComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (MainComponent.Output) -> Unit
+            output: (Output) -> Unit
         ): MainComponentImpl
     }
 }

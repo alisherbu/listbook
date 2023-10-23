@@ -1,6 +1,5 @@
 package kaa.alisherbu.feature.player.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -12,6 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,14 +26,15 @@ import kotlinx.coroutines.flow.StateFlow
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayerScreen(component: PlayerComponent) {
+    val state by component.state.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Player")
+                    Text(text = state.title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = component::onBackClicked) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 })
@@ -60,5 +62,6 @@ private fun PlayerScreenPreview() {
 
 private class PreviewPlayerComponent : PlayerComponent {
     override val state: StateFlow<PlayerState> = MutableStateFlow(PlayerState())
+    override fun onBackClicked() = Unit
 
 }

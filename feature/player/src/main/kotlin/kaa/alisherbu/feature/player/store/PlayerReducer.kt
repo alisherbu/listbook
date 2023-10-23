@@ -5,6 +5,10 @@ import javax.inject.Inject
 
 internal class PlayerReducer @Inject constructor() : Reducer<PlayerState, Message> {
     override fun PlayerState.reduce(msg: Message): PlayerState {
-        return this
+        return when (msg) {
+            is Message.SetAudioBook -> {
+                copy(title = msg.title)
+            }
+        }
     }
 }

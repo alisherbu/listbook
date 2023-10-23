@@ -20,4 +20,5 @@ dependencies {
 
     implementation(projects.feature.home)
     implementation(projects.feature.profile)
+    implementation(projects.core.shared)
 }

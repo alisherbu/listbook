@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.listbook.android.library)
     alias(libs.plugins.listbook.android.library.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
