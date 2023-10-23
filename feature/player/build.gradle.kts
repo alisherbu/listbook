@@ -15,7 +15,9 @@ dependencies {
     implementation(libs.arkivanov.decompose.decompose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.constraintLayout)
+    implementation(libs.androidx.compose.toolingPreview)
+    debugImplementation(libs.androidx.compose.tooling)
 
     implementation(projects.core.util)
     implementation(projects.core.resource)

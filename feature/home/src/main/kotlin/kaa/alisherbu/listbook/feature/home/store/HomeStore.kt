@@ -1,7 +1,7 @@
 package kaa.alisherbu.listbook.feature.home.store
 
 import com.arkivanov.mvikotlin.core.store.Store
-import kaa.alisherbu.listbook.feature.home.domain.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 
 internal sealed interface Intent
 internal sealed interface Action {

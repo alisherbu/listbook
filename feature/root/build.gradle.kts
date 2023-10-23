@@ -24,6 +24,7 @@ dependencies {
     implementation(projects.feature.main)
     implementation(projects.feature.signup)
     implementation(projects.feature.signIn)
+    implementation(projects.feature.player)
     implementation(projects.feature.dialog)
 
     implementation(projects.core.util)

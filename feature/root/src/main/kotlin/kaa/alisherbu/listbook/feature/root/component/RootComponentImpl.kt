@@ -20,6 +20,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kaa.alisherbu.feature.player.component.PlayerComponent
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
@@ -46,6 +47,7 @@ class RootComponentImpl @AssistedInject internal constructor(
     private val signInFactory: SignInComponent.Factory,
     private val signupFactory: SignupComponent.Factory,
     private val mainFactory: MainComponent.Factory,
+    private val playerFactory: PlayerComponent.Factory,
     private val storeProvider: Provider<RootStore>,
     dispatchers: AppDispatchers
 ) : RootComponent, ComponentContext by componentContext {
@@ -108,9 +110,14 @@ class RootComponentImpl @AssistedInject internal constructor(
             ChildScreen.SignIn(signInFactory(componentContext, ::onSignInOutput))
         }
 
+        ScreenConfig.Player -> {
+            ChildScreen.Player(playerFactory(componentContext))
+        }
+
         ScreenConfig.Undefined -> {
             ChildScreen.Undefined
         }
+
     }
 
     private fun createChildDialog(
@@ -187,6 +194,9 @@ class RootComponentImpl @AssistedInject internal constructor(
 
         @Parcelize
         object Undefined : ScreenConfig
+
+        @Parcelize
+        object Player : ScreenConfig
     }
 
 

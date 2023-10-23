@@ -1,7 +1,7 @@
 package kaa.alisherbu.listbook.feature.home.domain.usecase
 
 import kaa.alisherbu.listbook.feature.home.data.model.AudioBookResponse
-import kaa.alisherbu.listbook.feature.home.domain.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.home.domain.repository.AudioBooksRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

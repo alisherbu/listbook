@@ -60,5 +60,6 @@ dependencies {
     implementation(projects.feature.main)
     implementation(projects.feature.home)
     implementation(projects.feature.profile)
+    implementation(projects.feature.player)
 
 }

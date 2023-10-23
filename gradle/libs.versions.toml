@@ -20,12 +20,8 @@ kspVersion = "1.8.21-1.0.11"
 
 #androidx.compose
 composeBom = "2023.10.01"
-composeFoundation = "1.4.3"
-composeMaterial = "1.5.4"
-composeMaterial3 = "1.1.2"
 composeActivity = "1.5.1"
-composePreview = "1.5.4"
-composeUI = "1.5.4"
+composeConstraintLayout = "1.0.1"
 
 #firebase
 firebaseAuth = "22.0.0"
@@ -63,6 +59,7 @@ androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-toolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-constraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "composeConstraintLayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 

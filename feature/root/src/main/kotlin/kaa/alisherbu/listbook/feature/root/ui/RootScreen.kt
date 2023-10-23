@@ -16,6 +16,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import kaa.alisherbu.feature.player.ui.PlayerScreen
 import kaa.alisherbu.listbook.feature.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.feature.dialog.ui.MessageDialogScreen
 import kaa.alisherbu.listbook.feature.main.ui.MainScreen
@@ -36,6 +37,7 @@ fun RootScreen(component: RootComponent) {
             is ChildScreen.Main -> MainScreen(child.component)
             is ChildScreen.Signup -> SignupScreen(child.component)
             is ChildScreen.SignIn -> SignInScreen(child.component)
+            is ChildScreen.Player -> PlayerScreen(child.component)
             ChildScreen.Undefined -> ProgressIndicator()
         }
     }

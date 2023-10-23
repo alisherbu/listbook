@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import kaa.alisherbu.feature.player.component.PlayerComponent
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
@@ -20,6 +21,7 @@ interface RootComponent {
         class Main(val component: MainComponent) : ChildScreen
         class Signup(val component: SignupComponent) : ChildScreen
         class SignIn(val component: SignInComponent) : ChildScreen
+        class Player(val component: PlayerComponent) : ChildScreen
         object Undefined : ChildScreen
     }
 

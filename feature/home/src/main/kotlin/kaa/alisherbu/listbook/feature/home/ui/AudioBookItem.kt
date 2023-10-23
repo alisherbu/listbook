@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kaa.alisherbu.listbook.feature.home.domain.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
