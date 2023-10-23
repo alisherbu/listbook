@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kaa.alisherbu.listbook.feature.player.R
+import kaa.alisherbu.listbook.core.shared.R as Shared
 
 @Composable
 fun PlayerController(
@@ -34,7 +34,7 @@ fun PlayerController(
             modifier = Modifier.size(50.dp)
         ) {
             Icon(
-                painter = painterResource(R.drawable.baseline_skip_previous_24),
+                painter = painterResource(Shared.drawable.ic_skip_previous_24),
                 contentDescription = "Previous"
             )
         }
@@ -46,8 +46,8 @@ fun PlayerController(
             modifier = Modifier.size(75.dp)
         ) {
             Icon(
-                painter = if (isPlaying) painterResource(R.drawable.baseline_pause_24)
-                else painterResource(R.drawable.baseline_play_arrow_24),
+                painter = if (isPlaying) painterResource(Shared.drawable.ic_pause_24)
+                else painterResource(Shared.drawable.ic_play_arrow_24),
                 contentDescription = "Play&Pause"
             )
         }
@@ -59,7 +59,7 @@ fun PlayerController(
             modifier = Modifier.size(50.dp)
         ) {
             Icon(
-                painter = painterResource(R.drawable.baseline_skip_next_24),
+                painter = painterResource(Shared.drawable.ic_skip_next_24),
                 contentDescription = "Next"
             )
         }

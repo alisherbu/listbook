@@ -171,8 +171,12 @@ class RootComponentImpl @AssistedInject internal constructor(
     }
 
     private fun onMainOutput(output: MainComponent.Output) = when (output) {
-        is MainComponent.Output.OpenPlayer -> {
+        is MainComponent.Output.OpenPlayerWithBook -> {
             screenNavigation.push(ScreenConfig.Player(output.audioBook))
+        }
+
+        MainComponent.Output.OpenPlayer -> {
+            screenNavigation.push(ScreenConfig.Player(null))
         }
     }
 
@@ -199,7 +203,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         object Undefined : ScreenConfig
 
         @Parcelize
-        class Player(val audioBook: AudioBook) : ScreenConfig
+        class Player(val audioBook: AudioBook?) : ScreenConfig
     }
 
 

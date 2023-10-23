@@ -56,9 +56,17 @@ class MainComponentImpl @AssistedInject constructor(
         screenNavigation.bringToFront(ScreenConfig.Profile)
     }
 
+    override fun onPlayOrPause() {
+
+    }
+
+    override fun onPlayerClicked() {
+        output(Output.OpenPlayer)
+    }
+
     private fun onHomeOutput(output: HomeComponent.Output) = when (output) {
         is HomeComponent.Output.AudioBookItemClick -> {
-            output(Output.OpenPlayer(output.audioBook))
+            output(Output.OpenPlayerWithBook(output.audioBook))
         }
     }
 

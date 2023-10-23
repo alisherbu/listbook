@@ -17,7 +17,7 @@ import javax.inject.Provider
 class PlayerComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
-    @Assisted private val audioBook: AudioBook,
+    @Assisted private val audioBook: AudioBook?,
     private val storeProvider: Provider<PlayerStore>
 ) : PlayerComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore(storeProvider::get)
@@ -25,7 +25,8 @@ class PlayerComponentImpl @AssistedInject internal constructor(
     override val state: StateFlow<PlayerState> = store.stateFlow
 
     init {
-        store.accept(Intent.Initialize(audioBook))
+        if (audioBook != null)
+            store.accept(Intent.Initialize(audioBook))
     }
 
     override fun onBackClicked() {
@@ -58,7 +59,7 @@ class PlayerComponentImpl @AssistedInject internal constructor(
         override fun invoke(
             componentContext: ComponentContext,
             output: (Output) -> Unit,
-            audioBook: AudioBook
+            audioBook: AudioBook?
         ): PlayerComponentImpl
     }
 }

@@ -1,5 +1,7 @@
 package kaa.alisherbu.listbook.feature.main.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -13,8 +15,11 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.Value
 import kaa.alisherbu.listbook.feature.home.ui.HomeScreen
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
@@ -26,27 +31,34 @@ fun MainScreen(component: MainComponent) {
     val activeComponent = screenStack.active.instance
     Scaffold(
         bottomBar = {
-            BottomNavigation(modifier = Modifier.fillMaxWidth()) {
-                BottomNavigationItem(
-                    selected = activeComponent is ChildScreen.Home,
-                    onClick = component::onHomeClicked,
-                    icon = {
-                        Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
-                    },
-                    label = {
-                        Text(text = "Home")
-                    }
+            Column {
+                SmallPlayer(
+                    isPlaying = true,
+                    onPlayOrPause = component::onPlayOrPause,
+                    modifier = Modifier.clickable(onClick = component::onPlayerClicked)
                 )
-                BottomNavigationItem(
-                    selected = activeComponent is ChildScreen.Profile,
-                    onClick = component::onProfileClicked,
-                    icon = {
-                        Icon(imageVector = Icons.Default.Person, contentDescription = "Profile")
-                    },
-                    label = {
-                        Text(text = "Profile")
-                    }
-                )
+                BottomNavigation(modifier = Modifier.fillMaxWidth()) {
+                    BottomNavigationItem(
+                        selected = activeComponent is ChildScreen.Home,
+                        onClick = component::onHomeClicked,
+                        icon = {
+                            Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+                        },
+                        label = {
+                            Text(text = "Home")
+                        }
+                    )
+                    BottomNavigationItem(
+                        selected = activeComponent is ChildScreen.Profile,
+                        onClick = component::onProfileClicked,
+                        icon = {
+                            Icon(imageVector = Icons.Default.Person, contentDescription = "Profile")
+                        },
+                        label = {
+                            Text(text = "Profile")
+                        }
+                    )
+                }
             }
         },
         content = { padding ->

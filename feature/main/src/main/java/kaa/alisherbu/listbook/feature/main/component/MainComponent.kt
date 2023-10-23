@@ -12,14 +12,21 @@ interface MainComponent {
     val screenStack: Value<ChildStack<*, ChildScreen>>
 
     fun onHomeClicked()
+
     fun onProfileClicked()
+
+    fun onPlayOrPause()
+
+    fun onPlayerClicked()
+
     sealed interface ChildScreen {
         class Home(val component: HomeComponent) : ChildScreen
         class Profile(val component: ProfileComponent) : ChildScreen
     }
 
     sealed interface Output {
-        class OpenPlayer(val audioBook: AudioBook) : Output
+        class OpenPlayerWithBook(val audioBook: AudioBook) : Output
+        object OpenPlayer : Output
     }
 
     fun interface Factory {

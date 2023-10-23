@@ -24,7 +24,7 @@ interface PlayerComponent {
         operator fun invoke(
             componentContext: ComponentContext,
             output: (Output) -> Unit,
-            audioBook: AudioBook
+            audioBook: AudioBook?
         ): PlayerComponent
     }
 }
