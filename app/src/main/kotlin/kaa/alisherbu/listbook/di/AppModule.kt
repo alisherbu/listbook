@@ -13,7 +13,9 @@ import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.core.shared.player.AudioPlayer
 import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
+import javax.inject.Singleton
 
 @Module
 class AppModule(private val applicationContext: Context) {
@@ -45,5 +47,11 @@ class AppModule(private val applicationContext: Context) {
     @Provides
     fun provideExoPlayer(context: Context): ExoPlayer {
         return ExoPlayer.Builder(context).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAudioPlayer(exoPlayer: ExoPlayer): AudioPlayer {
+        return AudioPlayer(exoPlayer)
     }
 }
