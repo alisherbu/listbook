@@ -44,7 +44,7 @@ class SignInComponentImpl @AssistedInject internal constructor(
             }
 
             Label.SuccessfullySigned -> {
-                output(Output.Home)
+                output(Output.Main)
             }
         }
         lifecycle.doOnDestroy(mainScope::cancel)

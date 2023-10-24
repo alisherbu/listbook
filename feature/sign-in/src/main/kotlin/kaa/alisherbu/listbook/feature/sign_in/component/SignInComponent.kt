@@ -18,7 +18,7 @@ interface SignInComponent {
 
     sealed interface Output {
         object Back : Output
-        object Home : Output
+        object Main : Output
         class Error(val message: String) : Output
     }
 

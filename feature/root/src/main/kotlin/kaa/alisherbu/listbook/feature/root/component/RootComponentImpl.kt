@@ -11,6 +11,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.lifecycle.doOnDestroy
@@ -161,8 +162,8 @@ class RootComponentImpl @AssistedInject internal constructor(
             screenNavigation.pop()
         }
 
-        SignInComponent.Output.Home -> {
-            screenNavigation.push(ScreenConfig.Main)
+        SignInComponent.Output.Main -> {
+            screenNavigation.replaceAll(ScreenConfig.Main)
         }
 
         is SignInComponent.Output.Error -> {
