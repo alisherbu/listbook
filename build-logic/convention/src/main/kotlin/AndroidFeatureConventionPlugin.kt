@@ -23,6 +23,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(library("androidx-compose-material3"))
                 implementation(library("androidx-compose-constraintLayout"))
                 implementation(library("androidx-compose-toolingPreview"))
+                implementation(library("timber"))
                 debugImplementation(library("androidx-compose-tooling"))
             }
         }

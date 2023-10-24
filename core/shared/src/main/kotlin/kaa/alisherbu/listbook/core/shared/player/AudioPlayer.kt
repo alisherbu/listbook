@@ -1,7 +1,6 @@
 package kaa.alisherbu.listbook.core.shared.player
 
 import android.net.Uri
-import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
@@ -28,7 +27,6 @@ class AudioPlayer(private val exoPlayer: ExoPlayer) {
         books.forEach { medias[it] = MediaItem.fromUri(Uri.parse(it.audioUrl)) }
         exoPlayer.setMediaItems(medias.values.toList())
         exoPlayer.prepare()
-        Log.d("AudioPlayer", "loadAudioBooks: $medias")
     }
 
     fun playOrPause() {
