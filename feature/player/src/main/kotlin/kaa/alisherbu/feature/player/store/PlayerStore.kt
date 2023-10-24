@@ -14,6 +14,8 @@ internal sealed interface Action
 internal sealed interface Message {
     class UpdateAudioBook(val audioBook: AudioBook) : Message
     class PlayOrPause(val isPlaying: Boolean) : Message
+    class UpdateCurrentPosition(val position: Long, val positionText: String) : Message
+    class UpdateDuration(val duration: Long, val durationText: String) : Message
 }
 
 internal sealed interface Label

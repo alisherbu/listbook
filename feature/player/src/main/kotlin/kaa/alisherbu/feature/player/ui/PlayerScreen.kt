@@ -61,9 +61,11 @@ fun PlayerScreen(component: PlayerComponent) {
                 durationText = state.durationText,
                 onUserPositionChange = component::onUserPositionChange,
                 onUserPositionChangeFinished = component::onUserPositionChangeFinished,
-                modifier = Modifier.constrainAs(playerSlider) {
-                    bottom.linkTo(playerController.top, margin = 16.dp)
-                }
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .constrainAs(playerSlider) {
+                        bottom.linkTo(playerController.top, margin = 16.dp)
+                    }
             )
             PlayerController(
                 isPlaying = state.isPlaying,
@@ -85,7 +87,13 @@ private fun PlayerScreenPreview() {
 }
 
 private class PreviewPlayerComponent : PlayerComponent {
-    override val state: StateFlow<PlayerState> = MutableStateFlow(PlayerState())
+    val playerState = PlayerState(
+        duration = 10000,
+        durationText = "06:50",
+        position = 4000,
+        positionText = "03:45"
+    )
+    override val state: StateFlow<PlayerState> = MutableStateFlow(playerState)
     override fun onBackClicked() = Unit
     override fun onPreviousAudio() = Unit
     override fun onPlayPauseAudio() = Unit

@@ -3,6 +3,7 @@ package kaa.alisherbu.listbook.di
 import android.content.Context
 import androidx.media3.exoplayer.ExoPlayer
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.arkivanov.mvikotlin.logging.logger.DefaultLogFormatter
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +22,10 @@ import javax.inject.Singleton
 class AppModule(private val applicationContext: Context) {
     @Provides
     fun provideStoreFactory(): StoreFactory {
-        return LoggingStoreFactory(DefaultStoreFactory())
+        return LoggingStoreFactory(
+            delegate = DefaultStoreFactory(),
+            logFormatter = DefaultLogFormatter(LOG_LENGTH)
+        )
     }
 
     @Provides
@@ -51,7 +55,11 @@ class AppModule(private val applicationContext: Context) {
 
     @Provides
     @Singleton
-    fun provideAudioPlayer(exoPlayer: ExoPlayer): AudioPlayer {
-        return AudioPlayer(exoPlayer)
+    fun provideAudioPlayer(exoPlayer: ExoPlayer, dispatchers: AppDispatchers): AudioPlayer {
+        return AudioPlayer(exoPlayer, dispatchers)
+    }
+
+    companion object {
+        private const val LOG_LENGTH = 512
     }
 }
