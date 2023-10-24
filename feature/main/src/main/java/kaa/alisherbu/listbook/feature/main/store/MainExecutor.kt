@@ -11,8 +11,12 @@ internal class MainExecutor @Inject constructor(
 ) : CoroutineExecutor<Intent, Action, MainState, Message, Label>() {
 
     init {
-        audioPlayer.playing.onEach {
+        audioPlayer.isPlaying.onEach {
             dispatch(Message.PlayOrPause(it))
+        }.launchIn(scope)
+
+        audioPlayer.currentAudioBook.onEach {
+            dispatch(Message.UpdateAudioBook(it))
         }.launchIn(scope)
     }
 

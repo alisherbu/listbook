@@ -16,11 +16,8 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
-import com.arkivanov.decompose.router.stack.ChildStack
-import com.arkivanov.decompose.value.Value
 import kaa.alisherbu.listbook.feature.home.ui.HomeScreen
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
@@ -34,11 +31,15 @@ fun MainScreen(component: MainComponent) {
     Scaffold(
         bottomBar = {
             Column {
-                SmallPlayer(
-                    isPlaying = state.isPlaying,
-                    onPlayOrPause = component::onPlayOrPause,
-                    modifier = Modifier.clickable(onClick = component::onPlayerClicked)
-                )
+                state.currentAudioBook?.let {
+                    SmallPlayer(
+                        isPlaying = state.isPlaying,
+                        onPlayOrPause = component::onPlayOrPause,
+                        audioBook = it,
+                        modifier = Modifier.clickable(onClick = component::onPlayerClicked)
+                    )
+                }
+
                 BottomNavigation(modifier = Modifier.fillMaxWidth()) {
                     BottomNavigationItem(
                         selected = activeComponent is ChildScreen.Home,

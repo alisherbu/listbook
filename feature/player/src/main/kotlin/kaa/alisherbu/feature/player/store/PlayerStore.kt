@@ -12,7 +12,7 @@ internal sealed interface Intent {
 
 internal sealed interface Action
 internal sealed interface Message {
-    class SetAudioBook(val title: String) : Message
+    class UpdateAudioBook(val audioBook: AudioBook) : Message
     class PlayOrPause(val isPlaying: Boolean) : Message
 }
 

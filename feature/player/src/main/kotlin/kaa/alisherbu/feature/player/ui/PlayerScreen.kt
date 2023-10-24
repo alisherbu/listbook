@@ -46,10 +46,12 @@ fun PlayerScreen(component: PlayerComponent) {
         ) {
             val (playerController, playerSlider, bookName) = createRefs()
 
-            Text(text = state.title, modifier = Modifier.constrainAs(bookName) {
-                linkTo(start = parent.start, end = parent.end)
-                bottom.linkTo(playerSlider.top, margin = 16.dp)
-            })
+            state.currentAudioBook?.let {
+                Text(text = it.name, modifier = Modifier.constrainAs(bookName) {
+                    linkTo(start = parent.start, end = parent.end)
+                    bottom.linkTo(playerSlider.top, margin = 16.dp)
+                })
+            }
             PlayerSlider(
                 position = state.position,
                 positionText = state.positionText,

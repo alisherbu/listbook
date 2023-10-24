@@ -12,6 +12,7 @@ internal sealed interface Label
 internal sealed interface Action
 internal sealed interface Message {
     class PlayOrPause(val isPlaying: Boolean) : Message
+    class UpdateAudioBook(val audioBook: AudioBook?) : Message
 }
 
 internal interface MainStore : Store<Intent, MainState, Label>

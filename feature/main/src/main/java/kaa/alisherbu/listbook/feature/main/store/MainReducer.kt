@@ -9,6 +9,10 @@ internal class MainReducer @Inject constructor() : Reducer<MainState, Message> {
             is Message.PlayOrPause -> {
                 copy(isPlaying = msg.isPlaying)
             }
+
+            is Message.UpdateAudioBook -> {
+                copy(currentAudioBook = msg.audioBook)
+            }
         }
     }
 }

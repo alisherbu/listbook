@@ -13,12 +13,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.core.shared.R as Shared
 
 @Composable
 internal fun SmallPlayer(
     modifier: Modifier = Modifier,
     isPlaying: Boolean,
+    audioBook: AudioBook,
     onPlayOrPause: () -> Unit = {},
 ) {
     ConstraintLayout(
@@ -28,7 +30,7 @@ internal fun SmallPlayer(
             .height(60.dp)
     ) {
         val (audioName, playOrPause) = createRefs()
-        Text(text = "Audio Name", modifier = Modifier.constrainAs(audioName) {
+        Text(text = audioBook.name, modifier = Modifier.constrainAs(audioName) {
             linkTo(top = parent.top, bottom = parent.bottom)
             start.linkTo(parent.start, margin = 16.dp)
         })
@@ -53,5 +55,6 @@ internal fun SmallPlayer(
 @Preview
 @Composable
 private fun SmallPlayerPreview() {
-    SmallPlayer(isPlaying = true)
+    val audioBook = AudioBook(id = "id", name = "Name", audioUrl = "url")
+    SmallPlayer(isPlaying = true, audioBook = audioBook)
 }

@@ -5,34 +5,40 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class AudioPlayer(private val exoPlayer: ExoPlayer) {
-    private var isPlaying = false
-    private val medias: MutableMap<AudioBook, MediaItem> = mutableMapOf()
+    private val medias: MutableList<Pair<AudioBook, MediaItem>> = mutableListOf()
 
     init {
         exoPlayer.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
-                _playing.trySend(isPlaying)
+                _isPlaying.tryEmit(isPlaying)
+            }
+
+            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                medias.find { it.second == mediaItem }?.first?.let(_currentAudioBook::tryEmit)
             }
         })
     }
 
-    private val _playing = Channel<Boolean>()
-    val playing: Flow<Boolean> = _playing.receiveAsFlow()
+    private val _isPlaying = MutableStateFlow(false)
+    val isPlaying: StateFlow<Boolean> = _isPlaying.asStateFlow()
+
+    private val _currentAudioBook = MutableStateFlow<AudioBook?>(null)
+    val currentAudioBook: StateFlow<AudioBook?> = _currentAudioBook.asStateFlow()
+
     fun loadAudioBooks(books: List<AudioBook>) {
-        books.forEach { medias[it] = MediaItem.fromUri(Uri.parse(it.audioUrl)) }
-        exoPlayer.setMediaItems(medias.values.toList())
+        books.forEach { medias.add(Pair(it, MediaItem.fromUri(Uri.parse(it.audioUrl)))) }
+        exoPlayer.setMediaItems(medias.map { it.second })
         exoPlayer.prepare()
     }
 
     fun playOrPause() {
-        if (isPlaying) exoPlayer.pause()
+        if (isPlaying.value) exoPlayer.pause()
         else exoPlayer.play()
-        isPlaying = !isPlaying
     }
 
     fun previous() {
@@ -44,8 +50,10 @@ class AudioPlayer(private val exoPlayer: ExoPlayer) {
     }
 
     fun play(audioBook: AudioBook) {
-        val index = medias.keys.indexOf(audioBook)
+        val index = medias.map { it.first }.indexOf(audioBook)
         exoPlayer.seekTo(index, 0L)
+        if (!isPlaying.value) {
+            exoPlayer.play()
+        }
     }
-
 }
