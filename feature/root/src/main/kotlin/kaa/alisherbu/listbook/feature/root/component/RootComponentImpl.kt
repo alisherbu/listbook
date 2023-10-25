@@ -23,7 +23,6 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.feature.player.component.PlayerComponent
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
-import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
@@ -113,7 +112,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
 
         is ScreenConfig.Player -> {
-            ChildScreen.Player(playerFactory(componentContext, ::onPlayerOutput, config.audioBook))
+            ChildScreen.Player(playerFactory(componentContext, ::onPlayerOutput))
         }
 
         ScreenConfig.Undefined -> {
@@ -173,11 +172,11 @@ class RootComponentImpl @AssistedInject internal constructor(
 
     private fun onMainOutput(output: MainComponent.Output) = when (output) {
         is MainComponent.Output.OpenPlayerWithBook -> {
-            screenNavigation.push(ScreenConfig.Player(output.audioBook))
+            screenNavigation.push(ScreenConfig.Player)
         }
 
         MainComponent.Output.OpenPlayer -> {
-            screenNavigation.push(ScreenConfig.Player(null))
+            screenNavigation.push(ScreenConfig.Player)
         }
     }
 
@@ -204,7 +203,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         object Undefined : ScreenConfig
 
         @Parcelize
-        class Player(val audioBook: AudioBook?) : ScreenConfig
+        object Player : ScreenConfig
     }
 
 

@@ -83,6 +83,10 @@ class AudioPlayer(private val exoPlayer: ExoPlayer, dispatchers: AppDispatchers)
         }
     }
 
+    fun seekTo(position: Long) {
+        exoPlayer.seekTo(position)
+    }
+
     private fun AudioBook.toMediaItem(): MediaItem {
         val metadata = MediaMetadata.Builder()
             .setTitle(name)

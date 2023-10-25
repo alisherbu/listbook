@@ -17,17 +17,11 @@ import javax.inject.Provider
 class PlayerComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
-    @Assisted private val audioBook: AudioBook?,
     private val storeProvider: Provider<PlayerStore>
 ) : PlayerComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore(storeProvider::get)
 
     override val state: StateFlow<PlayerState> = store.stateFlow
-
-    init {
-        if (audioBook != null)
-            store.accept(Intent.Initialize(audioBook))
-    }
 
     override fun onBackClicked() {
         output(Output.Back)
@@ -46,11 +40,11 @@ class PlayerComponentImpl @AssistedInject internal constructor(
     }
 
     override fun onUserPositionChange(value: Long) {
-
+        store.accept(Intent.ChangeUserPosition(value))
     }
 
     override fun onUserPositionChangeFinished() {
-
+        store.accept(Intent.ChangeUserPositionFinished)
     }
 
 
@@ -58,8 +52,7 @@ class PlayerComponentImpl @AssistedInject internal constructor(
     interface Factory : PlayerComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit,
-            audioBook: AudioBook?
+            output: (Output) -> Unit
         ): PlayerComponentImpl
     }
 }

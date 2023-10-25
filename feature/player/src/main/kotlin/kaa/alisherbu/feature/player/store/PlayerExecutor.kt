@@ -4,7 +4,6 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kaa.alisherbu.listbook.core.shared.player.AudioPlayer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
@@ -46,10 +45,6 @@ internal class PlayerExecutor @Inject constructor(
 
     override fun executeIntent(intent: Intent, getState: () -> PlayerState) {
         when (intent) {
-            is Intent.Initialize -> {
-
-            }
-
             Intent.PlayOrPause -> {
                 audioPlayer.playOrPause()
             }
@@ -60,6 +55,19 @@ internal class PlayerExecutor @Inject constructor(
 
             Intent.SkipToPreviousAudio -> {
                 audioPlayer.previous()
+            }
+
+            is Intent.ChangeUserPosition -> {
+                dispatch(
+                    Message.UpdateUserPosition(
+                        intent.position,
+                        formatter.format(intent.position)
+                    )
+                )
+            }
+
+            Intent.ChangeUserPositionFinished -> {
+                audioPlayer.seekTo(getState().userPosition)
             }
         }
     }

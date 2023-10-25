@@ -21,6 +21,10 @@ internal class PlayerReducer @Inject constructor() : Reducer<PlayerState, Messag
             is Message.UpdateDuration -> {
                 copy(duration = msg.duration, durationText = msg.durationText)
             }
+
+            is Message.UpdateUserPosition -> {
+                copy(userPosition = msg.position, userPositionText = msg.positionText)
+            }
         }
     }
 }

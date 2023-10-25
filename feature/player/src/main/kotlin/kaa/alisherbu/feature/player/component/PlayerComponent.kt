@@ -23,8 +23,7 @@ interface PlayerComponent {
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit,
-            audioBook: AudioBook?
+            output: (Output) -> Unit
         ): PlayerComponent
     }
 }
