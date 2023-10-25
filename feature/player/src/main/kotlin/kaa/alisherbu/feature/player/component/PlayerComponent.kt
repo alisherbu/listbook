@@ -15,6 +15,7 @@ interface PlayerComponent {
     fun onNextAudio()
     fun onUserPositionChange(value: Long)
     fun onUserPositionChangeFinished()
+    fun onDownloadClick()
 
     sealed interface Output {
         object Back : Output

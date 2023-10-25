@@ -1,9 +1,14 @@
 package kaa.alisherbu.listbook.core.shared.player
 
+import android.content.Context
+import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.offline.DownloadRequest
+import androidx.media3.exoplayer.offline.DownloadService
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +20,12 @@ import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import kotlin.time.Duration.Companion.milliseconds
 
-class AudioPlayer(private val exoPlayer: ExoPlayer, dispatchers: AppDispatchers) {
+@UnstableApi
+class AudioPlayer(
+    private val exoPlayer: ExoPlayer,
+    private val context: Context,
+    dispatchers: AppDispatchers
+) {
     private val medias: MutableList<Pair<AudioBook, MediaItem>> = mutableListOf()
     private val mainScope = CoroutineScope(dispatchers.main)
 
@@ -96,5 +106,17 @@ class AudioPlayer(private val exoPlayer: ExoPlayer, dispatchers: AppDispatchers)
             .setMediaMetadata(metadata)
             .setUri(audioUrl)
             .build()
+    }
+
+
+    fun download(audioBook: AudioBook) {
+        val downloadRequest =
+            DownloadRequest.Builder(audioBook.id, Uri.parse(audioBook.audioUrl)).build()
+        DownloadService.sendAddDownload(
+            /* context = */ context,
+            /* clazz = */ AudioDownloadService::class.java,
+            /* downloadRequest = */ downloadRequest,
+            /* foreground = */ true
+        )
     }
 }

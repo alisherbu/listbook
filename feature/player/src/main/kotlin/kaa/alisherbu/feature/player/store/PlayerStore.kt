@@ -9,6 +9,7 @@ internal sealed interface Intent {
     object PlayOrPause : Intent
     class ChangeUserPosition(val position: Long) : Intent
     object ChangeUserPositionFinished : Intent
+    object Download : Intent
 }
 
 internal sealed interface Action

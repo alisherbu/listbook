@@ -1,7 +1,10 @@
 package kaa.alisherbu.listbook.di
 
 import android.content.Context
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.logging.logger.DefaultLogFormatter
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
@@ -15,6 +18,7 @@ import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.core.shared.player.AudioPlayer
+import kaa.alisherbu.listbook.core.shared.player.DownloadUtil
 import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
 import javax.inject.Singleton
 
@@ -49,14 +53,26 @@ class AppModule(private val applicationContext: Context) {
     }
 
     @Provides
+    @UnstableApi
     fun provideExoPlayer(context: Context): ExoPlayer {
-        return ExoPlayer.Builder(context).build()
+        val cacheDataSourceFactory = CacheDataSource.Factory()
+            .setCache(DownloadUtil.getDownloadCache(context))
+            .setUpstreamDataSourceFactory(DownloadUtil.getHttpDataSourceFactory(context))
+            .setCacheWriteDataSinkFactory(null)
+        val mediaSourceFactory = DefaultMediaSourceFactory(cacheDataSourceFactory)
+        return ExoPlayer.Builder(context)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideAudioPlayer(exoPlayer: ExoPlayer, dispatchers: AppDispatchers): AudioPlayer {
-        return AudioPlayer(exoPlayer, dispatchers)
+    fun provideAudioPlayer(
+        exoPlayer: ExoPlayer,
+        dispatchers: AppDispatchers,
+        context: Context
+    ): AudioPlayer {
+        return AudioPlayer(exoPlayer, context, dispatchers)
     }
 
     companion object {

@@ -69,6 +69,11 @@ internal class PlayerExecutor @Inject constructor(
             Intent.ChangeUserPositionFinished -> {
                 audioPlayer.seekTo(getState().userPosition)
             }
+
+            Intent.Download -> {
+                val audioBook = requireNotNull(getState().currentAudioBook) { "Can't be null" }
+                audioPlayer.download(audioBook)
+            }
         }
     }
 }

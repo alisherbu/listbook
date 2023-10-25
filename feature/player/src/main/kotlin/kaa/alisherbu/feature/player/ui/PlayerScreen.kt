@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,6 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import kaa.alisherbu.feature.player.component.PlayerComponent
 import kaa.alisherbu.feature.player.store.PlayerState
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -44,13 +46,23 @@ fun PlayerScreen(component: PlayerComponent) {
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            val (playerController, playerSlider, bookName) = createRefs()
+            val (playerController, playerSlider, bookName, download) = createRefs()
 
             state.currentAudioBook?.let {
                 Text(text = it.name, modifier = Modifier.constrainAs(bookName) {
                     linkTo(start = parent.start, end = parent.end)
                     bottom.linkTo(playerSlider.top, margin = 16.dp)
                 })
+
+                TextButton(
+                    onClick = component::onDownloadClick,
+                    modifier = Modifier.constrainAs(download) {
+                        linkTo(start = parent.start, end = parent.end)
+                        bottom.linkTo(bookName.top, margin = 16.dp)
+                    }
+                ) {
+                    Text(text = "Download")
+                }
             }
             PlayerSlider(
                 position = state.position,
@@ -91,7 +103,8 @@ private class PreviewPlayerComponent : PlayerComponent {
         duration = 10000,
         durationText = "06:50",
         position = 4000,
-        positionText = "03:45"
+        positionText = "03:45",
+        currentAudioBook = AudioBook("id", "Audio book name", "")
     )
     override val state: StateFlow<PlayerState> = MutableStateFlow(playerState)
     override fun onBackClicked() = Unit
@@ -100,5 +113,6 @@ private class PreviewPlayerComponent : PlayerComponent {
     override fun onNextAudio() = Unit
     override fun onUserPositionChange(value: Long) = Unit
     override fun onUserPositionChangeFinished() = Unit
+    override fun onDownloadClick() = Unit
 
 }

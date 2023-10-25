@@ -47,6 +47,10 @@ class PlayerComponentImpl @AssistedInject internal constructor(
         store.accept(Intent.ChangeUserPositionFinished)
     }
 
+    override fun onDownloadClick() {
+        store.accept(Intent.Download)
+    }
+
 
     @AssistedFactory
     interface Factory : PlayerComponent.Factory {
