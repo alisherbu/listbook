@@ -1,45 +1,41 @@
 package kaa.alisherbu.listbook.feature.home.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent
+import kaa.alisherbu.listbook.feature.home.store.HomeState
 
 @Composable
 fun HomeScreen(component: HomeComponent) {
     val state by component.state.collectAsState()
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 24.dp)
+    Scaffold(
+        topBar = {
+            HomeTopAppBar()
+        }
     ) {
-        Text(
-            text = "Home", style = TextStyle(
-                fontSize = 32.sp
-            )
+        HomeContent(
+            state = state,
+            onAudioBookClick = component::onAudioBookClick,
+            modifier = Modifier.padding(it)
         )
-        LazyColumn(
-            modifier = Modifier
-                .weight(1F)
-                .padding(top = 12.dp)
-        ) {
-            items(state.audioBooks) {
-                AudioBookItem(audioBook = it, component::onAudioBookClick)
-            }
+    }
+}
+
+@Composable
+private fun HomeContent(
+    modifier: Modifier = Modifier, state: HomeState,
+    onAudioBookClick: (AudioBook) -> Unit
+) {
+    LazyColumn(modifier = modifier) {
+        items(state.audioBooks) {
+            AudioBookItem(audioBook = it, onClick = onAudioBookClick)
         }
     }
 }

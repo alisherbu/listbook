@@ -3,6 +3,7 @@ package kaa.alisherbu.listbook.feature.main.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.material.BottomNavigation
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.router.stack.ChildStack
 import kaa.alisherbu.listbook.feature.home.ui.HomeScreen
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
@@ -40,7 +42,11 @@ fun MainScreen(component: MainComponent) {
                     )
                 }
 
-                BottomNavigation(modifier = Modifier.fillMaxWidth()) {
+                BottomNavigation(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                ) {
                     BottomNavigationItem(
                         selected = activeComponent is ChildScreen.Home,
                         onClick = component::onHomeClicked,
@@ -64,12 +70,20 @@ fun MainScreen(component: MainComponent) {
                 }
             }
         },
-        content = { padding ->
-            Children(stack = screenStack, modifier = Modifier.padding(padding)) {
-                when (val child = it.instance) {
-                    is ChildScreen.Home -> HomeScreen(child.component)
-                    is ChildScreen.Profile -> ProfileScreen(child.component)
-                }
-            }
+        content = {
+            MainContent(screenStack = screenStack, modifier = Modifier.padding(it))
         })
+}
+
+@Composable
+private fun MainContent(
+    modifier: Modifier = Modifier,
+    screenStack: ChildStack<*, ChildScreen>
+) {
+    Children(stack = screenStack, modifier = modifier) {
+        when (val child = it.instance) {
+            is ChildScreen.Home -> HomeScreen(child.component)
+            is ChildScreen.Profile -> ProfileScreen(child.component)
+        }
+    }
 }
