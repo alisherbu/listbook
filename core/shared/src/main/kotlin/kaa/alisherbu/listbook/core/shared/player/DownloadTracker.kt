@@ -1,7 +1,6 @@
 package kaa.alisherbu.listbook.core.shared.player
 
 import android.content.Context
-import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.offline.Download
@@ -32,17 +31,13 @@ class DownloadTracker(
         fun onDownloadsChanged()
     }
 
-    private val context: Context
-    private val listeners: CopyOnWriteArraySet<Listener>
-    private val downloads: HashMap<Uri, Download>
-    private val downloadIndex: DownloadIndex
+    private val context: Context = context.applicationContext
+    private val listeners: CopyOnWriteArraySet<Listener> = CopyOnWriteArraySet()
+    private val downloads: HashMap<String, Download> = HashMap()
+    private val downloadIndex: DownloadIndex = downloadManager.downloadIndex
     private var startDownloadDialogHelper: StartDownloadHelper? = null
 
     init {
-        this.context = context.applicationContext
-        listeners = CopyOnWriteArraySet()
-        downloads = HashMap()
-        downloadIndex = downloadManager.downloadIndex
         downloadManager.addListener(DownloadManagerListener())
         loadDownloads()
     }
@@ -56,17 +51,17 @@ class DownloadTracker(
     }
 
     fun isDownloaded(mediaItem: MediaItem): Boolean {
-        val download = downloads[checkNotNull(mediaItem.localConfiguration).uri]
+        val download = downloads[mediaItem.mediaId]
         return download != null && download.state != Download.STATE_FAILED
     }
 
-    fun getDownloadRequest(uri: Uri): DownloadRequest? {
-        val download = downloads[uri]
+    fun getDownloadRequest(id: String): DownloadRequest? {
+        val download = downloads[id]
         return if (download != null && download.state != Download.STATE_FAILED) download.request else null
     }
 
     fun removeDownload(mediaItem: MediaItem) {
-        val download = downloads[mediaItem.localConfiguration?.uri]
+        val download = downloads[mediaItem.mediaId]
         if (download != null && download.state != Download.STATE_FAILED) {
             DownloadService.sendRemoveDownload(
                 context,
@@ -90,7 +85,7 @@ class DownloadTracker(
         downloadIndex.getDownloads().use { cursor ->
             while (cursor.moveToNext()) {
                 val download = cursor.download
-                downloads[download.request.uri] = download
+                downloads[download.request.id] = download
                 list.add(download)
             }
         }
@@ -102,14 +97,14 @@ class DownloadTracker(
             download: Download,
             finalException: Exception?
         ) {
-            downloads[download.request.uri] = download
+            downloads[download.request.id] = download
             for (listener in listeners) {
                 listener.onDownloadsChanged()
             }
         }
 
         override fun onDownloadRemoved(downloadManager: DownloadManager, download: Download) {
-            downloads.remove(download.request.uri)
+            downloads.remove(download.request.id)
             for (listener in listeners) {
                 listener.onDownloadsChanged()
             }

@@ -1,7 +1,6 @@
 package kaa.alisherbu.listbook.core.shared.player
 
 import android.content.Context
-import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
@@ -71,7 +70,7 @@ class AudioPlayer(
 
     fun loadAudioBooks(books: List<AudioBook>) {
         books.forEach {
-            val downloadRequest = downloadTracker.getDownloadRequest(Uri.parse(it.audioUrl))
+            val downloadRequest = downloadTracker.getDownloadRequest(it.id)
             val mediaItem = downloadRequest?.toMediaItem() ?: it.toMediaItem()
             medias.add(Pair(it, mediaItem))
         }
