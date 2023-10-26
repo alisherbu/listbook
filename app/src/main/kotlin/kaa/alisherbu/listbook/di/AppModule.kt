@@ -17,8 +17,8 @@ import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
-import kaa.alisherbu.listbook.core.shared.player.AudioPlayer
-import kaa.alisherbu.listbook.core.shared.player.DownloadUtil
+import kaa.alisherbu.player.AudioPlayer
+import kaa.alisherbu.player.DownloadUtil
 import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
 import javax.inject.Singleton
 
@@ -57,7 +57,7 @@ class AppModule(private val applicationContext: Context) {
     fun provideExoPlayer(context: Context): ExoPlayer {
         val cacheDataSourceFactory = CacheDataSource.Factory()
             .setCache(DownloadUtil.getDownloadCache(context))
-            .setUpstreamDataSourceFactory(DownloadUtil.getHttpDataSourceFactory(context))
+            .setUpstreamDataSourceFactory(DownloadUtil.getHttpDataSourceFactory())
             .setCacheWriteDataSinkFactory(null)
         val mediaSourceFactory = DefaultMediaSourceFactory(context).setDataSourceFactory(cacheDataSourceFactory)
         return ExoPlayer.Builder(context)

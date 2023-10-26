@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.core.shared.player
+package kaa.alisherbu.player
 
 import android.content.Context
 import androidx.media3.common.MediaItem
@@ -9,7 +9,6 @@ import androidx.media3.exoplayer.offline.DownloadIndex
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadRequest
 import androidx.media3.exoplayer.offline.DownloadService
-import timber.log.Timber
 import java.io.IOException
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -42,16 +41,16 @@ class DownloadTracker(
         loadDownloads()
     }
 
-    fun addListener(listener: Listener?) {
-        listeners.add(checkNotNull(listener))
+    fun addListener(listener: Listener) {
+        listeners.add(listener)
     }
 
     fun removeListener(listener: Listener) {
         listeners.remove(listener)
     }
 
-    fun isDownloaded(mediaItem: MediaItem): Boolean {
-        val download = downloads[mediaItem.mediaId]
+    fun isDownloaded(id: String): Boolean {
+        val download = downloads[id]
         return download != null && download.state != Download.STATE_FAILED
     }
 
@@ -66,8 +65,8 @@ class DownloadTracker(
             DownloadService.sendRemoveDownload(
                 context,
                 AudioDownloadService::class.java,
-                download.request.id, /* foreground= */
-                false,
+                download.request.id,
+                /* foreground= */ false,
             )
         }
     }
@@ -81,12 +80,10 @@ class DownloadTracker(
     }
 
     private fun loadDownloads() {
-        val list = mutableListOf<Download>()
         downloadIndex.getDownloads().use { cursor ->
             while (cursor.moveToNext()) {
                 val download = cursor.download
                 downloads[download.request.id] = download
-                list.add(download)
             }
         }
     }
@@ -98,16 +95,12 @@ class DownloadTracker(
             finalException: Exception?
         ) {
             downloads[download.request.id] = download
-            for (listener in listeners) {
-                listener.onDownloadsChanged()
-            }
+            listeners.forEach(Listener::onDownloadsChanged)
         }
 
         override fun onDownloadRemoved(downloadManager: DownloadManager, download: Download) {
             downloads.remove(download.request.id)
-            for (listener in listeners) {
-                listener.onDownloadsChanged()
-            }
+            listeners.forEach(Listener::onDownloadsChanged)
         }
     }
 
@@ -117,7 +110,6 @@ class DownloadTracker(
     ) : DownloadHelper.Callback {
 
         init {
-            Timber.d("StartDownloadHelper.init. mediaId=${mediaItem.mediaId}")
             downloadHelper.prepare(this)
         }
 
@@ -132,7 +124,7 @@ class DownloadTracker(
                 /* downloadRequest = */ buildDownloadRequest(),
                 /* foreground = */ false,
             )
-            downloadHelper.release()
+            helper.release()
         }
 
         override fun onPrepareError(helper: DownloadHelper, e: IOException) {

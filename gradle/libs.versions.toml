@@ -35,6 +35,7 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.10.0"
 timber = "5.0.1"
+coroutines = "1.7.3"
 
 #media
 exoplayer = "1.1.1"
@@ -85,6 +86,8 @@ detekt-ruleauthors = { module = "io.gitlab.arturbosch.detekt:detekt-rules-ruleau
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidXCoreKtx" }
 androidx-lifecycle-runtimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

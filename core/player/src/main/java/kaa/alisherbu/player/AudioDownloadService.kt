@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.core.shared.player
+package kaa.alisherbu.player
 
 import android.annotation.SuppressLint
 import android.app.Notification

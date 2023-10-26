@@ -1,7 +1,7 @@
 package kaa.alisherbu.listbook.feature.main.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kaa.alisherbu.listbook.core.shared.player.AudioPlayer
+import kaa.alisherbu.player.AudioPlayer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

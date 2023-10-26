@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":core:player")
+
+
 include(":feature:player")
 
 

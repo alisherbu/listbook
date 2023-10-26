@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.core.shared.player
+package kaa.alisherbu.player
 
 import android.content.Context
 import androidx.media3.common.MediaItem
@@ -8,6 +8,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.player.tickerFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,7 +42,7 @@ class AudioPlayer(
                     if (mediaItem == null) {
                         false
                     } else {
-                        downloadTracker.isDownloaded(mediaItem)
+                        downloadTracker.isDownloaded(mediaItem.mediaId)
                     },
                 )
             }

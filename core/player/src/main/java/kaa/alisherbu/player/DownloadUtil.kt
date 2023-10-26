@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.core.shared.player
+package kaa.alisherbu.player
 
 import android.content.Context
 import androidx.media3.common.util.UnstableApi
@@ -25,10 +25,10 @@ object DownloadUtil {
     private lateinit var databaseProvider: DatabaseProvider
     private lateinit var downloadCache: Cache
     private lateinit var downloadDirectory: File
-    private lateinit var dataSourceFactory: DataSource.Factory
     private lateinit var httpDataSourceFactory: DataSource.Factory
     private lateinit var downloadNotificationHelper: DownloadNotificationHelper
     private val downloadExecutor = Executor(Runnable::run)
+
     fun getDownloadManager(context: Context): DownloadManager {
         ensureDownloadManagerInitialized(context)
         return downloadManager
@@ -40,7 +40,7 @@ object DownloadUtil {
                 context,
                 getDatabaseProvider(context),
                 getDownloadCache(context),
-                getHttpDataSourceFactory(context),
+                getHttpDataSourceFactory(),
                 downloadExecutor
             )
             downloadManager.maxParallelDownloads = 5
@@ -65,7 +65,7 @@ object DownloadUtil {
         return downloadCache
     }
 
-    fun getHttpDataSourceFactory(context: Context): DataSource.Factory {
+    fun getHttpDataSourceFactory(): DataSource.Factory {
         if (!this::httpDataSourceFactory.isInitialized) {
             val cookieManager = CookieManager()
             cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER)
@@ -86,7 +86,7 @@ object DownloadUtil {
         if (!this::downloadNotificationHelper.isInitialized) {
             downloadNotificationHelper = DownloadNotificationHelper(
                 context,
-                DOWNLOAD_NOTIFICATION_CHANNEL_ID
+                DOWNLOAD_NOTIFICATION_CHANNEL_ID,
             )
         }
         return downloadNotificationHelper

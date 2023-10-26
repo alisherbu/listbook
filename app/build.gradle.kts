@@ -59,6 +59,7 @@ dependencies {
 
     implementation(projects.core.util)
     implementation(projects.core.shared)
+    implementation(projects.core.player)
     implementation(projects.feature.root)
     implementation(projects.feature.auth)
     implementation(projects.feature.signIn)
