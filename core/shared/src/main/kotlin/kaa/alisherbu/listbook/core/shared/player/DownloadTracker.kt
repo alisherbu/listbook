@@ -85,7 +85,7 @@ class DownloadTracker(
         )
     }
 
-    fun loadDownloads() {
+    private fun loadDownloads() {
         val list = mutableListOf<Download>()
         downloadIndex.getDownloads().use { cursor ->
             while (cursor.moveToNext()) {
@@ -94,16 +94,6 @@ class DownloadTracker(
                 list.add(download)
             }
         }
-        Timber.d(
-            "count = ${list.size}, downloads = ${
-                list.map {
-                    Pair(
-                        it.request.id,
-                        it.request.uri,
-                    )
-                }
-            }",
-        )
     }
 
     private inner class DownloadManagerListener : DownloadManager.Listener {

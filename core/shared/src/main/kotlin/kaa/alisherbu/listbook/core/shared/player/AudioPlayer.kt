@@ -70,16 +70,10 @@ class AudioPlayer(
     val isDownloaded = _isDownloaded.asStateFlow()
 
     fun loadAudioBooks(books: List<AudioBook>) {
-        val isOffline = false
-        if (isOffline) {
-            books.forEach {
-                val downloadRequest = downloadTracker.getDownloadRequest(Uri.parse(it.audioUrl))
-                downloadRequest?.let { req ->
-                    medias.add(Pair(it, req.toMediaItem()))
-                }
-            }
-        } else {
-            books.forEach { medias.add(Pair(it, it.toMediaItem())) }
+        books.forEach {
+            val downloadRequest = downloadTracker.getDownloadRequest(Uri.parse(it.audioUrl))
+            val mediaItem = downloadRequest?.toMediaItem() ?: it.toMediaItem()
+            medias.add(Pair(it, mediaItem))
         }
         exoPlayer.setMediaItems(medias.map { it.second })
         exoPlayer.prepare()
@@ -91,7 +85,6 @@ class AudioPlayer(
         } else {
             exoPlayer.play()
         }
-        downloadTracker.loadDownloads()
     }
 
     fun previous() {
