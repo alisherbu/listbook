@@ -10,5 +10,5 @@ internal class AudioBookResponse(
     @PropertyName("name")
     val name: String? = null,
     @PropertyName("audioUrl")
-    val audioUrl: String? = null
+    val audioUrl: String? = null,
 )

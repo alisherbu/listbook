@@ -19,12 +19,11 @@ class AuthComponentImpl @AssistedInject constructor(
         output(Output.SignIn)
     }
 
-
     @AssistedFactory
     interface Factory : AuthComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): AuthComponentImpl
     }
 }

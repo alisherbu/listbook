@@ -26,12 +26,12 @@ import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent
-import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
-import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
-import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildDialog
+import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.root.store.Label
 import kaa.alisherbu.listbook.feature.root.store.RootStore
+import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
+import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -50,7 +50,7 @@ class RootComponentImpl @AssistedInject internal constructor(
     private val mainFactory: MainComponent.Factory,
     private val playerFactory: PlayerComponent.Factory,
     private val storeProvider: Provider<RootStore>,
-    dispatchers: AppDispatchers
+    dispatchers: AppDispatchers,
 ) : RootComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore(storeProvider::get)
@@ -69,7 +69,6 @@ class RootComponentImpl @AssistedInject internal constructor(
         lifecycle.doOnDestroy(mainScope::cancel)
     }
 
-
     override val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
         source = screenNavigation,
         initialConfiguration = ScreenConfig.Undefined,
@@ -80,7 +79,7 @@ class RootComponentImpl @AssistedInject internal constructor(
     override val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
         source = dialogNavigation,
         handleBackButton = true,
-        childFactory = ::createChildDialog
+        childFactory = ::createChildDialog,
     )
 
     private fun handleLabel(label: Label) {
@@ -89,7 +88,6 @@ class RootComponentImpl @AssistedInject internal constructor(
             Label.UserNotSigned -> screenNavigation.replaceCurrent(ScreenConfig.Auth)
         }
     }
-
 
     private fun createChildScreen(
         config: ScreenConfig,
@@ -118,20 +116,19 @@ class RootComponentImpl @AssistedInject internal constructor(
         ScreenConfig.Undefined -> {
             ChildScreen.Undefined
         }
-
     }
 
     private fun createChildDialog(
         config: DialogConfig,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): ChildDialog = when (config) {
         is DialogConfig.Message -> {
             ChildDialog.Message(
                 MessageDialogComponent(
                     componentContext,
                     config.text,
-                    onDismissed = dialogNavigation::dismiss
-                )
+                    onDismissed = dialogNavigation::dismiss,
+                ),
             )
         }
     }
@@ -206,7 +203,6 @@ class RootComponentImpl @AssistedInject internal constructor(
         object Player : ScreenConfig
     }
 
-
     private sealed interface DialogConfig : Parcelable {
         @Parcelize
         class Message(
@@ -217,7 +213,7 @@ class RootComponentImpl @AssistedInject internal constructor(
     @AssistedFactory
     interface Factory : RootComponent.Factory {
         override fun invoke(
-            componentContext: ComponentContext
+            componentContext: ComponentContext,
         ): RootComponentImpl
     }
 

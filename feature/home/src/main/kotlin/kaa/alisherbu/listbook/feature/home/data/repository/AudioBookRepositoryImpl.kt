@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 internal class AudioBookRepositoryImpl @Inject constructor(
-    private val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore,
 ) : AudioBooksRepository {
 
     override fun subscribeToAudioBooks(): Flow<List<AudioBookResponse>> {

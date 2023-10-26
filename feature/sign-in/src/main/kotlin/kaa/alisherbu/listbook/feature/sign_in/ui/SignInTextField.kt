@@ -20,8 +20,8 @@ import kaa.alisherbu.listbook.core.util.theme.Orange
 internal fun SignInTextField(
     value: String,
     hintText: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
     onValueChange: (String) -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text,
 ) {
     TextField(
         value = value,
@@ -35,7 +35,7 @@ internal fun SignInTextField(
             Text(
                 text = hintText,
                 fontSize = 18.sp,
-                color = Hint
+                color = Hint,
             )
         },
         colors = TextFieldDefaults.colors(
@@ -49,7 +49,7 @@ internal fun SignInTextField(
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.Sentences,
             imeAction = ImeAction.Next,
-            keyboardType = keyboardType
+            keyboardType = keyboardType,
         ),
         singleLine = true,
         maxLines = 1,

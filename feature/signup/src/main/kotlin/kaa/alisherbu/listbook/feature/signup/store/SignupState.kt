@@ -5,5 +5,5 @@ data class SignupState(
     val surname: String = "",
     val email: String = "",
     val password: String = "",
-    val isCreateAccountButtonEnabled: Boolean = false
+    val isCreateAccountButtonEnabled: Boolean = false,
 )

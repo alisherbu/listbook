@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class SignupExecutor @Inject constructor(
-    private val signUp: SignUpUseCase
+    private val signUp: SignUpUseCase,
 ) : CoroutineExecutor<Intent, Unit, SignupState, Message, Label>() {
     override fun executeIntent(intent: Intent, getState: () -> SignupState) {
         val state = getState()
@@ -17,7 +17,7 @@ internal class SignupExecutor @Inject constructor(
                     state.name,
                     state.surname,
                     intent.text,
-                    state.password
+                    state.password,
                 )
                 dispatch(Message.EmailTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
@@ -27,7 +27,7 @@ internal class SignupExecutor @Inject constructor(
                     intent.text,
                     state.surname,
                     state.email,
-                    state.password
+                    state.password,
                 )
                 dispatch(Message.NameTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
@@ -37,7 +37,7 @@ internal class SignupExecutor @Inject constructor(
                     state.name,
                     state.surname,
                     state.email,
-                    intent.text
+                    intent.text,
                 )
                 dispatch(Message.PasswordTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
@@ -47,7 +47,7 @@ internal class SignupExecutor @Inject constructor(
                     state.name,
                     intent.text,
                     state.email,
-                    state.password
+                    state.password,
                 )
                 dispatch(Message.SurnameTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
@@ -65,9 +65,9 @@ internal class SignupExecutor @Inject constructor(
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
     ): Boolean {
         return name.isNotBlank() && surname.isNotBlank() &&
-                email.isNotBlank() && password.isNotBlank()
+            email.isNotBlank() && password.isNotBlank()
     }
 }

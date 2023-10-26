@@ -8,11 +8,11 @@ import javax.inject.Provider
 internal class MainStoreImpl @Inject constructor(
     storeFactory: StoreFactory,
     executorProvider: Provider<MainExecutor>,
-    reducer: MainReducer
-) : MainStore, Store<Intent, MainState, Label> by storeFactory.create(
-    name = MainStore::class.simpleName,
-    initialState = MainState(),
-    executorFactory = executorProvider::get,
-    reducer = reducer
-) {
-}
+    reducer: MainReducer,
+) : MainStore,
+    Store<Intent, MainState, Label> by storeFactory.create(
+        name = MainStore::class.simpleName,
+        initialState = MainState(),
+        executorFactory = executorProvider::get,
+        reducer = reducer,
+    )

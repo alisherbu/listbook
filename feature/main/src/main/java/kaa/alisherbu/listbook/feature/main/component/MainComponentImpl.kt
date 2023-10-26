@@ -28,7 +28,7 @@ class MainComponentImpl @AssistedInject internal constructor(
     @Assisted private val output: (Output) -> Unit,
     private val homeFactory: HomeComponent.Factory,
     private val profileFactory: ProfileComponent.Factory,
-    private val storeProvider: Provider<MainStore>
+    private val storeProvider: Provider<MainStore>,
 ) : MainComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore(storeProvider::get)
 
@@ -38,15 +38,14 @@ class MainComponentImpl @AssistedInject internal constructor(
         screenNavigation,
         initialConfiguration = ScreenConfig.Home,
         handleBackButton = false,
-        childFactory = ::createChildScreen
+        childFactory = ::createChildScreen,
     )
 
     override val state: StateFlow<MainState> = store.stateFlow
 
-
     private fun createChildScreen(
         config: ScreenConfig,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): ChildScreen {
         return when (config) {
             ScreenConfig.Home -> {
@@ -93,7 +92,7 @@ class MainComponentImpl @AssistedInject internal constructor(
     interface Factory : MainComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): MainComponentImpl
     }
 }

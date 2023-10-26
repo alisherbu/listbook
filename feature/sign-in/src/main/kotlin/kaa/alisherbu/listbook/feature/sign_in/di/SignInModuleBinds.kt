@@ -1,6 +1,5 @@
 package kaa.alisherbu.listbook.feature.sign_in.di
 
-
 import dagger.Binds
 import dagger.Module
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
@@ -9,7 +8,6 @@ import kaa.alisherbu.listbook.feature.sign_in.data.repository.SignInRepositoryIm
 import kaa.alisherbu.listbook.feature.sign_in.domain.repository.SignInRepository
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInStore
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInStoreImpl
-
 
 @Module
 internal interface SignInModuleBinds {

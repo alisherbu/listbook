@@ -16,14 +16,13 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.feature.signup.component.SignupComponent.Output
 import kaa.alisherbu.listbook.feature.signup.store.Intent
 import kaa.alisherbu.listbook.feature.signup.store.Label
 import kaa.alisherbu.listbook.feature.signup.store.SignupState
 import kaa.alisherbu.listbook.feature.signup.store.SignupStore
-import kaa.alisherbu.listbook.feature.signup.component.SignupComponent.Output
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -35,7 +34,7 @@ class SignupComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
     private val storeProvider: Provider<SignupStore>,
-    dispatchers: AppDispatchers
+    dispatchers: AppDispatchers,
 ) : SignupComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore(storeProvider::get)
@@ -47,7 +46,7 @@ class SignupComponentImpl @AssistedInject internal constructor(
     override val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
         source = dialogNavigation,
         handleBackButton = true,
-        childFactory = ::createChildDialog
+        childFactory = ::createChildDialog,
     )
 
     init {
@@ -95,7 +94,7 @@ class SignupComponentImpl @AssistedInject internal constructor(
 
     private fun createChildDialog(
         config: DialogConfig,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): ChildDialog = when (config) {
         is DialogConfig.SuccessDialogConfig -> {
             ChildDialog.Success(
@@ -105,8 +104,8 @@ class SignupComponentImpl @AssistedInject internal constructor(
                     onDismissed = {
                         dialogNavigation.dismiss()
                         output(Output.Back)
-                    }
-                )
+                    },
+                ),
             )
         }
     }
@@ -122,12 +121,11 @@ class SignupComponentImpl @AssistedInject internal constructor(
         ) : DialogConfig
     }
 
-
     @AssistedFactory
     interface Factory : SignupComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): SignupComponentImpl
     }
 }

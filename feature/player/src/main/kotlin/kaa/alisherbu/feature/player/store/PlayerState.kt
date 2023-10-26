@@ -10,5 +10,5 @@ data class PlayerState(
     val durationText: String = "",
     val userPosition: Long = 0L,
     val userPositionText: String = "",
-    val isPlaying: Boolean = true
+    val isPlaying: Boolean = true,
 )

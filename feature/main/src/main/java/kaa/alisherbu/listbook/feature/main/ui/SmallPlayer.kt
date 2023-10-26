@@ -2,7 +2,7 @@ package kaa.alisherbu.listbook.feature.main.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -18,35 +18,42 @@ import kaa.alisherbu.listbook.core.shared.R as Shared
 
 @Composable
 internal fun SmallPlayer(
-    modifier: Modifier = Modifier,
     isPlaying: Boolean,
     audioBook: AudioBook,
+    modifier: Modifier = Modifier,
     onPlayOrPause: () -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
             .background(Color.LightGray)
-            .height(60.dp)
+            .heightIn(min = 60.dp),
     ) {
         val (audioName, playOrPause) = createRefs()
-        Text(text = audioBook.name, modifier = Modifier.constrainAs(audioName) {
-            linkTo(top = parent.top, bottom = parent.bottom)
-            start.linkTo(parent.start, margin = 16.dp)
-        })
+        Text(
+            text = audioBook.name,
+            modifier = Modifier.constrainAs(audioName) {
+                linkTo(top = parent.top, bottom = parent.bottom)
+                start.linkTo(parent.start, margin = 16.dp)
+            },
+        )
 
         IconButton(
             onClick = onPlayOrPause,
             modifier = Modifier.constrainAs(playOrPause) {
                 linkTo(top = parent.top, bottom = parent.bottom)
                 end.linkTo(parent.end, margin = 16.dp)
-            }) {
+            },
+        ) {
             Icon(
                 painter = painterResource(
-                    if (isPlaying) Shared.drawable.ic_pause_24
-                    else Shared.drawable.ic_play_arrow_24
+                    if (isPlaying) {
+                        Shared.drawable.ic_pause_24
+                    } else {
+                        Shared.drawable.ic_play_arrow_24
+                    },
                 ),
-                contentDescription = "Play&Pause"
+                contentDescription = "Play&Pause",
             )
         }
     }

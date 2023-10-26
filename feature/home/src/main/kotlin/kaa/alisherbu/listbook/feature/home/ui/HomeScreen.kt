@@ -18,20 +18,21 @@ fun HomeScreen(component: HomeComponent) {
     Scaffold(
         topBar = {
             HomeTopAppBar()
-        }
+        },
     ) {
         HomeContent(
             state = state,
             onAudioBookClick = component::onAudioBookClick,
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(it),
         )
     }
 }
 
 @Composable
 private fun HomeContent(
-    modifier: Modifier = Modifier, state: HomeState,
-    onAudioBookClick: (AudioBook) -> Unit
+    onAudioBookClick: (AudioBook) -> Unit,
+    state: HomeState,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier) {
         items(state.audioBooks) {

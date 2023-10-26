@@ -9,28 +9,28 @@ internal class SignupReducer @Inject constructor() : Reducer<SignupState, Messag
             is Message.EmailTextChanged -> {
                 copy(
                     email = msg.text,
-                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled,
                 )
             }
 
             is Message.NameTextChanged -> {
                 copy(
                     name = msg.text,
-                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled,
                 )
             }
 
             is Message.PasswordTextChanged -> {
                 copy(
                     password = msg.text,
-                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled,
                 )
             }
 
             is Message.SurnameTextChanged -> {
                 copy(
                     surname = msg.text,
-                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled
+                    isCreateAccountButtonEnabled = msg.isCreateAccountButtonEnabled,
                 )
             }
         }

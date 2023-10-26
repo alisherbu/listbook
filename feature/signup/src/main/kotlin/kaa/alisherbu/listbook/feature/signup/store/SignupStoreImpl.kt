@@ -8,10 +8,11 @@ import javax.inject.Provider
 internal class SignupStoreImpl @Inject constructor(
     storeFactory: StoreFactory,
     executorProvider: Provider<SignupExecutor>,
-    reducer: SignupReducer
-) : SignupStore, Store<Intent, SignupState, Label> by storeFactory.create(
-    name = SignupStore::class.simpleName,
-    executorFactory = executorProvider::get,
-    reducer = reducer,
-    initialState = SignupState()
-)
+    reducer: SignupReducer,
+) : SignupStore,
+    Store<Intent, SignupState, Label> by storeFactory.create(
+        name = SignupStore::class.simpleName,
+        executorFactory = executorProvider::get,
+        reducer = reducer,
+        initialState = SignupState(),
+    )

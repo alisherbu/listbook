@@ -7,9 +7,9 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.feature.home.component.HomeComponent.Output
 import kaa.alisherbu.listbook.feature.home.store.HomeState
 import kaa.alisherbu.listbook.feature.home.store.HomeStore
-import kaa.alisherbu.listbook.feature.home.component.HomeComponent.Output
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Provider
 
@@ -30,7 +30,7 @@ class HomeComponentImpl @AssistedInject internal constructor(
     interface Factory : HomeComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): HomeComponentImpl
     }
 }

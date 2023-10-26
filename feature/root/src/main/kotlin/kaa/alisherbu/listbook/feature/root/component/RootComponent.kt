@@ -7,9 +7,9 @@ import com.arkivanov.decompose.value.Value
 import kaa.alisherbu.feature.player.component.PlayerComponent
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.feature.dialog.component.MessageDialogComponent
+import kaa.alisherbu.listbook.feature.main.component.MainComponent
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
-import kaa.alisherbu.listbook.feature.main.component.MainComponent
 
 interface RootComponent {
 

@@ -8,11 +8,12 @@ import javax.inject.Provider
 
 internal class RootStoreImpl @Inject constructor(
     storeFactory: StoreFactory,
-    executorProvider: Provider<RootExecutor>
-) : RootStore, Store<Intent, RootState, Label> by storeFactory.create(
-    name = RootStore::class.simpleName,
-    executorFactory = executorProvider::get,
-    initialState = RootState(),
-    bootstrapper = SimpleBootstrapper(Action.CheckUserSigned),
-    autoInit = false
-)
+    executorProvider: Provider<RootExecutor>,
+) : RootStore,
+    Store<Intent, RootState, Label> by storeFactory.create(
+        name = RootStore::class.simpleName,
+        executorFactory = executorProvider::get,
+        initialState = RootState(),
+        bootstrapper = SimpleBootstrapper(Action.CheckUserSigned),
+        autoInit = false,
+    )

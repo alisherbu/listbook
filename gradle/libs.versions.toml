@@ -39,6 +39,10 @@ timber = "5.0.1"
 #media
 exoplayer = "1.1.1"
 
+#static analyzers
+detekt = "1.23.1"
+detektCompose = "1.3.0"
+
 [libraries]
 
 #mvikotlin
@@ -72,6 +76,11 @@ google-firebase-firestore = { module = "com.google.firebase:firebase-firestore-k
 #media
 exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "exoplayer" }
 
+#static analyzers
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-compose = { module = "ru.kode:detekt-rules-compose", version.ref = "detektCompose" }
+detekt-ruleauthors = { module = "io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors", version.ref = "detekt" }
+
 #libraries
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidXCoreKtx" }
 androidx-lifecycle-runtimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
@@ -96,6 +105,9 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+
+#static analyzers
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 # Plugins defined by this project
 listbook-android-application = { id = "listbook.android.application", version = "unspecified" }

@@ -5,7 +5,7 @@ import kaa.alisherbu.listbook.feature.root.domain.repository.RootRepository
 import javax.inject.Inject
 
 internal class RootRepositoryImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
 ) : RootRepository {
     override fun checkUserSigned(): Boolean {
         return firebaseAuth.currentUser != null

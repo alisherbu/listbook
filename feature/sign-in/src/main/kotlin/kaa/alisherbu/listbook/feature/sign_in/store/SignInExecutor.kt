@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class SignInExecutor @Inject constructor(
-    private val signIn: SignInUseCase
+    private val signIn: SignInUseCase,
 ) : CoroutineExecutor<Intent, Unit, SignInState, Message, Label>() {
     override fun executeIntent(intent: Intent, getState: () -> SignInState) {
         val state = getState()

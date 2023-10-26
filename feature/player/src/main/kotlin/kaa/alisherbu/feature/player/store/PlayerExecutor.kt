@@ -9,7 +9,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 internal class PlayerExecutor @Inject constructor(
-    private val audioPlayer: AudioPlayer
+    private val audioPlayer: AudioPlayer,
 ) : CoroutineExecutor<Intent, Action, PlayerState, Message, Label>() {
     private val formatter = SimpleDateFormat("mm:ss", Locale.getDefault())
 
@@ -27,8 +27,8 @@ internal class PlayerExecutor @Inject constructor(
             dispatch(
                 Message.UpdateCurrentPosition(
                     position = it,
-                    positionText = formatter.format(it)
-                )
+                    positionText = formatter.format(it),
+                ),
             )
         }.launchIn(scope)
 
@@ -37,8 +37,8 @@ internal class PlayerExecutor @Inject constructor(
             dispatch(
                 Message.UpdateDuration(
                     duration = it,
-                    durationText = formatter.format(it)
-                )
+                    durationText = formatter.format(it),
+                ),
             )
         }.launchIn(scope)
     }
@@ -61,8 +61,8 @@ internal class PlayerExecutor @Inject constructor(
                 dispatch(
                     Message.UpdateUserPosition(
                         intent.position,
-                        formatter.format(intent.position)
-                    )
+                        formatter.format(intent.position),
+                    ),
                 )
             }
 

@@ -6,7 +6,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class ProfileComponentImpl @AssistedInject constructor(
-    @Assisted componentContext: ComponentContext
+    @Assisted componentContext: ComponentContext,
 ) : ProfileComponent, ComponentContext by componentContext {
 
     @AssistedFactory

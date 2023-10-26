@@ -22,7 +22,7 @@ fun MessageDialogScreen(dialogComponent: MessageDialogComponent) {
             TextButton(
                 onClick = {
                     dialogComponent.onDismissClicked()
-                }
+                },
             ) {
                 Text("Dismiss")
             }

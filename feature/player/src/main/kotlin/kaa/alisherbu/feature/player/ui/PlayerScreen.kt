@@ -39,27 +39,32 @@ fun PlayerScreen(component: PlayerComponent) {
                     IconButton(onClick = component::onBackClicked) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
                     }
-                })
-        }) { padding ->
+                },
+            )
+        },
+    ) { padding ->
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(padding),
         ) {
             val (playerController, playerSlider, bookName, download) = createRefs()
 
             state.currentAudioBook?.let {
-                Text(text = it.name, modifier = Modifier.constrainAs(bookName) {
-                    linkTo(start = parent.start, end = parent.end)
-                    bottom.linkTo(playerSlider.top, margin = 16.dp)
-                })
+                Text(
+                    text = it.name,
+                    modifier = Modifier.constrainAs(bookName) {
+                        linkTo(start = parent.start, end = parent.end)
+                        bottom.linkTo(playerSlider.top, margin = 16.dp)
+                    },
+                )
 
                 TextButton(
                     onClick = component::onDownloadClick,
                     modifier = Modifier.constrainAs(download) {
                         linkTo(start = parent.start, end = parent.end)
                         bottom.linkTo(bookName.top, margin = 16.dp)
-                    }
+                    },
                 ) {
                     Text(text = "Download")
                 }
@@ -72,12 +77,12 @@ fun PlayerScreen(component: PlayerComponent) {
                 duration = state.duration,
                 durationText = state.durationText,
                 onUserPositionChange = component::onUserPositionChange,
-                onUserPositionChangeFinished = component::onUserPositionChangeFinished,
+                onUserPositionChangeFinish = component::onUserPositionChangeFinished,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .constrainAs(playerSlider) {
                         bottom.linkTo(playerController.top, margin = 16.dp)
-                    }
+                    },
             )
             PlayerController(
                 isPlaying = state.isPlaying,
@@ -87,7 +92,8 @@ fun PlayerScreen(component: PlayerComponent) {
                 modifier = Modifier.constrainAs(playerController) {
                     width = Dimension.matchParent
                     bottom.linkTo(parent.bottom, margin = 16.dp)
-                })
+                },
+            )
         }
     }
 }
@@ -104,7 +110,7 @@ private class PreviewPlayerComponent : PlayerComponent {
         durationText = "06:50",
         position = 4000,
         positionText = "03:45",
-        currentAudioBook = AudioBook("id", "Audio book name", "")
+        currentAudioBook = AudioBook("id", "Audio book name", ""),
     )
     override val state: StateFlow<PlayerState> = MutableStateFlow(playerState)
     override fun onBackClicked() = Unit
@@ -114,5 +120,4 @@ private class PreviewPlayerComponent : PlayerComponent {
     override fun onUserPositionChange(value: Long) = Unit
     override fun onUserPositionChangeFinished() = Unit
     override fun onDownloadClick() = Unit
-
 }

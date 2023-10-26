@@ -21,8 +21,8 @@ import kaa.alisherbu.listbook.feature.auth.ui.AuthScreen
 import kaa.alisherbu.listbook.feature.dialog.ui.MessageDialogScreen
 import kaa.alisherbu.listbook.feature.main.ui.MainScreen
 import kaa.alisherbu.listbook.feature.root.component.RootComponent
-import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildDialog
+import kaa.alisherbu.listbook.feature.root.component.RootComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.sign_in.ui.SignInScreen
 import kaa.alisherbu.listbook.feature.signup.ui.SignupScreen
 
@@ -58,7 +58,7 @@ internal fun ProgressIndicator() {
         CircularProgressIndicator(
             modifier = Modifier
                 .size(80.dp)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }

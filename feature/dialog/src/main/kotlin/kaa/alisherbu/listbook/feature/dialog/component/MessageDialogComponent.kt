@@ -8,7 +8,6 @@ class MessageDialogComponent(
     private val onDismissed: () -> Unit,
 ) : ComponentContext by componentContext {
 
-
     fun onDismissClicked() {
         onDismissed()
     }

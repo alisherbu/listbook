@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 internal class HomeExecutor @Inject constructor(
     private val loadAudioBooks: LoadAudioBooksUseCase,
-    private val audioPlayer: AudioPlayer
+    private val audioPlayer: AudioPlayer,
 ) : CoroutineExecutor<Intent, Action, HomeState, Message, Label>() {
     override fun executeAction(action: Action, getState: () -> HomeState) {
         when (action) {

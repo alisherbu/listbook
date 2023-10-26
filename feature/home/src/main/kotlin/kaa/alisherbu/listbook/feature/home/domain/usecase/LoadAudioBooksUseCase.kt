@@ -1,14 +1,14 @@
 package kaa.alisherbu.listbook.feature.home.domain.usecase
 
-import kaa.alisherbu.listbook.feature.home.data.model.AudioBookResponse
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.feature.home.data.model.AudioBookResponse
 import kaa.alisherbu.listbook.feature.home.domain.repository.AudioBooksRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class LoadAudioBooksUseCase @Inject constructor(
-    private val audioBookRepository: AudioBooksRepository
+    private val audioBookRepository: AudioBooksRepository,
 ) {
     operator fun invoke(): Flow<List<AudioBook>> {
         return audioBookRepository.subscribeToAudioBooks().map(::toAudioBookList)
@@ -22,7 +22,7 @@ internal class LoadAudioBooksUseCase @Inject constructor(
         return AudioBook(
             id = book.id.toString(),
             name = book.name.toString(),
-            audioUrl = book.audioUrl.toString()
+            audioUrl = book.audioUrl.toString(),
         )
     }
 }

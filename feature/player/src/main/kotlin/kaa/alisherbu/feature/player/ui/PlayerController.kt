@@ -18,24 +18,24 @@ import kaa.alisherbu.listbook.core.shared.R as Shared
 
 @Composable
 fun PlayerController(
-    modifier: Modifier,
     isPlaying: Boolean,
+    modifier: Modifier = Modifier,
     onPrevious: () -> Unit = {},
     onPlayPause: () -> Unit = {},
-    onNext: () -> Unit = {}
+    onNext: () -> Unit = {},
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         FilledTonalIconButton(
             onClick = onPrevious,
-            modifier = Modifier.size(50.dp)
+            modifier = Modifier.size(50.dp),
         ) {
             Icon(
                 painter = painterResource(Shared.drawable.ic_skip_previous_24),
-                contentDescription = "Previous"
+                contentDescription = "Previous",
             )
         }
 
@@ -43,12 +43,15 @@ fun PlayerController(
 
         FilledTonalIconButton(
             onClick = onPlayPause,
-            modifier = Modifier.size(75.dp)
+            modifier = Modifier.size(75.dp),
         ) {
             Icon(
-                painter = if (isPlaying) painterResource(Shared.drawable.ic_pause_24)
-                else painterResource(Shared.drawable.ic_play_arrow_24),
-                contentDescription = "Play&Pause"
+                painter = if (isPlaying) {
+                    painterResource(Shared.drawable.ic_pause_24)
+                } else {
+                    painterResource(Shared.drawable.ic_play_arrow_24)
+                },
+                contentDescription = "Play&Pause",
             )
         }
 
@@ -56,11 +59,11 @@ fun PlayerController(
 
         FilledTonalIconButton(
             onClick = onNext,
-            modifier = Modifier.size(50.dp)
+            modifier = Modifier.size(50.dp),
         ) {
             Icon(
                 painter = painterResource(Shared.drawable.ic_skip_next_24),
-                contentDescription = "Next"
+                contentDescription = "Next",
             )
         }
     }

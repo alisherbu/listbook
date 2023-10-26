@@ -18,7 +18,7 @@ internal fun SuccessDialogScreen(dialogComponent: SuccessDialogComponent) {
         },
         confirmButton = {
             TextButton(
-                onClick = dialogComponent::dismiss
+                onClick = dialogComponent::dismiss,
             ) {
                 Text("Ok")
             }

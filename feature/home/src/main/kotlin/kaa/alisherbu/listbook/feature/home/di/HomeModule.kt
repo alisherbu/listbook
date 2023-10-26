@@ -12,7 +12,7 @@ class HomeModule {
     @Provides
     internal fun provideExecutor(
         loadAudioBooksUseCase: LoadAudioBooksUseCase,
-        audioPlayer: AudioPlayer
+        audioPlayer: AudioPlayer,
     ): HomeExecutor {
         return HomeExecutor(loadAudioBooksUseCase, audioPlayer)
     }

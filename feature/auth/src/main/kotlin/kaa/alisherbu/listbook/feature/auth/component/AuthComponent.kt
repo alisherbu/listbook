@@ -16,7 +16,7 @@ interface AuthComponent {
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): AuthComponent
     }
 }

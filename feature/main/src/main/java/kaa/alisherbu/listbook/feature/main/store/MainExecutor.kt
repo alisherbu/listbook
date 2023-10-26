@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 internal class MainExecutor @Inject constructor(
-    private val audioPlayer: AudioPlayer
+    private val audioPlayer: AudioPlayer,
 ) : CoroutineExecutor<Intent, Action, MainState, Message, Label>() {
 
     init {

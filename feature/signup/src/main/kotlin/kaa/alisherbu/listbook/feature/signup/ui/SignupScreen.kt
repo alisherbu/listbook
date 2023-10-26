@@ -25,12 +25,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
-import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
-import kaa.alisherbu.listbook.feature.signup.component.SignupComponentImpl
-import kaa.alisherbu.listbook.feature.signup.store.SignupState
 import kaa.alisherbu.listbook.core.resource.R
 import kaa.alisherbu.listbook.core.util.theme.MineShaft
 import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
+import kaa.alisherbu.listbook.feature.signup.component.SignupComponentImpl
+import kaa.alisherbu.listbook.feature.signup.store.SignupState
 
 @Composable
 fun SignupScreen(component: SignupComponent) {
@@ -38,18 +38,18 @@ fun SignupScreen(component: SignupComponent) {
     Scaffold(
         topBar = {
             SignupTopAppBar(
-                onBackClicked = component::onBackClicked
+                onBackClick = component::onBackClicked,
             )
-        }
+        },
     ) {
         SignupContent(
             state = state,
-            onNameTextChanged = component::onNameTextChanged,
-            onSurnameTextChanged = component::onSurnameTextChanged,
-            onEmailTextChanged = component::onEmailTextChanged,
-            onPasswordTextChanged = component::onPasswordTextChanged,
-            onCreateAccountClicked = component::onCreateAccountClicked,
-            modifier = Modifier.padding(it)
+            onNameTextChange = component::onNameTextChanged,
+            onSurnameTextChange = component::onSurnameTextChanged,
+            onEmailTextChange = component::onEmailTextChanged,
+            onPasswordTextChange = component::onPasswordTextChanged,
+            onCreateAccountClick = component::onCreateAccountClicked,
+            modifier = Modifier.padding(it),
         )
     }
     val dialogSlot by component.dialogSlot.subscribeAsState()
@@ -65,45 +65,45 @@ fun SignupScreen(component: SignupComponent) {
 @Composable
 private fun SignupContent(
     state: SignupState,
-    onNameTextChanged: (String) -> Unit,
-    onSurnameTextChanged: (String) -> Unit,
-    onEmailTextChanged: (String) -> Unit,
-    onPasswordTextChanged: (String) -> Unit,
-    onCreateAccountClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onNameTextChange: (String) -> Unit,
+    onSurnameTextChange: (String) -> Unit,
+    onEmailTextChange: (String) -> Unit,
+    onPasswordTextChange: (String) -> Unit,
+    onCreateAccountClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Orange)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp)
+                .padding(top = 32.dp),
         ) {
             SignupTextField(
                 value = state.name,
                 hintText = "Name",
-                onValueChange = onNameTextChanged
+                onValueChange = onNameTextChange,
             )
             SignupTextField(
                 value = state.surname,
                 hintText = "Surname",
-                onValueChange = onSurnameTextChanged
+                onValueChange = onSurnameTextChange,
             )
             SignupTextField(
                 value = state.email,
                 hintText = "Email",
                 keyboardType = KeyboardType.Email,
-                onValueChange = onEmailTextChanged
+                onValueChange = onEmailTextChange,
             )
             SignupTextField(
                 value = state.password,
                 hintText = "Password",
                 keyboardType = KeyboardType.Password,
-                onValueChange = onPasswordTextChanged
+                onValueChange = onPasswordTextChange,
             )
         }
         Column(
@@ -111,14 +111,14 @@ private fun SignupContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 32.dp)
+                .padding(vertical = 32.dp),
         ) {
             Button(
                 modifier = Modifier,
-                onClick = onCreateAccountClicked,
+                onClick = onCreateAccountClick,
                 colors = buttonColors(
                     containerColor = Color.Black,
-                    disabledContainerColor = MineShaft
+                    disabledContainerColor = MineShaft,
                 ),
                 enabled = state.isCreateAccountButtonEnabled,
             ) {
@@ -131,7 +131,7 @@ private fun SignupContent(
             Text(
                 text = "or",
                 color = Color.White,
-                fontSize = 18.sp
+                fontSize = 18.sp,
             )
             Row {
                 IconButton(onClick = { }) {
@@ -140,8 +140,8 @@ private fun SignupContent(
                         contentDescription = "Signup by Facebook",
                         modifier = Modifier.background(
                             color = Color.White,
-                            shape = RoundedCornerShape(20.dp)
-                        )
+                            shape = RoundedCornerShape(20.dp),
+                        ),
                     )
                 }
                 IconButton(onClick = { }) {
@@ -150,13 +150,11 @@ private fun SignupContent(
                         contentDescription = "Signup by Facebook",
                         modifier = Modifier.background(
                             color = Color.White,
-                            shape = RoundedCornerShape(20.dp)
-                        )
+                            shape = RoundedCornerShape(20.dp),
+                        ),
                     )
                 }
             }
         }
     }
 }
-
-

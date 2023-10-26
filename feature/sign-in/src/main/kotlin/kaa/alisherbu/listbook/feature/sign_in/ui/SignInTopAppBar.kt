@@ -18,8 +18,8 @@ import kaa.alisherbu.listbook.core.util.theme.Orange
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignInTopAppBar(
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onBackClicked: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -30,19 +30,19 @@ internal fun SignInTopAppBar(
         },
         modifier = modifier,
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Orange
+            containerColor = Orange,
         ),
         navigationIcon = {
             IconButton(
-                onClick = onBackClicked,
-                modifier = Modifier.padding(top = 10.dp)
+                onClick = onBackClick,
+                modifier = Modifier.padding(top = 10.dp),
             ) {
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
-        }
+        },
     )
 }

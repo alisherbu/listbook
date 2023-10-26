@@ -12,5 +12,4 @@ class RootModule {
     internal fun provideExecutor(checkUserSignedUseCase: CheckUserSignedUseCase): RootExecutor {
         return RootExecutor(checkUserSignedUseCase)
     }
-
 }

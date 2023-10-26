@@ -24,10 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
-import kaa.alisherbu.listbook.feature.sign_in.store.SignInState
 import kaa.alisherbu.listbook.core.resource.R
 import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
+import kaa.alisherbu.listbook.feature.sign_in.store.SignInState
 
 @Composable
 fun SignInScreen(component: SignInComponent) {
@@ -35,16 +35,16 @@ fun SignInScreen(component: SignInComponent) {
     Scaffold(
         topBar = {
             SignInTopAppBar(
-                onBackClicked = component::onBackClicked
+                onBackClick = component::onBackClicked,
             )
-        }
+        },
     ) {
         SignInContent(
             state = state,
-            onEmailTextChanged = component::onEmailTextChanged,
-            onPasswordTextChanged = component::onPasswordTextChanged,
-            onLogInClicked = component::onLogInClicked,
-            modifier = Modifier.padding(it)
+            onEmailTextChange = component::onEmailTextChanged,
+            onPasswordTextChange = component::onPasswordTextChanged,
+            onLogInClick = component::onLogInClicked,
+            modifier = Modifier.padding(it),
         )
     }
 }
@@ -52,33 +52,33 @@ fun SignInScreen(component: SignInComponent) {
 @Composable
 private fun SignInContent(
     state: SignInState,
-    onEmailTextChanged: (String) -> Unit,
-    onPasswordTextChanged: (String) -> Unit,
-    onLogInClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onEmailTextChange: (String) -> Unit,
+    onPasswordTextChange: (String) -> Unit,
+    onLogInClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Orange)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp)
+                .padding(top = 32.dp),
         ) {
             SignInTextField(
                 value = state.email,
                 hintText = "Email",
                 keyboardType = KeyboardType.Email,
-                onValueChange = onEmailTextChanged
+                onValueChange = onEmailTextChange,
             )
             SignInTextField(
                 value = state.password,
                 hintText = "Password",
                 keyboardType = KeyboardType.Password,
-                onValueChange = onPasswordTextChanged
+                onValueChange = onPasswordTextChange,
             )
         }
         Column(
@@ -86,24 +86,24 @@ private fun SignInContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 32.dp)
+                .padding(vertical = 32.dp),
         ) {
             Button(
                 modifier = Modifier,
-                onClick = onLogInClicked,
+                onClick = onLogInClick,
                 colors = buttonColors(
-                    containerColor = Color.Black
-                )
+                    containerColor = Color.Black,
+                ),
             ) {
                 Text(
                     text = "Log in",
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
             }
             Text(
                 text = "or",
                 color = Color.White,
-                fontSize = 18.sp
+                fontSize = 18.sp,
             )
             Row {
                 IconButton(onClick = { }) {
@@ -112,8 +112,8 @@ private fun SignInContent(
                         contentDescription = "Signup by Facebook",
                         modifier = Modifier.background(
                             color = Color.White,
-                            shape = RoundedCornerShape(20.dp)
-                        )
+                            shape = RoundedCornerShape(20.dp),
+                        ),
                     )
                 }
                 IconButton(onClick = { }) {
@@ -122,14 +122,11 @@ private fun SignInContent(
                         contentDescription = "Signup by Facebook",
                         modifier = Modifier.background(
                             color = Color.White,
-                            shape = RoundedCornerShape(20.dp)
-                        )
+                            shape = RoundedCornerShape(20.dp),
+                        ),
                     )
                 }
             }
         }
     }
 }
-
-
-

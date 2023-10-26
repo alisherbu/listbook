@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 
 @Composable
 fun AuthScreen(component: AuthComponent) {
@@ -24,7 +24,7 @@ fun AuthScreen(component: AuthComponent) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(Orange)
+            .background(Orange),
     ) {
         Button(
             onClick = component::onSignupClicked,
@@ -34,7 +34,7 @@ fun AuthScreen(component: AuthComponent) {
                 text = "Create account",
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(0.5f),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
 
@@ -42,15 +42,14 @@ fun AuthScreen(component: AuthComponent) {
             onClick = {
                 component.onSignInClicked()
             },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
         ) {
             Text(
                 text = "Sign in",
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(0.5f),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
     }
 }
-

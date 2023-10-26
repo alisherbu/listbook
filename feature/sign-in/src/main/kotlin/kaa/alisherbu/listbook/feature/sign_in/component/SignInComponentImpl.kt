@@ -9,11 +9,11 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent.Output
 import kaa.alisherbu.listbook.feature.sign_in.store.Intent
 import kaa.alisherbu.listbook.feature.sign_in.store.Label
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInState
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInStore
-import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent.Output
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -26,7 +26,7 @@ class SignInComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
     private val storeProvider: Provider<SignInStore>,
-    dispatchers: AppDispatchers
+    dispatchers: AppDispatchers,
 ) : SignInComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore(storeProvider::get)
     private val mainScope = CoroutineScope(dispatchers.main)
@@ -69,12 +69,11 @@ class SignInComponentImpl @AssistedInject internal constructor(
         store.accept(Intent.LogInClicked)
     }
 
-
     @AssistedFactory
     interface Factory : SignInComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): SignInComponentImpl
     }
 }

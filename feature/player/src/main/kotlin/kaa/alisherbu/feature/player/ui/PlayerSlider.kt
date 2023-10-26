@@ -24,7 +24,7 @@ fun PlayerSlider(
     duration: Long,
     durationText: String,
     onUserPositionChange: (value: Long) -> Unit,
-    onUserPositionChangeFinished: () -> Unit,
+    onUserPositionChangeFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -34,7 +34,7 @@ fun PlayerSlider(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(text = if (interacting) userPositionText else positionText)
         Spacer(modifier = Modifier.width(16.dp))
@@ -42,9 +42,9 @@ fun PlayerSlider(
             value = if (interacting) userPosition.toFloat() else position.toFloat(),
             valueRange = 0F..duration.toFloat(),
             onValueChange = { onUserPositionChange(it.toLong()) },
-            onValueChangeFinished = onUserPositionChangeFinished,
+            onValueChangeFinished = onUserPositionChangeFinish,
             interactionSource = interaction,
-            modifier = Modifier.weight(1F)
+            modifier = Modifier.weight(1F),
         )
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = durationText)

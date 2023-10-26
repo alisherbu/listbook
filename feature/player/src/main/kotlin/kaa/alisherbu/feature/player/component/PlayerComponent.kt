@@ -2,7 +2,6 @@ package kaa.alisherbu.feature.player.component
 
 import com.arkivanov.decompose.ComponentContext
 import kaa.alisherbu.feature.player.store.PlayerState
-import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerComponent {
@@ -24,7 +23,7 @@ interface PlayerComponent {
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): PlayerComponent
     }
 }

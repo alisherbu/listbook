@@ -36,7 +36,7 @@ interface MainComponent {
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            output: (Output) -> Unit
+            output: (Output) -> Unit,
         ): MainComponent
     }
 }

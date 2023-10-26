@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -14,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -38,14 +38,14 @@ fun MainScreen(component: MainComponent) {
                         isPlaying = state.isPlaying,
                         onPlayOrPause = component::onPlayOrPause,
                         audioBook = it,
-                        modifier = Modifier.clickable(onClick = component::onPlayerClicked)
+                        modifier = Modifier.clickable(onClick = component::onPlayerClicked),
                     )
                 }
 
                 BottomNavigation(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .navigationBarsPadding()
+                        .navigationBarsPadding(),
                 ) {
                     BottomNavigationItem(
                         selected = activeComponent is ChildScreen.Home,
@@ -55,7 +55,7 @@ fun MainScreen(component: MainComponent) {
                         },
                         label = {
                             Text(text = "Home")
-                        }
+                        },
                     )
                     BottomNavigationItem(
                         selected = activeComponent is ChildScreen.Profile,
@@ -65,20 +65,21 @@ fun MainScreen(component: MainComponent) {
                         },
                         label = {
                             Text(text = "Profile")
-                        }
+                        },
                     )
                 }
             }
         },
         content = {
             MainContent(screenStack = screenStack, modifier = Modifier.padding(it))
-        })
+        },
+    )
 }
 
 @Composable
 private fun MainContent(
+    screenStack: ChildStack<*, ChildScreen>,
     modifier: Modifier = Modifier,
-    screenStack: ChildStack<*, ChildScreen>
 ) {
     Children(stack = screenStack, modifier = modifier) {
         when (val child = it.instance) {
