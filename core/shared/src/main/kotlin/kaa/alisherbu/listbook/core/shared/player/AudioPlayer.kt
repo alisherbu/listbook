@@ -70,15 +70,15 @@ class AudioPlayer(
 
     fun loadAudioBooks(books: List<AudioBook>) {
         val isOffline = true
-        if (!isOffline) {
-            books.forEach { medias.add(Pair(it, it.toMediaItem())) }
-        } else {
+        if (isOffline) {
             books.forEach {
                 val downloadRequest = downloadTracker.getDownloadRequest(Uri.parse(it.audioUrl))
                 downloadRequest?.let { req ->
                     medias.add(Pair(it, req.toMediaItem()))
                 }
             }
+        } else {
+            books.forEach { medias.add(Pair(it, it.toMediaItem())) }
         }
         exoPlayer.setMediaItems(medias.map { it.second })
         exoPlayer.prepare()
@@ -90,7 +90,6 @@ class AudioPlayer(
         } else {
             exoPlayer.play()
         }
-        downloadedAudios()
     }
 
     fun previous() {
@@ -126,14 +125,5 @@ class AudioPlayer(
 
     fun download(audioBook: AudioBook) {
         downloadTracker.toggleDownload(audioBook.toMediaItem())
-    }
-
-    fun downloadedAudios() {
-        val downloadedList = downloadTracker.getDownloads()
-
-        Timber.d("count = ${downloadedList.size}")
-        downloadedList.forEach {
-            Timber.d("uri=${it.request.uri}")
-        }
     }
 }

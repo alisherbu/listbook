@@ -3,8 +3,6 @@ package kaa.alisherbu.listbook.core.shared.player
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
-import androidx.media3.common.C
-import androidx.media3.common.DrmInitData
 import androidx.media3.common.Format
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.Log
@@ -17,7 +15,6 @@ import androidx.media3.exoplayer.offline.DownloadIndex
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadRequest
 import androidx.media3.exoplayer.offline.DownloadService
-import com.google.common.base.Preconditions
 import java.io.IOException
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -43,7 +40,7 @@ class DownloadTracker(
     private val listeners: CopyOnWriteArraySet<Listener>
     private val downloads: HashMap<Uri, Download>
     private val downloadIndex: DownloadIndex
-    private var startDownloadDialogHelper: StartDownloadDialogHelper? = null
+    private var startDownloadDialogHelper: StartDownloadHelper? = null
 
     init {
         this.context = context.applicationContext
@@ -55,7 +52,7 @@ class DownloadTracker(
     }
 
     fun addListener(listener: Listener?) {
-        listeners.add(Preconditions.checkNotNull(listener))
+        listeners.add(checkNotNull(listener))
     }
 
     fun removeListener(listener: Listener) {
@@ -63,7 +60,7 @@ class DownloadTracker(
     }
 
     fun isDownloaded(mediaItem: MediaItem): Boolean {
-        val download = downloads[Preconditions.checkNotNull(mediaItem.localConfiguration).uri]
+        val download = downloads[checkNotNull(mediaItem.localConfiguration).uri]
         return download != null && download.state != Download.STATE_FAILED
     }
 
@@ -79,7 +76,7 @@ class DownloadTracker(
     fun toggleDownload(
         mediaItem: MediaItem
     ) {
-        val download = downloads[Preconditions.checkNotNull(mediaItem.localConfiguration).uri]
+        val download = downloads[mediaItem.localConfiguration?.uri]
         if (download != null && download.state != Download.STATE_FAILED) {
             DownloadService.sendRemoveDownload(
                 context,
@@ -88,10 +85,8 @@ class DownloadTracker(
                 false,
             )
         } else {
-            if (startDownloadDialogHelper != null) {
-                startDownloadDialogHelper!!.release()
-            }
-            startDownloadDialogHelper = StartDownloadDialogHelper(
+            startDownloadDialogHelper?.release()
+            startDownloadDialogHelper = StartDownloadHelper(
                 DownloadHelper.forMediaItem(
                     context,
                     mediaItem,
@@ -102,15 +97,11 @@ class DownloadTracker(
     }
 
     private fun loadDownloads() {
-        try {
-            downloadIndex.getDownloads().use { loadedDownloads ->
-                while (loadedDownloads.moveToNext()) {
-                    val download = loadedDownloads.download
-                    downloads[download.request.uri] = download
-                }
+        downloadIndex.getDownloads().use { cursor ->
+            while (cursor.moveToNext()) {
+                val download = cursor.download
+                downloads[download.request.uri] = download
             }
-        } catch (e: IOException) {
-            Log.w(TAG, "Failed to query downloads", e)
         }
     }
 
@@ -134,7 +125,7 @@ class DownloadTracker(
         }
     }
 
-    private inner class StartDownloadDialogHelper(
+    private inner class StartDownloadHelper(
         private val downloadHelper: DownloadHelper,
         private val mediaItem: MediaItem
     ) : DownloadHelper.Callback {
@@ -155,46 +146,10 @@ class DownloadTracker(
                 onDownloadPrepared(helper)
                 return
             }
-
-            // The content is DRM protected. We need to acquire an offline license.
-            if (Util.SDK_INT < 18) {
-                Toast.makeText(
-                    context,
-                    "R.string.error_drm_unsupported_before_api_18",
-                    Toast.LENGTH_LONG,
-                )
-                    .show()
-                Log.e(
-                    TAG,
-                    "Downloading DRM protected content is not supported on API versions below 18",
-                )
-                return
-            }
-            // TODO(internal b/163107948): Support cases where DrmInitData are not in the manifest.
-            if (!hasNonNullWidevineSchemaData(format.drmInitData)) {
-                Toast.makeText(
-                    context,
-                    "R.string.download_start_error_offline_license",
-                    Toast.LENGTH_LONG,
-                )
-                    .show()
-                Log.e(
-                    TAG,
-                    "Downloading content where DRM scheme data is not located in the manifest is not" +
-                        " supported",
-                )
-                return
-            }
         }
 
         override fun onPrepareError(helper: DownloadHelper, e: IOException) {
-            val isLiveContent = e is LiveContentUnsupportedException
-            val toastStringId =
-                if (isLiveContent) "R.string.download_live_unsupported" else "R.string.download_start_error"
-            val logMessage =
-                if (isLiveContent) "Downloading live content unsupported" else "Failed to start download"
-            Toast.makeText(context, toastStringId, Toast.LENGTH_LONG).show()
-            Log.e(TAG, logMessage, e)
+
         }
 
         // Internal methods.
@@ -228,24 +183,10 @@ class DownloadTracker(
                 downloadHelper.release()
                 return
             }
-            val tracks = downloadHelper.getTracks( /* periodIndex= */0)
             Log.d(TAG, "No dialog content. Downloading entire stream.")
             startDownload()
             downloadHelper.release()
             return
-        }
-
-        /**
-         * Returns whether any [DrmInitData.SchemeData] that [ ][DrmInitData.SchemeData.matches] [C.WIDEVINE_UUID] has non-null [ ][DrmInitData.SchemeData.data].
-         */
-        private fun hasNonNullWidevineSchemaData(drmInitData: DrmInitData?): Boolean {
-            for (i in 0 until drmInitData!!.schemeDataCount) {
-                val schemeData = drmInitData[i]
-                if (schemeData.matches(C.WIDEVINE_UUID) && schemeData.hasData()) {
-                    return true
-                }
-            }
-            return false
         }
 
         private fun startDownload(downloadRequest: DownloadRequest = buildDownloadRequest()) {
@@ -260,7 +201,7 @@ class DownloadTracker(
         private fun buildDownloadRequest(): DownloadRequest {
             return downloadHelper
                 .getDownloadRequest(
-                    Util.getUtf8Bytes(Preconditions.checkNotNull(mediaItem.mediaMetadata.title.toString())),
+                    Util.getUtf8Bytes(checkNotNull(mediaItem.mediaMetadata.title.toString())),
                 )
                 .copyWithKeySetId(keySetId)
         }
