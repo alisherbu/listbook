@@ -58,15 +58,26 @@ fun PlayerScreen(component: PlayerComponent) {
                         bottom.linkTo(playerSlider.top, margin = 16.dp)
                     },
                 )
-
-                TextButton(
-                    onClick = component::onDownloadClick,
-                    modifier = Modifier.constrainAs(download) {
-                        linkTo(start = parent.start, end = parent.end)
-                        bottom.linkTo(bookName.top, margin = 16.dp)
-                    },
-                ) {
-                    Text(text = "Download")
+                if (state.isDownloaded) {
+                    TextButton(
+                        onClick = component::onRemoveClick,
+                        modifier = Modifier.constrainAs(download) {
+                            linkTo(start = parent.start, end = parent.end)
+                            bottom.linkTo(bookName.top, margin = 16.dp)
+                        },
+                    ) {
+                        Text(text = "Remove")
+                    }
+                } else {
+                    TextButton(
+                        onClick = component::onDownloadClick,
+                        modifier = Modifier.constrainAs(download) {
+                            linkTo(start = parent.start, end = parent.end)
+                            bottom.linkTo(bookName.top, margin = 16.dp)
+                        },
+                    ) {
+                        Text(text = "Download")
+                    }
                 }
             }
             PlayerSlider(
@@ -120,4 +131,5 @@ private class PreviewPlayerComponent : PlayerComponent {
     override fun onUserPositionChange(value: Long) = Unit
     override fun onUserPositionChangeFinished() = Unit
     override fun onDownloadClick() = Unit
+    override fun onRemoveClick() = Unit
 }

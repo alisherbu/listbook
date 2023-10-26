@@ -50,6 +50,10 @@ class PlayerComponentImpl @AssistedInject internal constructor(
         store.accept(Intent.Download)
     }
 
+    override fun onRemoveClick() {
+        store.accept(Intent.Remove)
+    }
+
     @AssistedFactory
     interface Factory : PlayerComponent.Factory {
         override fun invoke(

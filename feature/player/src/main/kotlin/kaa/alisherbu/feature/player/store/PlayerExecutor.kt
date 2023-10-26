@@ -2,6 +2,7 @@ package kaa.alisherbu.feature.player.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kaa.alisherbu.listbook.core.shared.player.AudioPlayer
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat
@@ -14,6 +15,11 @@ internal class PlayerExecutor @Inject constructor(
     private val formatter = SimpleDateFormat("mm:ss", Locale.getDefault())
 
     init {
+        with(audioPlayer) {
+            combine(isDownloaded, currentAudioBook) { isDownloaded, currentAudioBook ->
+                dispatch(Message.UpdatePlayer(isDownloaded = isDownloaded))
+            }.launchIn(scope)
+        }
         audioPlayer.isPlaying.onEach {
             dispatch(Message.PlayOrPause(it))
         }.launchIn(scope)
@@ -73,6 +79,11 @@ internal class PlayerExecutor @Inject constructor(
             Intent.Download -> {
                 val audioBook = requireNotNull(getState().currentAudioBook) { "Can't be null" }
                 audioPlayer.download(audioBook)
+            }
+
+            Intent.Remove -> {
+                val audioBook = requireNotNull(getState().currentAudioBook) { "Can't be null" }
+                audioPlayer.removeDownload(audioBook)
             }
         }
     }

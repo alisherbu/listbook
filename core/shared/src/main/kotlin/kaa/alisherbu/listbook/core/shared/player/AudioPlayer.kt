@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 import kotlin.time.Duration.Companion.milliseconds
 
 @UnstableApi
@@ -39,14 +38,13 @@ class AudioPlayer(
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 medias.find { it.second == mediaItem }?.first?.let(_currentAudioBook::tryEmit)
-            }
-
-            override fun onPositionDiscontinuity(
-                oldPosition: Player.PositionInfo,
-                newPosition: Player.PositionInfo,
-                reason: Int
-            ) {
-                Timber.d("oldPosition=${oldPosition.positionMs}, newPosition=${newPosition.positionMs}")
+                _isDownloaded.tryEmit(
+                    if (mediaItem == null) {
+                        false
+                    } else {
+                        downloadTracker.isDownloaded(mediaItem)
+                    },
+                )
             }
         })
         tickerFlow(1000.milliseconds).onEach {
@@ -68,8 +66,11 @@ class AudioPlayer(
     private val _duration = MutableStateFlow(0L)
     val duration: StateFlow<Long> = _duration.asStateFlow()
 
+    private val _isDownloaded = MutableStateFlow(false)
+    val isDownloaded = _isDownloaded.asStateFlow()
+
     fun loadAudioBooks(books: List<AudioBook>) {
-        val isOffline = true
+        val isOffline = false
         if (isOffline) {
             books.forEach {
                 val downloadRequest = downloadTracker.getDownloadRequest(Uri.parse(it.audioUrl))
@@ -90,6 +91,7 @@ class AudioPlayer(
         } else {
             exoPlayer.play()
         }
+        downloadTracker.loadDownloads()
     }
 
     fun previous() {
@@ -123,7 +125,11 @@ class AudioPlayer(
             .build()
     }
 
+    fun removeDownload(audioBook: AudioBook) {
+        medias.find { it.first == audioBook }?.second?.let(downloadTracker::removeDownload)
+    }
+
     fun download(audioBook: AudioBook) {
-        downloadTracker.toggleDownload(audioBook.toMediaItem())
+        downloadTracker.startDownload(audioBook.toMediaItem())
     }
 }

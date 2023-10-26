@@ -1,5 +1,6 @@
 package kaa.alisherbu.listbook.feature.home.data.repository
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kaa.alisherbu.listbook.feature.home.data.model.AudioBookResponse
 import kaa.alisherbu.listbook.feature.home.domain.repository.AudioBooksRepository
@@ -16,11 +17,17 @@ internal class AudioBookRepositoryImpl @Inject constructor(
         return callbackFlow {
             val subscription = firebaseFirestore.collection("audio-books")
                 .addSnapshotListener { snapshot, _ ->
-                    snapshot?.documents?.mapNotNull {
-                        it.toObject(AudioBookResponse::class.java)
-                    }?.also(::trySend)
+                    snapshot?.documents?.mapNotNull(::toAudioBookResponse)?.also(::trySend)
                 }
             awaitClose(subscription::remove)
         }
+    }
+
+    private fun toAudioBookResponse(snapshot: DocumentSnapshot): AudioBookResponse {
+        return AudioBookResponse(
+            id = snapshot.id,
+            name = snapshot["name"].toString(),
+            audioUrl = snapshot["audioUrl"].toString(),
+        )
     }
 }

@@ -15,6 +15,7 @@ interface PlayerComponent {
     fun onUserPositionChange(value: Long)
     fun onUserPositionChangeFinished()
     fun onDownloadClick()
+    fun onRemoveClick()
 
     sealed interface Output {
         object Back : Output

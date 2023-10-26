@@ -10,6 +10,7 @@ internal sealed interface Intent {
     class ChangeUserPosition(val position: Long) : Intent
     object ChangeUserPositionFinished : Intent
     object Download : Intent
+    object Remove : Intent
 }
 
 internal sealed interface Action
@@ -19,6 +20,7 @@ internal sealed interface Message {
     class UpdateCurrentPosition(val position: Long, val positionText: String) : Message
     class UpdateUserPosition(val position: Long, val positionText: String) : Message
     class UpdateDuration(val duration: Long, val durationText: String) : Message
+    class UpdatePlayer(val isDownloaded: Boolean) : Message
 }
 
 internal sealed interface Label
