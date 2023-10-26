@@ -59,7 +59,7 @@ class AppModule(private val applicationContext: Context) {
             .setCache(DownloadUtil.getDownloadCache(context))
             .setUpstreamDataSourceFactory(DownloadUtil.getHttpDataSourceFactory(context))
             .setCacheWriteDataSinkFactory(null)
-        val mediaSourceFactory = DefaultMediaSourceFactory(cacheDataSourceFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(context).setDataSourceFactory(cacheDataSourceFactory)
         return ExoPlayer.Builder(context)
             .setMediaSourceFactory(mediaSourceFactory)
             .build()
@@ -67,6 +67,7 @@ class AppModule(private val applicationContext: Context) {
 
     @Provides
     @Singleton
+    @UnstableApi
     fun provideAudioPlayer(
         exoPlayer: ExoPlayer,
         dispatchers: AppDispatchers,

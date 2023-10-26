@@ -1,7 +1,5 @@
 package kaa.alisherbu.listbook.core.shared.player
 
-import android.app.Notification
-import android.app.NotificationManager
 import android.content.Context
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.database.DatabaseProvider

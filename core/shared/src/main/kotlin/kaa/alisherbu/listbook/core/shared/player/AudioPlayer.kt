@@ -7,8 +7,6 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.offline.DownloadRequest
-import androidx.media3.exoplayer.offline.DownloadService
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +26,10 @@ class AudioPlayer(
 ) {
     private val medias: MutableList<Pair<AudioBook, MediaItem>> = mutableListOf()
     private val mainScope = CoroutineScope(dispatchers.main)
+    private val downloadTracker = DownloadTracker(
+        context,
+        DownloadUtil.getDownloadManager(context),
+    )
 
     init {
         exoPlayer.addListener(object : Player.Listener {
@@ -67,14 +69,28 @@ class AudioPlayer(
     val duration: StateFlow<Long> = _duration.asStateFlow()
 
     fun loadAudioBooks(books: List<AudioBook>) {
-        books.forEach { medias.add(Pair(it, it.toMediaItem())) }
+        val isOffline = true
+        if (!isOffline) {
+            books.forEach { medias.add(Pair(it, it.toMediaItem())) }
+        } else {
+            books.forEach {
+                val downloadRequest = downloadTracker.getDownloadRequest(Uri.parse(it.audioUrl))
+                downloadRequest?.let { req ->
+                    medias.add(Pair(it, req.toMediaItem()))
+                }
+            }
+        }
         exoPlayer.setMediaItems(medias.map { it.second })
         exoPlayer.prepare()
     }
 
     fun playOrPause() {
-        if (isPlaying.value) exoPlayer.pause()
-        else exoPlayer.play()
+        if (isPlaying.value) {
+            exoPlayer.pause()
+        } else {
+            exoPlayer.play()
+        }
+        downloadedAudios()
     }
 
     fun previous() {
@@ -108,15 +124,16 @@ class AudioPlayer(
             .build()
     }
 
-
     fun download(audioBook: AudioBook) {
-        val downloadRequest =
-            DownloadRequest.Builder(audioBook.id, Uri.parse(audioBook.audioUrl)).build()
-        DownloadService.sendAddDownload(
-            /* context = */ context,
-            /* clazz = */ AudioDownloadService::class.java,
-            /* downloadRequest = */ downloadRequest,
-            /* foreground = */ true
-        )
+        downloadTracker.toggleDownload(audioBook.toMediaItem())
+    }
+
+    fun downloadedAudios() {
+        val downloadedList = downloadTracker.getDownloads()
+
+        Timber.d("count = ${downloadedList.size}")
+        downloadedList.forEach {
+            Timber.d("uri=${it.request.uri}")
+        }
     }
 }
