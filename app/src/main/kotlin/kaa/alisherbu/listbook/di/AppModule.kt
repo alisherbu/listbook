@@ -52,29 +52,7 @@ class AppModule(private val applicationContext: Context) {
         return applicationContext
     }
 
-    @Provides
-    @UnstableApi
-    fun provideExoPlayer(context: Context): ExoPlayer {
-        val cacheDataSourceFactory = CacheDataSource.Factory()
-            .setCache(DownloadUtil.getDownloadCache(context))
-            .setUpstreamDataSourceFactory(DownloadUtil.getHttpDataSourceFactory())
-            .setCacheWriteDataSinkFactory(null)
-        val mediaSourceFactory = DefaultMediaSourceFactory(context).setDataSourceFactory(cacheDataSourceFactory)
-        return ExoPlayer.Builder(context)
-            .setMediaSourceFactory(mediaSourceFactory)
-            .build()
-    }
 
-    @Provides
-    @Singleton
-    @UnstableApi
-    fun provideAudioPlayer(
-        exoPlayer: ExoPlayer,
-        dispatchers: AppDispatchers,
-        context: Context
-    ): AudioPlayer {
-        return AudioPlayer(exoPlayer, context, dispatchers)
-    }
 
     companion object {
         private const val LOG_LENGTH = 512

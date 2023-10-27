@@ -11,6 +11,7 @@ android {
 
 dependencies {
     implementation(libs.google.firebase.firestore)
+    implementation(libs.exoplayer)
     implementation(projects.core.database)
     implementation(projects.core.domain)
     implementation(projects.core.shared)

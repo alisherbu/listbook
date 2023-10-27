@@ -12,6 +12,7 @@ android {
 dependencies {
     implementation(libs.exoplayer)
     implementation(projects.core.shared)
+    implementation(projects.core.domain)
     implementation(libs.timber)
     implementation(libs.coroutines.android)
 }

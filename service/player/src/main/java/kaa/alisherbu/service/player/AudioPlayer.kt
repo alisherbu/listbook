@@ -5,31 +5,30 @@ import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.offline.Download
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.core.shared.player.tickerFlow
+import kaa.alisherbu.listbook.domain.repository.AudioDownloadsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
 @SuppressLint("UnsafeOptInUsageError")
-class AudioPlayer(
+class AudioPlayer @Inject constructor(
     private val exoPlayer: ExoPlayer,
-    private val context: Context,
-    dispatchers: AppDispatchers
+    dispatchers: AppDispatchers,
+    private val audioDownloadsRepository: AudioDownloadsRepository<Download?>,
+    private val downloadTracker: DownloadTracker
 ) {
     private val medias: MutableList<Pair<AudioBook, MediaItem>> = mutableListOf()
     private val mainScope = CoroutineScope(dispatchers.main)
-    private val downloadTracker = DownloadTracker(
-        context,
-        DownloadUtil.getDownloadManager(context),
-    )
 
     init {
         exoPlayer.addListener(object : Player.Listener {
@@ -43,7 +42,7 @@ class AudioPlayer(
                     if (mediaItem == null) {
                         false
                     } else {
-                        downloadTracker.isDownloaded(mediaItem.mediaId)
+                        audioDownloadsRepository.isDownloaded(mediaItem.mediaId)
                     },
                 )
             }
@@ -72,7 +71,7 @@ class AudioPlayer(
 
     fun loadAudioBooks(books: List<AudioBook>) {
         books.forEach {
-            val downloadRequest = downloadTracker.getDownloadRequest(it.id)
+            val downloadRequest = audioDownloadsRepository.getDownload(it.id)?.request
             val mediaItem = downloadRequest?.toMediaItem() ?: it.toMediaItem()
             medias.add(Pair(it, mediaItem))
         }
@@ -120,7 +119,11 @@ class AudioPlayer(
     }
 
     fun removeDownload(audioBook: AudioBook) {
-        medias.find { it.first == audioBook }?.second?.let(downloadTracker::removeDownload)
+        medias.find { it.first == audioBook }?.second?.let {
+            downloadTracker.removeDownload(
+                it.mediaId
+            )
+        }
     }
 
     fun download(audioBook: AudioBook) {
