@@ -1,4 +1,4 @@
-package kaa.alisherbu.player
+package kaa.alisherbu.service.player
 
 import android.content.Context
 import androidx.media3.common.MediaItem

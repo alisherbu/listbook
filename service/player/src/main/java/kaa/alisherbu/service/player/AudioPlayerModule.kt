@@ -1,4 +1,4 @@
-package kaa.alisherbu.player
+package kaa.alisherbu.service.player
 
 import dagger.Module
 

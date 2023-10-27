@@ -17,8 +17,8 @@ import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
-import kaa.alisherbu.player.AudioPlayer
-import kaa.alisherbu.player.DownloadUtil
+import kaa.alisherbu.service.player.AudioPlayer
+import kaa.alisherbu.service.player.DownloadUtil
 import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
 import javax.inject.Singleton
 

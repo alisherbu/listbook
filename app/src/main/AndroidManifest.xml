@@ -31,7 +31,7 @@
         </activity>
 
         <service
-            android:name="kaa.alisherbu.player.AudioDownloadService"
+            android:name="kaa.alisherbu.service.player.AudioDownloadService"
             android:exported="false"
             android:foregroundServiceType="dataSync">
             <intent-filter>

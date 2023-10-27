@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.core.player"
+    namespace = "kaa.alisherbu.listbook.service.player"
 }
 
 dependencies {

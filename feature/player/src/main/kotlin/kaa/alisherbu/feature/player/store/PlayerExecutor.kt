@@ -1,7 +1,7 @@
 package kaa.alisherbu.feature.player.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kaa.alisherbu.player.AudioPlayer
+import kaa.alisherbu.service.player.AudioPlayer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat

@@ -1,16 +1,11 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":core:player")
-
-
-include(":feature:player")
-
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":core:util")
 include(":core:shared")
 include(":core:resource")
+include(":service:player")
 include(":feature:root")
 include(":feature:main")
 include(":feature:auth")
@@ -19,6 +14,7 @@ include(":feature:profile")
 include(":feature:signup")
 include(":feature:sign-in")
 include(":feature:dialog")
+include(":feature:player")
 
 pluginManagement {
     includeBuild("build-logic")

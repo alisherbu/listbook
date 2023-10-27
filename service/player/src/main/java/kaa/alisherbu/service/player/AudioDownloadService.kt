@@ -1,4 +1,4 @@
-package kaa.alisherbu.player
+package kaa.alisherbu.service.player
 
 import android.annotation.SuppressLint
 import android.app.Notification
