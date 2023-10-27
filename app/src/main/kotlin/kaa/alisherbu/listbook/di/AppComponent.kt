@@ -1,6 +1,7 @@
 package kaa.alisherbu.listbook.di
 
 import android.content.Context
+import dagger.BindsInstance
 import dagger.Component
 import kaa.alisherbu.listbook.core.data.di.DataModule
 import kaa.alisherbu.listbook.core.database.di.DatabaseModule
@@ -22,5 +23,8 @@ import javax.inject.Singleton
 interface AppComponent {
     val rootComponentFactory: RootComponentImpl.Factory
 
-    fun applicationContext(applicationContext: Context)
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance applicationContext: Context): AppComponent
+    }
 }

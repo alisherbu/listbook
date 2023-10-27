@@ -1,10 +1,5 @@
 package kaa.alisherbu.listbook.di
 
-import android.content.Context
-import androidx.media3.common.util.UnstableApi
-import androidx.media3.datasource.cache.CacheDataSource
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.logging.logger.DefaultLogFormatter
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
@@ -17,13 +12,10 @@ import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
-import kaa.alisherbu.service.player.AudioPlayer
-import kaa.alisherbu.service.player.DownloadUtil
 import kaa.alisherbu.listbook.coroutine.DefaultAppDispatchers
-import javax.inject.Singleton
 
 @Module
-class AppModule(private val applicationContext: Context) {
+class AppModule {
     @Provides
     fun provideStoreFactory(): StoreFactory {
         return LoggingStoreFactory(
@@ -46,13 +38,6 @@ class AppModule(private val applicationContext: Context) {
     fun provideAppDispatchers(): AppDispatchers {
         return DefaultAppDispatchers()
     }
-
-    @Provides
-    fun provideApplicationContext(): Context {
-        return applicationContext
-    }
-
-
 
     companion object {
         private const val LOG_LENGTH = 512
