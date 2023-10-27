@@ -10,6 +10,7 @@ import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent.Output
 import kaa.alisherbu.listbook.feature.home.store.HomeState
 import kaa.alisherbu.listbook.feature.home.store.HomeStore
+import kaa.alisherbu.listbook.feature.home.store.Intent
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Provider
 
@@ -24,6 +25,10 @@ class HomeComponentImpl @AssistedInject internal constructor(
 
     override fun onAudioBookClick(audioBook: AudioBook) {
         output(Output.AudioBookItemClick(audioBook))
+    }
+
+    override fun onRefresh() {
+        store.accept(Intent.Refresh)
     }
 
     @AssistedFactory

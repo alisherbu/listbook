@@ -11,6 +11,8 @@ interface HomeComponent {
 
     fun onAudioBookClick(audioBook: AudioBook)
 
+    fun onRefresh()
+
     sealed interface Output {
         class AudioBookItemClick(val audioBook: AudioBook) : Output
     }

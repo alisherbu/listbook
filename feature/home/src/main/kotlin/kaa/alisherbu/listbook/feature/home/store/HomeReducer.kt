@@ -9,6 +9,10 @@ internal class HomeReducer @Inject constructor() : Reducer<HomeState, Message> {
             is Message.UpdateAudioBooks -> {
                 copy(audioBooks = msg.audioBooks)
             }
+
+            is Message.UpdateRefresh -> {
+                copy(isRefreshing = msg.isRefreshing)
+            }
         }
     }
 }

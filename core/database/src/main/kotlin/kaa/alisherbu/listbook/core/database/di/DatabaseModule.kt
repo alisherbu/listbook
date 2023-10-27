@@ -6,11 +6,13 @@ import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.database.ListbookDatabase
 import kaa.alisherbu.listbook.core.database.dao.AudioBooksDao
+import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
 
     @Provides
+    @Singleton
     fun provideDatabase(context: Context): ListbookDatabase {
         return Room.databaseBuilder(
             context = context,

@@ -4,4 +4,5 @@ import kaa.alisherbu.listbook.core.shared.model.AudioBook
 
 data class HomeState(
     val audioBooks: List<AudioBook> = emptyList(),
+    val isRefreshing: Boolean = false
 )

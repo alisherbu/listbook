@@ -21,6 +21,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(library("arkivanov-decompose-extensionsComposeJetpack"))
                 implementation(library("androidx-compose-foundation"))
                 implementation(library("androidx-compose-material3"))
+                implementation(library("androidx-compose-material"))
                 implementation(library("androidx-compose-constraintLayout"))
                 implementation(library("androidx-compose-toolingPreview"))
                 implementation(library("timber"))
