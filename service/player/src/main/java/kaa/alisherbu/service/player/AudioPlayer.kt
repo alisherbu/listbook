@@ -35,13 +35,6 @@ class AudioPlayer @Inject constructor(
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 medias.find { it.second == mediaItem }?.first?.let(_currentAudioBook::tryEmit)
-                _isDownloaded.tryEmit(
-                    if (mediaItem == null) {
-                        false
-                    } else {
-                        audioDownloadManager.isDownloaded(mediaItem.mediaId)
-                    },
-                )
             }
         })
         tickerFlow(1000.milliseconds).onEach {
@@ -63,16 +56,12 @@ class AudioPlayer @Inject constructor(
     private val _duration = MutableStateFlow(0L)
     val duration: StateFlow<Long> = _duration.asStateFlow()
 
-    private val _isDownloaded = MutableStateFlow(false)
-    val isDownloaded = _isDownloaded.asStateFlow()
-
     fun loadAudioBooks(books: List<AudioBook>) {
+        medias.clear()
         books.forEach {
-            val downloadRequest = audioDownloadManager.getDownload(it.id)?.request
-            val mediaItem = downloadRequest?.toMediaItem() ?: it.toMediaItem()
-            medias.add(Pair(it, mediaItem))
+            medias.add(Pair(it, getAsMedia(it)))
         }
-        exoPlayer.setMediaItems(medias.map { it.second })
+        exoPlayer.setMediaItems(medias.map { it.second }, false)
         exoPlayer.prepare()
     }
 
@@ -104,6 +93,11 @@ class AudioPlayer @Inject constructor(
         exoPlayer.seekTo(position)
     }
 
+    private fun getAsMedia(audioBook: AudioBook): MediaItem {
+        val downloadRequest = audioDownloadManager.getDownload(audioBook.id)?.request
+        return downloadRequest?.toMediaItem() ?: audioBook.toMediaItem()
+    }
+
     private fun AudioBook.toMediaItem(): MediaItem {
         val metadata = MediaMetadata.Builder()
             .setTitle(name)
@@ -116,11 +110,7 @@ class AudioPlayer @Inject constructor(
     }
 
     fun removeDownload(audioBook: AudioBook) {
-        medias.find { it.first == audioBook }?.second?.let {
-            downloadTracker.removeDownload(
-                it.mediaId
-            )
-        }
+        downloadTracker.removeDownload(audioBook.id)
     }
 
     fun download(audioBook: AudioBook) {

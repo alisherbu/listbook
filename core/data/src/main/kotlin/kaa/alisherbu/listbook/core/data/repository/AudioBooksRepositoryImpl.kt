@@ -25,6 +25,22 @@ class AudioBooksRepositoryImpl @Inject constructor(
 
     init {
         syncWithRemote()
+        downloadManager.addListener(object : AudioDownloadManager.Listener {
+            override fun onDownloadCompleted(id: String) {
+                ioScope.launch {
+                    val entity = audioBooksDao.getAudioBook(id)
+                    audioBooksDao.update(entity.copy(isDownloaded = true))
+                }
+            }
+
+            override fun onDownloadRemoved(id: String) {
+                ioScope.launch {
+                    val entity = audioBooksDao.getAudioBook(id)
+                    audioBooksDao.update(entity.copy(isDownloaded = false))
+                }
+            }
+
+        })
     }
 
     override fun getAudioBooksFlow(): Flow<List<AudioBookResponse>> {
@@ -48,7 +64,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
             id = entity.id,
             name = entity.name,
             audioUrl = entity.audioUrl,
-            isDownloaded = downloadManager.isDownloaded(entity.id)
+            isDownloaded = entity.isDownloaded
         )
     }
 
@@ -57,6 +73,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
             id = snapshot.id,
             name = snapshot["name"] as? String,
             audioUrl = snapshot["audioUrl"] as? String,
+            isDownloaded = downloadManager.isDownloaded(snapshot.id)
         )
     }
 }
