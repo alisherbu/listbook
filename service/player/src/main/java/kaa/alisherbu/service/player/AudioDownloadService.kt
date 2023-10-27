@@ -31,7 +31,7 @@ class AudioDownloadService : DownloadService(
             nextNotificationId = FOREGROUND_NOTIFICATION_ID + 1
         )
         downloadManager.addListener(terminalStateNotificationHelper)
-        return DownloadUtil.getDownloadManager(this)
+        return downloadManager
     }
 
     @SuppressLint("MissingPermission")

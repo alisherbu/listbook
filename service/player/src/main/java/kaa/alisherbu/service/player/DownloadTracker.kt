@@ -17,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  */
 @UnstableApi
 class DownloadTracker(
-    context: Context,
+    private val context: Context,
     downloadManager: DownloadManager
 ) {
     /**
@@ -30,7 +30,6 @@ class DownloadTracker(
         fun onDownloadsChanged()
     }
 
-    private val context: Context = context.applicationContext
     private val listeners: CopyOnWriteArraySet<Listener> = CopyOnWriteArraySet()
     private val downloads: HashMap<String, Download> = HashMap()
     private val downloadIndex: DownloadIndex = downloadManager.downloadIndex
