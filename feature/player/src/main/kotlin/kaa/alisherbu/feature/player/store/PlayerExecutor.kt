@@ -42,9 +42,6 @@ internal class PlayerExecutor @Inject constructor(
             )
         }.launchIn(scope)
 
-        audioPlayer.isDownloaded.onEach {
-            dispatch(Message.UpdateDownload(isDownloaded = it))
-        }.launchIn(scope)
     }
 
     override fun executeIntent(intent: Intent, getState: () -> PlayerState) {

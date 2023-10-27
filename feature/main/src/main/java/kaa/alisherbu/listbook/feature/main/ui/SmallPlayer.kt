@@ -62,6 +62,6 @@ internal fun SmallPlayer(
 @Preview
 @Composable
 private fun SmallPlayerPreview() {
-    val audioBook = AudioBook(id = "id", name = "Name", audioUrl = "url")
+    val audioBook = AudioBook(id = "id", name = "Name", audioUrl = "url", isDownloaded = true)
     SmallPlayer(isPlaying = true, audioBook = audioBook)
 }

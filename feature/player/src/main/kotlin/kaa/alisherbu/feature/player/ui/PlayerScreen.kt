@@ -58,7 +58,7 @@ fun PlayerScreen(component: PlayerComponent) {
                         bottom.linkTo(playerSlider.top, margin = 16.dp)
                     },
                 )
-                if (state.isDownloaded) {
+                if (it.isDownloaded) {
                     TextButton(
                         onClick = component::onRemoveClick,
                         modifier = Modifier.constrainAs(download) {
@@ -121,7 +121,7 @@ private class PreviewPlayerComponent : PlayerComponent {
         durationText = "06:50",
         position = 4000,
         positionText = "03:45",
-        currentAudioBook = AudioBook("id", "Audio book name", ""),
+        currentAudioBook = AudioBook("id", "Audio book name", "", false),
     )
     override val state: StateFlow<PlayerState> = MutableStateFlow(playerState)
     override fun onBackClicked() = Unit

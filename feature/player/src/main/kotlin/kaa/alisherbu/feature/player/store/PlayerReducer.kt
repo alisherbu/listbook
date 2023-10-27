@@ -26,9 +26,6 @@ internal class PlayerReducer @Inject constructor() : Reducer<PlayerState, Messag
                 copy(userPosition = msg.position, userPositionText = msg.positionText)
             }
 
-            is Message.UpdateDownload -> {
-                copy(isDownloaded = msg.isDownloaded)
-            }
         }
     }
 }

@@ -1,16 +1,15 @@
-package kaa.alisherbu.listbook.core.data.repository
+package kaa.alisherbu.service.player
 
-import androidx.media3.common.util.UnstableApi
+import android.annotation.SuppressLint
 import androidx.media3.exoplayer.offline.Download
 import androidx.media3.exoplayer.offline.DownloadIndex
 import androidx.media3.exoplayer.offline.DownloadManager
-import kaa.alisherbu.listbook.domain.repository.AudioDownloadsRepository
 import javax.inject.Inject
 
-@UnstableApi
-class AudioDownloadsRepositoryImpl @Inject constructor(
+@SuppressLint("UnsafeOptInUsageError")
+class AudioDownloadManager @Inject constructor(
     downloadManager: DownloadManager
-) : AudioDownloadsRepository<Download?> {
+) {
     private val downloads: MutableMap<String, Download> = hashMapOf()
     private val downloadIndex: DownloadIndex = downloadManager.downloadIndex
     private val downloadListener = object : DownloadManager.Listener {
@@ -34,16 +33,16 @@ class AudioDownloadsRepositoryImpl @Inject constructor(
         downloadManager.addListener(downloadListener)
     }
 
-    override fun isDownloaded(id: String): Boolean {
+    fun isDownloaded(id: String): Boolean {
         val download = downloads[id]
         return download != null && download.state != Download.STATE_FAILED
     }
 
-    override fun getDownload(id: String): Download? {
+    internal fun getDownload(id: String): Download? {
         return downloads[id]
     }
 
-    override fun getDownloads(): List<Download> {
+    internal fun getDownloads(): List<Download> {
         return downloads.values.toList()
     }
 

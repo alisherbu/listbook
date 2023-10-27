@@ -4,13 +4,11 @@ import android.content.Context
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.offline.Download
-import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
-import kaa.alisherbu.listbook.domain.repository.AudioDownloadsRepository
+import kaa.alisherbu.service.player.AudioDownloadManager
 import kaa.alisherbu.service.player.AudioPlayer
 import kaa.alisherbu.service.player.DownloadTracker
 import kaa.alisherbu.service.player.DownloadUtil
@@ -53,16 +51,17 @@ class AudioPlayerModule {
     fun provideAudioPlayer(
         exoPlayer: ExoPlayer,
         dispatchers: AppDispatchers,
-        audioDownloadRepository: AudioDownloadsRepository<Download?>,
+        audioDownloadManager: AudioDownloadManager,
         downloadTracker: DownloadTracker
     ): AudioPlayer {
-        return AudioPlayer(exoPlayer, dispatchers, audioDownloadRepository, downloadTracker)
+        return AudioPlayer(exoPlayer, dispatchers, audioDownloadManager, downloadTracker)
     }
 
     @UnstableApi
     @Provides
-    fun provideDownloadManager(context: Context): DownloadManager {
-        return DownloadUtil.getDownloadManager(context)
+    @Singleton
+    fun provideAudioDownloadManager(context: Context): AudioDownloadManager {
+        return AudioDownloadManager(DownloadUtil.getDownloadManager(context))
     }
 
     @UnstableApi

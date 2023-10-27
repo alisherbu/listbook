@@ -7,6 +7,7 @@ import kaa.alisherbu.listbook.core.database.entity.AudioBookEntity
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.domain.model.AudioBookResponse
 import kaa.alisherbu.listbook.domain.repository.AudioBooksRepository
+import kaa.alisherbu.service.player.AudioDownloadManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class AudioBooksRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
     private val audioBooksDao: AudioBooksDao,
-    private val dispatchers: AppDispatchers
+    private val dispatchers: AppDispatchers,
+    private val downloadManager: AudioDownloadManager
 ) : AudioBooksRepository {
     private val ioScope = CoroutineScope(dispatchers.io)
 
@@ -45,7 +47,8 @@ class AudioBooksRepositoryImpl @Inject constructor(
         return AudioBookResponse(
             id = entity.id,
             name = entity.name,
-            audioUrl = entity.audioUrl
+            audioUrl = entity.audioUrl,
+            isDownloaded = downloadManager.isDownloaded(entity.id)
         )
     }
 

@@ -23,6 +23,7 @@ class GetAudioBooksUseCase @Inject constructor(
             id = book.id.toString(),
             name = book.name.toString(),
             audioUrl = book.audioUrl.toString(),
+            isDownloaded = book.isDownloaded
         )
     }
 }

@@ -20,7 +20,6 @@ internal sealed interface Message {
     class UpdateCurrentPosition(val position: Long, val positionText: String) : Message
     class UpdateUserPosition(val position: Long, val positionText: String) : Message
     class UpdateDuration(val duration: Long, val durationText: String) : Message
-    class UpdateDownload(val isDownloaded: Boolean) : Message
 }
 
 internal sealed interface Label

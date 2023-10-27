@@ -1,16 +1,13 @@
 package kaa.alisherbu.service.player
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.offline.Download
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.core.shared.player.tickerFlow
-import kaa.alisherbu.listbook.domain.repository.AudioDownloadsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +21,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class AudioPlayer @Inject constructor(
     private val exoPlayer: ExoPlayer,
     dispatchers: AppDispatchers,
-    private val audioDownloadsRepository: AudioDownloadsRepository<Download?>,
+    private val audioDownloadManager: AudioDownloadManager,
     private val downloadTracker: DownloadTracker
 ) {
     private val medias: MutableList<Pair<AudioBook, MediaItem>> = mutableListOf()
@@ -42,7 +39,7 @@ class AudioPlayer @Inject constructor(
                     if (mediaItem == null) {
                         false
                     } else {
-                        audioDownloadsRepository.isDownloaded(mediaItem.mediaId)
+                        audioDownloadManager.isDownloaded(mediaItem.mediaId)
                     },
                 )
             }
@@ -71,7 +68,7 @@ class AudioPlayer @Inject constructor(
 
     fun loadAudioBooks(books: List<AudioBook>) {
         books.forEach {
-            val downloadRequest = audioDownloadsRepository.getDownload(it.id)?.request
+            val downloadRequest = audioDownloadManager.getDownload(it.id)?.request
             val mediaItem = downloadRequest?.toMediaItem() ?: it.toMediaItem()
             medias.add(Pair(it, mediaItem))
         }
