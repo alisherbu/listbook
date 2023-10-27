@@ -1,5 +1,6 @@
 package kaa.alisherbu.service.player
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -17,7 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlin.time.Duration.Companion.milliseconds
 
-@UnstableApi
+@SuppressLint("UnsafeOptInUsageError")
 class AudioPlayer(
     private val exoPlayer: ExoPlayer,
     private val context: Context,

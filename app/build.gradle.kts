@@ -59,6 +59,9 @@ dependencies {
 
     implementation(projects.core.util)
     implementation(projects.core.shared)
+    implementation(projects.core.database)
+    implementation(projects.core.data)
+    implementation(projects.core.domain)
     implementation(projects.service.player)
     implementation(projects.feature.root)
     implementation(projects.feature.auth)

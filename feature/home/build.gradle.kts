@@ -12,5 +12,6 @@ dependencies {
     implementation(libs.google.firebase.firestore)
 
     implementation(projects.core.shared)
+    implementation(projects.core.domain)
     implementation(projects.service.player)
 }

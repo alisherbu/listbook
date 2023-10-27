@@ -2,12 +2,16 @@
 
 plugins {
     alias(libs.plugins.listbook.android.library)
+    alias(libs.plugins.listbook.android.dagger)
 }
 
 android {
-    namespace = "kaa.alisherbu.listbook.core.data"
+    namespace = "kaa.alisherbu.listbook.core.database"
 }
 
 dependencies {
-
+    implementation(libs.google.firebase.firestore)
+    implementation(projects.core.database)
+    implementation(projects.core.domain)
+    implementation(projects.core.shared)
 }
