@@ -12,6 +12,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 apply("listbook.android.library")
                 apply("listbook.android.library.compose")
                 apply("listbook.android.dagger")
+                apply("kotlin-parcelize")
             }
 
             dependencies {

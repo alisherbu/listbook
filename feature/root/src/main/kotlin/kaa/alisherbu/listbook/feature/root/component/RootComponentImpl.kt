@@ -185,22 +185,22 @@ class RootComponentImpl @AssistedInject internal constructor(
 
     private sealed interface ScreenConfig : Parcelable {
         @Parcelize
-        object Auth : ScreenConfig
+        data object Auth : ScreenConfig
 
         @Parcelize
-        object Main : ScreenConfig
+        data object Main : ScreenConfig
 
         @Parcelize
-        object Signup : ScreenConfig
+        data object Signup : ScreenConfig
 
         @Parcelize
-        object SignIn : ScreenConfig
+        data object SignIn : ScreenConfig
 
         @Parcelize
-        object Undefined : ScreenConfig
+        data object Undefined : ScreenConfig
 
         @Parcelize
-        object Player : ScreenConfig
+        data object Player : ScreenConfig
     }
 
     private sealed interface DialogConfig : Parcelable {

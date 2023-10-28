@@ -12,4 +12,5 @@ dependencies {
     implementation(projects.core.resource)
     implementation(projects.core.shared)
     implementation(projects.service.player)
+    implementation(projects.feature.chapter)
 }

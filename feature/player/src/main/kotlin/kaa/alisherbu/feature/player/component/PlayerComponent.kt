@@ -1,12 +1,15 @@
 package kaa.alisherbu.feature.player.component
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.slot.ChildSlot
+import com.arkivanov.decompose.value.Value
 import kaa.alisherbu.feature.player.store.PlayerState
+import kaa.alisherbu.listbook.chapter.component.ChapterComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerComponent {
     val state: StateFlow<PlayerState>
-
+    val dialogSlot: Value<ChildSlot<*, ChildDialog>>
     fun onBackClicked()
 
     fun onPreviousAudio()
@@ -16,9 +19,14 @@ interface PlayerComponent {
     fun onUserPositionChangeFinished()
     fun onDownloadClick()
     fun onRemoveClick()
-
+    fun onChapterClick()
+    fun onChapterDismiss()
     sealed interface Output {
-        object Back : Output
+        data object Back : Output
+    }
+
+    sealed interface ChildDialog {
+        class ChapterDialog(val component: ChapterComponent) : ChildDialog
     }
 
     fun interface Factory {
