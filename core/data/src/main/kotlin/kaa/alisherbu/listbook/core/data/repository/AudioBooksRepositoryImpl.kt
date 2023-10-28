@@ -3,7 +3,9 @@ package kaa.alisherbu.listbook.core.data.repository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kaa.alisherbu.listbook.core.database.dao.AudioBooksDao
+import kaa.alisherbu.listbook.core.database.dao.ChaptersDao
 import kaa.alisherbu.listbook.core.database.entity.AudioBookEntity
+import kaa.alisherbu.listbook.core.database.entity.ChapterEntity
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.domain.model.AudioBookResponse
 import kaa.alisherbu.listbook.domain.repository.AudioBooksRepository
@@ -18,6 +20,7 @@ import javax.inject.Inject
 class AudioBooksRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
     private val audioBooksDao: AudioBooksDao,
+    private val chaptersDao: ChaptersDao,
     private val dispatchers: AppDispatchers,
     private val downloadManager: AudioDownloadManager
 ) : AudioBooksRepository {
@@ -53,6 +56,12 @@ class AudioBooksRepositoryImpl @Inject constructor(
                 val audioBooks = it.documents.map(::toAudioBookEntity)
                 ioScope.launch { audioBooksDao.insertAll(audioBooks) }
             }
+
+        firebaseFirestore.collection("chapters").get()
+            .addOnSuccessListener {
+                val audioBooks = it.documents.map(::toChapterEntity)
+                ioScope.launch { chaptersDao.insertAll(audioBooks) }
+            }
     }
 
     private fun toAudioBookList(books: List<AudioBookEntity>): List<AudioBookResponse> {
@@ -71,6 +80,16 @@ class AudioBooksRepositoryImpl @Inject constructor(
 
     private fun toAudioBookEntity(snapshot: DocumentSnapshot): AudioBookEntity {
         return AudioBookEntity(
+            id = snapshot.id,
+            name = snapshot["name"] as? String,
+            audioUrl = snapshot["audioUrl"] as? String,
+            headerImage = snapshot["header_image"] as? String,
+            isDownloaded = downloadManager.isDownloaded(snapshot.id)
+        )
+    }
+
+    private fun toChapterEntity(snapshot: DocumentSnapshot): ChapterEntity {
+        return ChapterEntity(
             id = snapshot.id,
             name = snapshot["name"] as? String,
             audioUrl = snapshot["audioUrl"] as? String,

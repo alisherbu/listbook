@@ -1,7 +1,13 @@
 package kaa.alisherbu.feature.player.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,7 +21,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -68,6 +77,7 @@ fun PlayerScreen(component: PlayerComponent) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PlayerContent(
     state: PlayerState,
@@ -142,11 +152,22 @@ private fun PlayerContent(
                 bottom.linkTo(chapter.top, margin = 16.dp)
             },
         )
-        TextButton(onClick = onChapterClick,
-            modifier = Modifier.constrainAs(chapter) {
-                bottom.linkTo(parent.bottom)
-            }) {
-            Text(text = "Chapter")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                .background(Color.Cyan)
+                .clickable { onChapterClick() }
+                .constrainAs(chapter) {
+                    bottom.linkTo(parent.bottom)
+                }
+        ) {
+            Text(
+                text = "Chapter",
+                modifier = Modifier
+                    .align(Alignment.Center),
+            )
         }
     }
 }

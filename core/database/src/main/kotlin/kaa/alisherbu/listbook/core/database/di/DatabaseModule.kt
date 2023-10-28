@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.database.ListbookDatabase
 import kaa.alisherbu.listbook.core.database.dao.AudioBooksDao
+import kaa.alisherbu.listbook.core.database.dao.ChaptersDao
 import javax.inject.Singleton
 
 @Module
@@ -28,5 +29,10 @@ class DatabaseModule {
     @Provides
     fun provideAudioBooksDao(database: ListbookDatabase): AudioBooksDao {
         return database.audioBooksDao()
+    }
+
+    @Provides
+    fun provideChapterDao(database: ListbookDatabase): ChaptersDao {
+        return database.chaptersDao()
     }
 }
