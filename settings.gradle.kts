@@ -19,6 +19,7 @@ include(":feature:signup")
 include(":feature:sign-in")
 include(":feature:dialog")
 include(":feature:player")
+include(":feature:chapter")
 
 pluginManagement {
     includeBuild("build-logic")

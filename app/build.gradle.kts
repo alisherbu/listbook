@@ -71,5 +71,6 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.profile)
     implementation(projects.feature.player)
+    implementation(projects.feature.chapter)
 
 }
