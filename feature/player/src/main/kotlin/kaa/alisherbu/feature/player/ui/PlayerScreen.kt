@@ -121,7 +121,13 @@ private class PreviewPlayerComponent : PlayerComponent {
         durationText = "06:50",
         position = 4000,
         positionText = "03:45",
-        currentAudioBook = AudioBook("id", "Audio book name", "", false),
+        currentAudioBook = AudioBook(
+            "id",
+            "Audio book name",
+            "",
+            headerImage = "",
+            isDownloaded = false
+        ),
     )
     override val state: StateFlow<PlayerState> = MutableStateFlow(playerState)
     override fun onBackClicked() = Unit

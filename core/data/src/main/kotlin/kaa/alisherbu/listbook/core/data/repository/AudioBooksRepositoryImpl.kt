@@ -64,6 +64,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
             id = entity.id,
             name = entity.name,
             audioUrl = entity.audioUrl,
+            headerImage = entity.headerImage,
             isDownloaded = entity.isDownloaded
         )
     }
@@ -73,6 +74,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
             id = snapshot.id,
             name = snapshot["name"] as? String,
             audioUrl = snapshot["audioUrl"] as? String,
+            headerImage = snapshot["header_image"] as? String,
             isDownloaded = downloadManager.isDownloaded(snapshot.id)
         )
     }

@@ -3,6 +3,7 @@ package kaa.alisherbu.listbook.feature.home.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +34,7 @@ fun HomeScreen(component: HomeComponent) {
         topBar = {
             HomeTopAppBar()
         },
+        contentWindowInsets = WindowInsets(0.dp)
     ) {
         HomeContent(
             state = state,
@@ -59,14 +61,17 @@ private fun HomeContent(
             .fillMaxSize()
             .pullRefresh(refreshState)
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             item {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(10) {
-                        BookItem()
+                    items(state.audioBooks) {
+                        BookItem(it)
                     }
                 }
             }
@@ -91,9 +96,27 @@ private fun HomeScreenPreview() {
 private class HomeComponentPreview : HomeComponent {
     val homeState = HomeState(
         audioBooks = listOf(
-            AudioBook(id = "1", name = "Chapter 1", audioUrl = "", isDownloaded = false),
-            AudioBook(id = "2", name = "Chapter 2", audioUrl = "", isDownloaded = false),
-            AudioBook(id = "3", name = "Chapter 3", audioUrl = "", isDownloaded = false)
+            AudioBook(
+                id = "1",
+                name = "Chapter 1",
+                audioUrl = "",
+                headerImage = "",
+                isDownloaded = false
+            ),
+            AudioBook(
+                id = "2",
+                name = "Chapter 2",
+                audioUrl = "",
+                headerImage = "",
+                isDownloaded = false
+            ),
+            AudioBook(
+                id = "3",
+                name = "Chapter 3",
+                audioUrl = "",
+                headerImage = "",
+                isDownloaded = false
+            )
         )
     )
     override val state: StateFlow<HomeState> = MutableStateFlow(homeState)

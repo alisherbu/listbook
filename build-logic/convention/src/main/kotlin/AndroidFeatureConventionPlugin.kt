@@ -24,6 +24,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(library("androidx-compose-material"))
                 implementation(library("androidx-compose-constraintLayout"))
                 implementation(library("androidx-compose-toolingPreview"))
+                implementation(library("compose-coil"))
                 implementation(library("timber"))
                 debugImplementation(library("androidx-compose-tooling"))
             }
