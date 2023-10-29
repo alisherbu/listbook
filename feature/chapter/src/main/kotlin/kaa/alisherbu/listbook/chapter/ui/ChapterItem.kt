@@ -1,5 +1,6 @@
 package kaa.alisherbu.listbook.chapter.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,11 +22,11 @@ import kaa.alisherbu.listbook.core.shared.model.Chapter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChapterItem(
-    audioBook: Chapter,
+    chapter: Chapter,
     onClick: (book: Chapter) -> Unit,
 ) {
     Card(
-        onClick = { onClick(audioBook) },
+        onClick = { onClick(chapter) },
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
@@ -34,16 +35,18 @@ fun ChapterItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxSize(),
         ) {
-            Spacer(modifier = Modifier.width(20.dp))
-            Text(text = audioBook.name)
-            Spacer(modifier = Modifier.width(20.dp))
-            if (audioBook.isDownloaded) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_download_done_24),
-                    contentDescription = "Downloaded",
-                    modifier = Modifier.weight(1f)
-                )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(text = chapter.name)
+            if (chapter.isDownloaded) {
+                Box(modifier = Modifier.weight(1f)) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_download_done_24),
+                        contentDescription = "Downloaded",
+                        modifier = Modifier.align(Alignment.CenterEnd)
+                    )
+                }
             }
+            Spacer(modifier = Modifier.width(16.dp))
         }
     }
 }

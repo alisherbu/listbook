@@ -72,8 +72,8 @@ internal class PlayerExecutor @Inject constructor(
             }
 
             Intent.Download -> {
-                val audioBook = requireNotNull(getState().currentChapter) { "Can't be null" }
-                audioPlayer.download(audioBook)
+                val chapter = requireNotNull(getState().currentChapter) { "Can't be null" }
+                audioPlayer.download(chapter)
             }
 
             Intent.Remove -> {
@@ -83,6 +83,10 @@ internal class PlayerExecutor @Inject constructor(
 
             is Intent.Play -> {
                 audioPlayer.play(intent.chapter)
+            }
+
+            is Intent.UpdateAudioBook -> {
+                dispatch(Message.UpdateAudioBook(intent.audioBook))
             }
         }
     }

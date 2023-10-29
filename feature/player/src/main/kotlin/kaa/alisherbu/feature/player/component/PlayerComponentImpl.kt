@@ -35,6 +35,10 @@ class PlayerComponentImpl @AssistedInject internal constructor(
 
     override val state: StateFlow<PlayerState> = store.stateFlow
 
+    init {
+        store.accept(Intent.UpdateAudioBook(audioBook))
+    }
+
     private val dialogNavigation = SlotNavigation<DialogConfig>()
 
     override val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(

@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
@@ -95,12 +96,12 @@ private fun PlayerContent(
         modifier = modifier
             .fillMaxSize()
     ) {
-        val (playerController, playerSlider, bookName, download, chapter) = createRefs()
+        val (playerController, playerSlider, bookName, chapterName, download, chapter) = createRefs()
 
         state.currentChapter?.let {
             Text(
                 text = it.name,
-                modifier = Modifier.constrainAs(bookName) {
+                modifier = Modifier.constrainAs(chapterName) {
                     linkTo(start = parent.start, end = parent.end)
                     bottom.linkTo(playerSlider.top, margin = 16.dp)
                 },
@@ -126,6 +127,16 @@ private fun PlayerContent(
                     Text(text = "Download")
                 }
             }
+        }
+        state.currentAudioBook?.let {
+            Text(
+                text = it.name,
+                fontSize = 20.sp,
+                modifier = Modifier.constrainAs(bookName) {
+                    linkTo(start = parent.start, end = parent.end)
+                    bottom.linkTo(chapterName.top, margin = 16.dp)
+                },
+            )
         }
         PlayerSlider(
             position = state.position,
