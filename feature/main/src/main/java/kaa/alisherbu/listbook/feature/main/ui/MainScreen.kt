@@ -32,12 +32,15 @@ fun MainScreen(component: MainComponent) {
     Scaffold(
         bottomBar = {
             Column {
-                state.currentAudioBook?.let {
+                state.currentChapter?.let {
                     SmallPlayer(
                         isPlaying = state.isPlaying,
                         onPlayOrPause = component::onPlayOrPause,
                         audioBook = it,
-                        modifier = Modifier.clickable(onClick = component::onPlayerClicked),
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                component.onPlayerClicked(state.currentAudioBook)
+                            }),
                     )
                 }
 

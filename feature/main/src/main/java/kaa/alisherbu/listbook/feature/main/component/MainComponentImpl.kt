@@ -8,18 +8,25 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.ChildScreen
 import kaa.alisherbu.listbook.feature.main.component.MainComponent.Output
 import kaa.alisherbu.listbook.feature.main.store.Intent
+import kaa.alisherbu.listbook.feature.main.store.Label
 import kaa.alisherbu.listbook.feature.main.store.MainState
 import kaa.alisherbu.listbook.feature.main.store.MainStore
 import kaa.alisherbu.listbook.feature.profile.component.ProfileComponent
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.parcelize.Parcelize
 import javax.inject.Provider
 
@@ -29,8 +36,24 @@ class MainComponentImpl @AssistedInject internal constructor(
     private val homeFactory: HomeComponent.Factory,
     private val profileFactory: ProfileComponent.Factory,
     private val storeProvider: Provider<MainStore>,
+    dispatchers: AppDispatchers
 ) : MainComponent, ComponentContext by componentContext {
+    private val mainScope = CoroutineScope(dispatchers.main)
     private val store = instanceKeeper.getStore(storeProvider::get)
+
+    init {
+        store.labels
+            .onEach(::handleLabel)
+            .launchIn(mainScope)
+    }
+
+    private fun handleLabel(label: Label) {
+        when (label) {
+            is Label.OpenPlayer -> {
+                output(Output.OpenPlayerWithBook(label.audioBook))
+            }
+        }
+    }
 
     private val screenNavigation = StackNavigation<ScreenConfig>()
 
@@ -70,8 +93,8 @@ class MainComponentImpl @AssistedInject internal constructor(
         store.accept(Intent.PlayOrPause)
     }
 
-    override fun onPlayerClicked() {
-        output(Output.OpenPlayer)
+    override fun onPlayerClicked(audioBook: AudioBook?) {
+        store.accept(Intent.OpenPlayer)
     }
 
     private fun onHomeOutput(output: HomeComponent.Output) = when (output) {
@@ -82,10 +105,10 @@ class MainComponentImpl @AssistedInject internal constructor(
 
     private sealed interface ScreenConfig : Parcelable {
         @Parcelize
-        object Home : ScreenConfig
+        data object Home : ScreenConfig
 
         @Parcelize
-        object Profile : ScreenConfig
+        data object Profile : ScreenConfig
     }
 
     @AssistedFactory

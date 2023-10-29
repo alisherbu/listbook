@@ -34,7 +34,7 @@ class AudioPlayer @Inject constructor(
             }
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                medias.find { it.second == mediaItem }?.first?.let(_currentAudioBook::tryEmit)
+                medias.find { it.second == mediaItem }?.first?.let(_currentChapter::tryEmit)
             }
         })
         tickerFlow(1000.milliseconds).onEach {
@@ -47,8 +47,8 @@ class AudioPlayer @Inject constructor(
     private val _isPlaying = MutableStateFlow(false)
     val isPlaying: StateFlow<Boolean> = _isPlaying.asStateFlow()
 
-    private val _currentAudioBook = MutableStateFlow<Chapter?>(null)
-    val currentAudioBook: StateFlow<Chapter?> = _currentAudioBook.asStateFlow()
+    private val _currentChapter = MutableStateFlow<Chapter?>(null)
+    val currentChapter: StateFlow<Chapter?> = _currentChapter.asStateFlow()
 
     private val _currentPosition = MutableStateFlow(0L)
     val currentPosition: StateFlow<Long> = _currentPosition.asStateFlow()
@@ -56,9 +56,9 @@ class AudioPlayer @Inject constructor(
     private val _duration = MutableStateFlow(0L)
     val duration: StateFlow<Long> = _duration.asStateFlow()
 
-    fun loadAudioBooks(books: List<Chapter>) {
+    fun loadChapters(chapters: List<Chapter>) {
         medias.clear()
-        books.forEach {
+        chapters.forEach {
             medias.add(Pair(it, getAsMedia(it)))
         }
         exoPlayer.setMediaItems(medias.map { it.second }, false)

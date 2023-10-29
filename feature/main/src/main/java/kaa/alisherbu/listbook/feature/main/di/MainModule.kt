@@ -2,7 +2,8 @@ package kaa.alisherbu.listbook.feature.main.di
 
 import dagger.Module
 import dagger.Provides
-import kaa.alisherbu.listbook.feature.main.domain.usecase.GetChaptersByBookIdUseCase
+import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
+import kaa.alisherbu.listbook.feature.main.domain.usecase.GetChaptersByBookIdFlowUseCase
 import kaa.alisherbu.listbook.feature.main.store.MainExecutor
 import kaa.alisherbu.service.player.AudioPlayer
 
@@ -12,8 +13,12 @@ class MainModule {
     @Provides
     internal fun provideExecutor(
         audioPlayer: AudioPlayer,
-        getChaptersByBookIdUseCase: GetChaptersByBookIdUseCase
+        getChaptersByBookIdUseCase: GetChaptersByBookIdFlowUseCase,
+        dispatchers: AppDispatchers
     ): MainExecutor {
-        return MainExecutor(audioPlayer, getChaptersByBookIdUseCase)
+        return MainExecutor(
+            audioPlayer,
+            getChaptersByBookIdUseCase
+        )
     }
 }

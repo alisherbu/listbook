@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChaptersDao {
-    @Query("SELECT * FROM chapters")
-    fun getAudioBooks(): Flow<List<ChapterEntity>>
+    @Query("SELECT * FROM chapters WHERE bookId=:bookId")
+    fun getChaptersFlow(bookId: String): Flow<List<ChapterEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(audioBooks: List<ChapterEntity>)
@@ -19,7 +19,7 @@ interface ChaptersDao {
     @Query("SELECT * FROM chapters WHERE bookId=:bookId")
     suspend fun getChaptersByBookId(bookId: String): List<ChapterEntity>
 
-    @Query("SELECT * FROM audio_books WHERE id= :id")
+    @Query("SELECT * FROM chapters WHERE id= :id")
     suspend fun getChapterById(id: String): ChapterEntity
 
     @Update

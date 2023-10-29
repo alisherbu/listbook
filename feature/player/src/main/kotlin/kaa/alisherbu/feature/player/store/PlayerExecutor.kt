@@ -18,7 +18,7 @@ internal class PlayerExecutor @Inject constructor(
             dispatch(Message.PlayOrPause(it))
         }.launchIn(scope)
 
-        audioPlayer.currentAudioBook.onEach {
+        audioPlayer.currentChapter.onEach {
             checkNotNull(it) { "AudioBook shouldn't be null in the player" }
             dispatch(Message.UpdateAudioBook(it))
         }.launchIn(scope)

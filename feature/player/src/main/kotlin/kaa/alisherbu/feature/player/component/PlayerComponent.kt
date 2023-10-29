@@ -5,6 +5,7 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
 import kaa.alisherbu.feature.player.store.PlayerState
 import kaa.alisherbu.listbook.chapter.component.ChapterComponent
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerComponent {
@@ -32,6 +33,7 @@ interface PlayerComponent {
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
+            audioBook: AudioBook,
             output: (Output) -> Unit,
         ): PlayerComponent
     }

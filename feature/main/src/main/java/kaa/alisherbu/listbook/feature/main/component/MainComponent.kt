@@ -21,7 +21,7 @@ interface MainComponent {
 
     fun onPlayOrPause()
 
-    fun onPlayerClicked()
+    fun onPlayerClicked(audioBook: AudioBook?)
 
     sealed interface ChildScreen {
         class Home(val component: HomeComponent) : ChildScreen
@@ -30,7 +30,6 @@ interface MainComponent {
 
     sealed interface Output {
         class OpenPlayerWithBook(val audioBook: AudioBook) : Output
-        data object OpenPlayer : Output
     }
 
     fun interface Factory {

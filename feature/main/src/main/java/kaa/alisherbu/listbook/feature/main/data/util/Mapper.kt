@@ -13,3 +13,7 @@ internal fun toChapterResponse(entity: ChapterEntity): ChapterResponse {
         isDownloaded = entity.isDownloaded
     )
 }
+
+internal fun toChapterResponseList(entities: List<ChapterEntity>): List<ChapterResponse> {
+    return entities.map(::toChapterResponse)
+}

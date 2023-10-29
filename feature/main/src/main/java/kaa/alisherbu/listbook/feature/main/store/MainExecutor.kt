@@ -1,7 +1,8 @@
 package kaa.alisherbu.listbook.feature.main.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kaa.alisherbu.listbook.feature.main.domain.usecase.GetChaptersByBookIdUseCase
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.feature.main.domain.usecase.GetChaptersByBookIdFlowUseCase
 import kaa.alisherbu.service.player.AudioPlayer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -10,7 +11,7 @@ import javax.inject.Inject
 
 internal class MainExecutor @Inject constructor(
     private val audioPlayer: AudioPlayer,
-    private val getChaptersByBookId: GetChaptersByBookIdUseCase
+    private val getChaptersByBookIdFlow: GetChaptersByBookIdFlowUseCase
 ) : CoroutineExecutor<Intent, Action, MainState, Message, Label>() {
 
     init {
@@ -18,21 +19,33 @@ internal class MainExecutor @Inject constructor(
             dispatch(Message.PlayOrPause(it))
         }.launchIn(scope)
 
-        audioPlayer.currentAudioBook.onEach {
-            dispatch(Message.UpdateAudioBook(it))
+        audioPlayer.currentChapter.onEach {
+            dispatch(Message.UpdateChapter(it))
         }.launchIn(scope)
     }
 
     override fun executeIntent(intent: Intent, getState: () -> MainState) {
+        val state = getState()
         when (intent) {
             is Intent.Play -> scope.launch {
-                val chapters = getChaptersByBookId(intent.audioBook.id)
-                audioPlayer.loadAudioBooks(chapters)
+                dispatch(Message.UpdateAudioBook(intent.audioBook))
+                subscribeChaptersFlow(intent.audioBook)
             }
 
             Intent.PlayOrPause -> {
                 audioPlayer.playOrPause()
             }
+
+            Intent.OpenPlayer -> {
+                val audioBook = state.currentAudioBook ?: error("AudioBook should be null here")
+                publish(Label.OpenPlayer(audioBook))
+            }
         }
+    }
+
+    private fun subscribeChaptersFlow(audioBook: AudioBook) {
+        getChaptersByBookIdFlow(audioBook.id).onEach {
+            audioPlayer.loadChapters(it)
+        }.launchIn(scope)
     }
 }

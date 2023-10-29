@@ -13,5 +13,5 @@ internal class ChapterStoreImpl @Inject constructor(
     name = ChapterStore::class.simpleName,
     initialState = ChapterState(),
     executorFactory = executorProvider::get,
-    reducer = reducer
+    reducer = reducer,
 )

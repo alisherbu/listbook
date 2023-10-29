@@ -19,6 +19,7 @@ import kaa.alisherbu.feature.player.store.Intent
 import kaa.alisherbu.feature.player.store.PlayerState
 import kaa.alisherbu.feature.player.store.PlayerStore
 import kaa.alisherbu.listbook.chapter.component.ChapterComponent
+import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 import javax.inject.Provider
@@ -26,6 +27,7 @@ import javax.inject.Provider
 class PlayerComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
+    @Assisted private val audioBook: AudioBook,
     private val chapterFactory: ChapterComponent.Factory,
     private val storeProvider: Provider<PlayerStore>,
 ) : PlayerComponent, ComponentContext by componentContext {
@@ -78,27 +80,28 @@ class PlayerComponentImpl @AssistedInject internal constructor(
     }
 
     override fun onChapterClick() {
-        dialogNavigation.activate(DialogConfig.ChapterDialog)
+        dialogNavigation.activate(DialogConfig.ChapterDialog(audioBook))
     }
 
     private fun createChildDialog(
         config: DialogConfig,
         componentContext: ComponentContext
     ): ChildDialog = when (config) {
-        DialogConfig.ChapterDialog -> {
-            ChildDialog.ChapterDialog(chapterFactory(componentContext))
+        is DialogConfig.ChapterDialog -> {
+            ChildDialog.ChapterDialog(chapterFactory(componentContext, config.audioBook))
         }
     }
 
     private sealed interface DialogConfig : Parcelable {
         @Parcelize
-        data object ChapterDialog : DialogConfig
+        class ChapterDialog(val audioBook: AudioBook) : DialogConfig
     }
 
     @AssistedFactory
     interface Factory : PlayerComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
+            audioBook: AudioBook,
             output: (Output) -> Unit,
         ): PlayerComponentImpl
     }

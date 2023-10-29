@@ -10,6 +10,10 @@ internal class MainReducer @Inject constructor() : Reducer<MainState, Message> {
                 copy(isPlaying = msg.isPlaying)
             }
 
+            is Message.UpdateChapter -> {
+                copy(currentChapter = msg.chapter)
+            }
+
             is Message.UpdateAudioBook -> {
                 copy(currentAudioBook = msg.audioBook)
             }
