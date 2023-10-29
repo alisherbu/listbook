@@ -39,7 +39,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
             override fun onDownloadRemoved(id: String) {
                 ioScope.launch {
                     val entity = chaptersDao.getChapterById(id)
-                    chaptersDao.update(entity.copy(isDownloaded = true))
+                    chaptersDao.update(entity.copy(isDownloaded = false))
                 }
             }
 
@@ -72,9 +72,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
         return AudioBookResponse(
             id = entity.id,
             name = entity.name,
-            audioUrl = entity.audioUrl,
             headerImage = entity.headerImage,
-            isDownloaded = entity.isDownloaded
         )
     }
 
@@ -82,9 +80,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
         return AudioBookEntity(
             id = snapshot.id,
             name = snapshot["name"] as? String,
-            audioUrl = snapshot["audioUrl"] as? String,
             headerImage = snapshot["header_image"] as? String,
-            isDownloaded = downloadManager.isDownloaded(snapshot.id)
         )
     }
 

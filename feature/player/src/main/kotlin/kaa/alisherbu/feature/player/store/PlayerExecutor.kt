@@ -19,8 +19,8 @@ internal class PlayerExecutor @Inject constructor(
         }.launchIn(scope)
 
         audioPlayer.currentChapter.onEach {
-            checkNotNull(it) { "AudioBook shouldn't be null in the player" }
-            dispatch(Message.UpdateAudioBook(it))
+            checkNotNull(it) { "Chapter shouldn't be null in the player" }
+            dispatch(Message.UpdateChapter(it))
         }.launchIn(scope)
 
         audioPlayer.currentPosition.onEach {
@@ -72,13 +72,17 @@ internal class PlayerExecutor @Inject constructor(
             }
 
             Intent.Download -> {
-                val audioBook = requireNotNull(getState().currentAudioBook) { "Can't be null" }
+                val audioBook = requireNotNull(getState().currentChapter) { "Can't be null" }
                 audioPlayer.download(audioBook)
             }
 
             Intent.Remove -> {
-                val audioBook = requireNotNull(getState().currentAudioBook) { "Can't be null" }
+                val audioBook = requireNotNull(getState().currentChapter) { "Can't be null" }
                 audioPlayer.removeDownload(audioBook)
+            }
+
+            is Intent.Play -> {
+                audioPlayer.play(intent.chapter)
             }
         }
     }

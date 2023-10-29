@@ -4,18 +4,19 @@ import com.arkivanov.mvikotlin.core.store.Store
 import kaa.alisherbu.listbook.core.shared.model.Chapter
 
 internal sealed interface Intent {
-    object SkipToPreviousAudio : Intent
-    object SkipToNextAudio : Intent
-    object PlayOrPause : Intent
+    data object SkipToPreviousAudio : Intent
+    data object SkipToNextAudio : Intent
+    data object PlayOrPause : Intent
     class ChangeUserPosition(val position: Long) : Intent
-    object ChangeUserPositionFinished : Intent
-    object Download : Intent
-    object Remove : Intent
+    data object ChangeUserPositionFinished : Intent
+    data object Download : Intent
+    data object Remove : Intent
+    class Play(val chapter: Chapter) : Intent
 }
 
 internal sealed interface Action
 internal sealed interface Message {
-    class UpdateAudioBook(val audioBook: Chapter) : Message
+    class UpdateChapter(val chapter: Chapter) : Message
     class PlayOrPause(val isPlaying: Boolean) : Message
     class UpdateCurrentPosition(val position: Long, val positionText: String) : Message
     class UpdateUserPosition(val position: Long, val positionText: String) : Message

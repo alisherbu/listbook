@@ -82,8 +82,8 @@ class AudioPlayer @Inject constructor(
         exoPlayer.seekToNext()
     }
 
-    fun play(audioBook: Chapter) {
-        val index = medias.map { it.first }.indexOf(audioBook)
+    fun play(chapter: Chapter) {
+        val index = medias.map { it.first.id }.indexOf(chapter.id)
         exoPlayer.seekTo(index, 0L)
         if (!isPlaying.value) {
             exoPlayer.play()
@@ -110,8 +110,8 @@ class AudioPlayer @Inject constructor(
             .build()
     }
 
-    fun removeDownload(audioBook: Chapter) {
-        downloadTracker.removeDownload(audioBook.id)
+    fun removeDownload(chapter: Chapter) {
+        downloadTracker.removeDownload(chapter.id)
     }
 
     fun download(audioBook: Chapter) {

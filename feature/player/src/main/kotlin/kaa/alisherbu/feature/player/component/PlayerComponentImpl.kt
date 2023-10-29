@@ -88,7 +88,22 @@ class PlayerComponentImpl @AssistedInject internal constructor(
         componentContext: ComponentContext
     ): ChildDialog = when (config) {
         is DialogConfig.ChapterDialog -> {
-            ChildDialog.ChapterDialog(chapterFactory(componentContext, config.audioBook))
+            ChildDialog.ChapterDialog(
+                chapterFactory(
+                    componentContext,
+                    config.audioBook,
+                    ::onChapterOutput
+                )
+            )
+        }
+    }
+
+    private fun onChapterOutput(output: ChapterComponent.Output) {
+        when (output) {
+            is ChapterComponent.Output.Play -> {
+                store.accept(Intent.Play(output.chapter))
+                dialogNavigation.dismiss()
+            }
         }
     }
 

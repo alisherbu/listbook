@@ -3,7 +3,7 @@ package kaa.alisherbu.feature.player.store
 import kaa.alisherbu.listbook.core.shared.model.Chapter
 
 data class PlayerState(
-    val currentAudioBook: Chapter? = null,
+    val currentChapter: Chapter? = null,
     val position: Long = 0L,
     val positionText: String = "",
     val duration: Long = 0L,

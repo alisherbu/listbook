@@ -97,7 +97,7 @@ private fun PlayerContent(
     ) {
         val (playerController, playerSlider, bookName, download, chapter) = createRefs()
 
-        state.currentAudioBook?.let {
+        state.currentChapter?.let {
             Text(
                 text = it.name,
                 modifier = Modifier.constrainAs(bookName) {

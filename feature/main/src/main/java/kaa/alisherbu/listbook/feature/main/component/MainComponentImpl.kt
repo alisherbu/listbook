@@ -50,7 +50,7 @@ class MainComponentImpl @AssistedInject internal constructor(
     private fun handleLabel(label: Label) {
         when (label) {
             is Label.OpenPlayer -> {
-                output(Output.OpenPlayerWithBook(label.audioBook))
+                output(Output.OpenPlayer(label.audioBook))
             }
         }
     }

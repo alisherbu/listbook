@@ -6,8 +6,8 @@ import javax.inject.Inject
 internal class PlayerReducer @Inject constructor() : Reducer<PlayerState, Message> {
     override fun PlayerState.reduce(msg: Message): PlayerState {
         return when (msg) {
-            is Message.UpdateAudioBook -> {
-                copy(currentAudioBook = msg.audioBook)
+            is Message.UpdateChapter -> {
+                copy(currentChapter = msg.chapter)
             }
 
             is Message.PlayOrPause -> {

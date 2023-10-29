@@ -29,7 +29,7 @@ interface MainComponent {
     }
 
     sealed interface Output {
-        class OpenPlayerWithBook(val audioBook: AudioBook) : Output
+        class OpenPlayer(val audioBook: AudioBook) : Output
     }
 
     fun interface Factory {

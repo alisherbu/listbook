@@ -11,10 +11,15 @@ interface ChapterComponent {
 
     fun onChapterClicked(chapter: Chapter)
 
+    sealed interface Output {
+        class Play(val chapter: Chapter) : Output
+    }
+
     interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            audioBook: AudioBook
+            audioBook: AudioBook,
+            output: (Output) -> Unit
         ): ChapterComponent
     }
 }

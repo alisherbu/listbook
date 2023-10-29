@@ -169,7 +169,7 @@ class RootComponentImpl @AssistedInject internal constructor(
     }
 
     private fun onMainOutput(output: MainComponent.Output) = when (output) {
-        is MainComponent.Output.OpenPlayerWithBook -> {
+        is MainComponent.Output.OpenPlayer -> {
             screenNavigation.push(ScreenConfig.Player(output.audioBook))
         }
     }

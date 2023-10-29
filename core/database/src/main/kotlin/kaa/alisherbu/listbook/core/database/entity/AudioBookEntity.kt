@@ -10,10 +10,6 @@ data class AudioBookEntity(
     val id: String,
     @ColumnInfo("name")
     val name: String? = null,
-    @ColumnInfo("audioUrl")
-    val audioUrl: String? = null,
     @ColumnInfo("headerImage")
     val headerImage: String? = null,
-    @ColumnInfo(name = "isDownloaded")
-    val isDownloaded: Boolean = false
 )
