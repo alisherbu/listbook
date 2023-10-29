@@ -13,13 +13,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.model.Chapter
 import kaa.alisherbu.listbook.core.shared.R as Shared
 
 @Composable
 internal fun SmallPlayer(
     isPlaying: Boolean,
-    audioBook: AudioBook,
+    audioBook: Chapter,
     modifier: Modifier = Modifier,
     onPlayOrPause: () -> Unit = {},
 ) {
@@ -63,11 +63,11 @@ internal fun SmallPlayer(
 @Composable
 private fun SmallPlayerPreview() {
     val audioBook =
-        AudioBook(
+        Chapter(
             id = "id",
+            bookId = "bookId",
             name = "Name",
             audioUrl = "url",
-            headerImage = "",
             isDownloaded = true
         )
     SmallPlayer(isPlaying = true, audioBook = audioBook)

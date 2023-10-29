@@ -20,6 +20,7 @@ class GetChaptersUseCase @Inject constructor(
 
     private fun toChapter(response: ChapterResponse): Chapter {
         return Chapter(
+            id = response.id.toString(),
             bookId = response.bookId.toString(),
             name = response.name.toString(),
             audioUrl = response.audioUrl.toString(),

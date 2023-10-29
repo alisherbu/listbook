@@ -1,7 +1,7 @@
 package kaa.alisherbu.feature.player.store
 
 import com.arkivanov.mvikotlin.core.store.Store
-import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.model.Chapter
 
 internal sealed interface Intent {
     object SkipToPreviousAudio : Intent
@@ -15,7 +15,7 @@ internal sealed interface Intent {
 
 internal sealed interface Action
 internal sealed interface Message {
-    class UpdateAudioBook(val audioBook: AudioBook) : Message
+    class UpdateAudioBook(val audioBook: Chapter) : Message
     class PlayOrPause(val isPlaying: Boolean) : Message
     class UpdateCurrentPosition(val position: Long, val positionText: String) : Message
     class UpdateUserPosition(val position: Long, val positionText: String) : Message

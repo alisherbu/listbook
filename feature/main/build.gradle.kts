@@ -15,5 +15,6 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.profile)
     implementation(projects.core.shared)
+    implementation(projects.core.database)
     implementation(projects.service.player)
 }

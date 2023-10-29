@@ -6,17 +6,25 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun BookItem(audioBook: AudioBook, modifier: Modifier = Modifier) {
+internal fun BookItem(
+    audioBook: AudioBook,
+    onAudioBookClick: (book: AudioBook) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
+        onClick = {
+            onAudioBookClick(audioBook)
+        },
         modifier = modifier.padding(vertical = 2.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -32,17 +40,4 @@ internal fun BookItem(audioBook: AudioBook, modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop
         )
     }
-}
-
-@Composable
-@Preview
-private fun BookItemPreview() {
-    val audioBook = AudioBook(
-        id = "1",
-        name = "Chapter 1",
-        audioUrl = "",
-        headerImage = "",
-        isDownloaded = false
-    )
-    BookItem(audioBook = audioBook)
 }

@@ -157,7 +157,7 @@ private fun PlayerContent(
                 .fillMaxWidth()
                 .height(60.dp)
                 .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-                .background(Color.Cyan)
+                .background(Color.LightGray)
                 .clickable { onChapterClick() }
                 .constrainAs(chapter) {
                     bottom.linkTo(parent.bottom)

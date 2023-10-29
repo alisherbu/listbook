@@ -31,15 +31,15 @@ class AudioBooksRepositoryImpl @Inject constructor(
         downloadManager.addListener(object : AudioDownloadManager.Listener {
             override fun onDownloadCompleted(id: String) {
                 ioScope.launch {
-                    val entity = audioBooksDao.getAudioBook(id)
-                    audioBooksDao.update(entity.copy(isDownloaded = true))
+                    val entity = chaptersDao.getChapterById(id)
+                    chaptersDao.update(entity.copy(isDownloaded = true))
                 }
             }
 
             override fun onDownloadRemoved(id: String) {
                 ioScope.launch {
-                    val entity = audioBooksDao.getAudioBook(id)
-                    audioBooksDao.update(entity.copy(isDownloaded = false))
+                    val entity = chaptersDao.getChapterById(id)
+                    chaptersDao.update(entity.copy(isDownloaded = true))
                 }
             }
 
@@ -91,6 +91,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
     private fun toChapterEntity(snapshot: DocumentSnapshot): ChapterEntity {
         return ChapterEntity(
             id = snapshot.id,
+            bookId = snapshot["bookId"] as? String,
             name = snapshot["name"] as? String,
             audioUrl = snapshot["audioUrl"] as? String,
             headerImage = snapshot["header_image"] as? String,

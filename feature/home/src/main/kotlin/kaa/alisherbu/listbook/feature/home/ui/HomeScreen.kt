@@ -1,31 +1,36 @@
 package kaa.alisherbu.listbook.feature.home.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
 import kaa.alisherbu.listbook.feature.home.component.HomeComponent
 import kaa.alisherbu.listbook.feature.home.store.HomeState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HomeScreen(component: HomeComponent) {
@@ -67,17 +72,67 @@ private fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
+                Row {
+                    Text(text = "New Releases Book")
+                }
+            }
+            item {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(state.audioBooks) {
-                        BookItem(it)
+                        BookItem(
+                            audioBook = it,
+                            onAudioBookClick = onAudioBookClick
+                        )
                     }
                 }
             }
-            items(state.audioBooks) {
-                AudioBookItem(audioBook = it, onClick = onAudioBookClick)
+            item {
+                Row {
+                    Text(text = "Category")
+                }
             }
+            item {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(6) {
+                        Box(
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(100.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(Color.LightGray)
+                        ) {
+                            Text(
+                                text = "Category $it",
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
+                }
+            }
+
+            item {
+                Row {
+                    Text(text = "Featured Books")
+                }
+            }
+
+            item {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(state.audioBooks) {
+                        BookItem(
+                            audioBook = it,
+                            onAudioBookClick = onAudioBookClick
+                        )
+                    }
+                }
+            }
+
         }
         PullRefreshIndicator(
             refreshing = state.isRefreshing,
@@ -87,42 +142,3 @@ private fun HomeContent(
     }
 }
 
-@Preview
-@Composable
-private fun HomeScreenPreview() {
-    HomeScreen(HomeComponentPreview())
-}
-
-private class HomeComponentPreview : HomeComponent {
-    val homeState = HomeState(
-        audioBooks = listOf(
-            AudioBook(
-                id = "1",
-                name = "Chapter 1",
-                audioUrl = "",
-                headerImage = "",
-                isDownloaded = false
-            ),
-            AudioBook(
-                id = "2",
-                name = "Chapter 2",
-                audioUrl = "",
-                headerImage = "",
-                isDownloaded = false
-            ),
-            AudioBook(
-                id = "3",
-                name = "Chapter 3",
-                audioUrl = "",
-                headerImage = "",
-                isDownloaded = false
-            )
-        )
-    )
-    override val state: StateFlow<HomeState> = MutableStateFlow(homeState)
-
-    override fun onAudioBookClick(audioBook: AudioBook) = Unit
-
-    override fun onRefresh() = Unit
-
-}

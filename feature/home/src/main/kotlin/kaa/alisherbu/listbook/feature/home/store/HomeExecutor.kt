@@ -2,6 +2,7 @@ package kaa.alisherbu.listbook.feature.home.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kaa.alisherbu.listbook.domain.usecase.GetAudioBooksUseCase
+import kaa.alisherbu.listbook.domain.usecase.GetChaptersUseCase
 import kaa.alisherbu.listbook.feature.home.domain.usecase.RefreshUseCase
 import kaa.alisherbu.service.player.AudioPlayer
 import kotlinx.coroutines.delay
@@ -18,7 +19,6 @@ internal class HomeExecutor @Inject constructor(
     init {
         getAudioBooks().onEach {
             dispatch(Message.UpdateAudioBooks(it))
-            audioPlayer.loadAudioBooks(it)
         }.launchIn(scope)
     }
 

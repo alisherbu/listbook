@@ -1,13 +1,16 @@
 package kaa.alisherbu.listbook.feature.main.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import kaa.alisherbu.listbook.feature.main.domain.usecase.GetChaptersByBookIdUseCase
 import kaa.alisherbu.service.player.AudioPlayer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class MainExecutor @Inject constructor(
     private val audioPlayer: AudioPlayer,
+    private val getChaptersByBookId: GetChaptersByBookIdUseCase
 ) : CoroutineExecutor<Intent, Action, MainState, Message, Label>() {
 
     init {
@@ -22,8 +25,9 @@ internal class MainExecutor @Inject constructor(
 
     override fun executeIntent(intent: Intent, getState: () -> MainState) {
         when (intent) {
-            is Intent.Play -> {
-                audioPlayer.play(intent.audioBook)
+            is Intent.Play -> scope.launch {
+                val chapters = getChaptersByBookId(intent.audioBook.id)
+                audioPlayer.loadAudioBooks(chapters)
             }
 
             Intent.PlayOrPause -> {

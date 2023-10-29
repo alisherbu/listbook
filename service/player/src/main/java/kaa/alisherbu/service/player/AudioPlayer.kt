@@ -6,7 +6,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
-import kaa.alisherbu.listbook.core.shared.model.AudioBook
+import kaa.alisherbu.listbook.core.shared.model.Chapter
 import kaa.alisherbu.listbook.core.shared.player.tickerFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ class AudioPlayer @Inject constructor(
     private val audioDownloadManager: AudioDownloadManager,
     private val downloadTracker: DownloadTracker
 ) {
-    private val medias: MutableList<Pair<AudioBook, MediaItem>> = mutableListOf()
+    private val medias: MutableList<Pair<Chapter, MediaItem>> = mutableListOf()
     private val mainScope = CoroutineScope(dispatchers.main)
 
     init {
@@ -47,8 +47,8 @@ class AudioPlayer @Inject constructor(
     private val _isPlaying = MutableStateFlow(false)
     val isPlaying: StateFlow<Boolean> = _isPlaying.asStateFlow()
 
-    private val _currentAudioBook = MutableStateFlow<AudioBook?>(null)
-    val currentAudioBook: StateFlow<AudioBook?> = _currentAudioBook.asStateFlow()
+    private val _currentAudioBook = MutableStateFlow<Chapter?>(null)
+    val currentAudioBook: StateFlow<Chapter?> = _currentAudioBook.asStateFlow()
 
     private val _currentPosition = MutableStateFlow(0L)
     val currentPosition: StateFlow<Long> = _currentPosition.asStateFlow()
@@ -56,13 +56,14 @@ class AudioPlayer @Inject constructor(
     private val _duration = MutableStateFlow(0L)
     val duration: StateFlow<Long> = _duration.asStateFlow()
 
-    fun loadAudioBooks(books: List<AudioBook>) {
+    fun loadAudioBooks(books: List<Chapter>) {
         medias.clear()
         books.forEach {
             medias.add(Pair(it, getAsMedia(it)))
         }
         exoPlayer.setMediaItems(medias.map { it.second }, false)
         exoPlayer.prepare()
+        exoPlayer.play()
     }
 
     fun playOrPause() {
@@ -81,7 +82,7 @@ class AudioPlayer @Inject constructor(
         exoPlayer.seekToNext()
     }
 
-    fun play(audioBook: AudioBook) {
+    fun play(audioBook: Chapter) {
         val index = medias.map { it.first }.indexOf(audioBook)
         exoPlayer.seekTo(index, 0L)
         if (!isPlaying.value) {
@@ -93,12 +94,12 @@ class AudioPlayer @Inject constructor(
         exoPlayer.seekTo(position)
     }
 
-    private fun getAsMedia(audioBook: AudioBook): MediaItem {
+    private fun getAsMedia(audioBook: Chapter): MediaItem {
         val downloadRequest = audioDownloadManager.getDownload(audioBook.id)?.request
         return downloadRequest?.toMediaItem() ?: audioBook.toMediaItem()
     }
 
-    private fun AudioBook.toMediaItem(): MediaItem {
+    private fun Chapter.toMediaItem(): MediaItem {
         val metadata = MediaMetadata.Builder()
             .setTitle(name)
             .build()
@@ -109,11 +110,11 @@ class AudioPlayer @Inject constructor(
             .build()
     }
 
-    fun removeDownload(audioBook: AudioBook) {
+    fun removeDownload(audioBook: Chapter) {
         downloadTracker.removeDownload(audioBook.id)
     }
 
-    fun download(audioBook: AudioBook) {
+    fun download(audioBook: Chapter) {
         downloadTracker.startDownload(audioBook.toMediaItem())
     }
 }
