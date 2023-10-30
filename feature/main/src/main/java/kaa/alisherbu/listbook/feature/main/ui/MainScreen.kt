@@ -3,6 +3,7 @@ package kaa.alisherbu.listbook.feature.main.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -71,6 +72,7 @@ fun MainScreen(component: MainComponent) {
                 }
             }
         },
+        modifier = Modifier.navigationBarsPadding(),
         content = {
             MainContent(screenStack = screenStack, modifier = Modifier.padding(it))
         },

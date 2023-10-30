@@ -3,6 +3,7 @@ package kaa.alisherbu.listbook.feature.home.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -121,11 +122,9 @@ private fun HomeContent(
             }
 
             item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(state.audioBooks) {
-                        BookItem(
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    state.audioBooks.forEach {
+                        BookDetailItem(
                             audioBook = it,
                             onAudioBookClick = onAudioBookClick
                         )
