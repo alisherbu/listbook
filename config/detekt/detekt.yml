@@ -72,7 +72,7 @@ formatting:
   Filename:
     active: false
   MaximumLineLength:
-    active: false
+    active: true
   ParameterListSpacing:
     active: true
   StatementWrapping:
