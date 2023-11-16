@@ -5,7 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -58,7 +58,7 @@ fun PlayerScreen(component: PlayerComponent) {
             onPlayPauseAudio = component::onPlayPauseAudio,
             onNextAudio = component::onNextAudio,
             onUserPositionChange = component::onUserPositionChange,
-            onUserPositionChangeFinished = component::onUserPositionChangeFinished,
+            onUserPositionChangeFinish = component::onUserPositionChangeFinished,
             onDownloadClick = component::onDownloadClick,
             onRemoveClick = component::onRemoveClick,
             onChapterClick = component::onChapterClick,
@@ -78,7 +78,6 @@ fun PlayerScreen(component: PlayerComponent) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PlayerContent(
     state: PlayerState,
@@ -86,7 +85,7 @@ private fun PlayerContent(
     onPlayPauseAudio: () -> Unit,
     onNextAudio: () -> Unit,
     onUserPositionChange: (Long) -> Unit,
-    onUserPositionChangeFinished: () -> Unit,
+    onUserPositionChangeFinish: () -> Unit,
     onDownloadClick: () -> Unit,
     onRemoveClick: () -> Unit,
     onChapterClick: () -> Unit,
@@ -146,7 +145,7 @@ private fun PlayerContent(
             duration = state.duration,
             durationText = state.durationText,
             onUserPositionChange = onUserPositionChange,
-            onUserPositionChangeFinish = onUserPositionChangeFinished,
+            onUserPositionChangeFinish = onUserPositionChangeFinish,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .constrainAs(playerSlider) {
@@ -166,7 +165,7 @@ private fun PlayerContent(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp)
+                .heightIn(60.dp)
                 .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                 .background(Color.LightGray)
                 .clickable { onChapterClick() }
