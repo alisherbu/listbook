@@ -25,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.core.resource.R
+import kaa.alisherbu.listbook.core.shared.R as Shared
 import kaa.alisherbu.listbook.core.shared.theme.Orange
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInState
@@ -110,7 +110,7 @@ private fun SignInContent(
             Row {
                 IconButton(onClick = { }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.facebook_round_icon),
+                        painter = painterResource(id = Shared.drawable.facebook_round_icon),
                         contentDescription = "Signup by Facebook",
                         modifier = Modifier.background(
                             color = Color.White,
@@ -120,7 +120,7 @@ private fun SignInContent(
                 }
                 IconButton(onClick = { }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.google_round_icon),
+                        painter = painterResource(id = Shared.drawable.google_round_icon),
                         contentDescription = "Signup by Facebook",
                         modifier = Modifier.background(
                             color = Color.White,

@@ -9,7 +9,7 @@ android {
 }
 dependencies {
     
-    implementation(projects.core.resource)
+    
     implementation(projects.core.shared)
     implementation(projects.core.database)
 }

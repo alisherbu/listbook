@@ -14,5 +14,5 @@ dependencies {
 
     
     implementation(projects.core.shared)
-    implementation(projects.core.resource)
+    
 }

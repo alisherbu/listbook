@@ -20,6 +20,6 @@ dependencies {
     implementation(projects.feature.dialog)
 
     
-    implementation(projects.core.resource)
+    
     implementation(projects.core.shared)
 }
