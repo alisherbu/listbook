@@ -3,8 +3,10 @@ package kaa.alisherbu.listbook.core.data.repository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kaa.alisherbu.listbook.core.database.dao.AudioBooksDao
+import kaa.alisherbu.listbook.core.database.dao.CategoriesDao
 import kaa.alisherbu.listbook.core.database.dao.ChaptersDao
 import kaa.alisherbu.listbook.core.database.entity.AudioBookEntity
+import kaa.alisherbu.listbook.core.database.entity.CategoryEntity
 import kaa.alisherbu.listbook.core.database.entity.ChapterEntity
 import kaa.alisherbu.listbook.core.shared.coroutine.AppDispatchers
 import kaa.alisherbu.listbook.domain.model.AudioBookResponse
@@ -21,6 +23,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
     private val audioBooksDao: AudioBooksDao,
     private val chaptersDao: ChaptersDao,
+    private val categoriesDao: CategoriesDao,
     private val dispatchers: AppDispatchers,
     private val downloadManager: AudioDownloadManager
 ) : AudioBooksRepository {
@@ -46,7 +49,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
     }
 
     override fun getAudioBooksFlow(): Flow<List<AudioBookResponse>> {
-        return audioBooksDao.getAudioBooks().map(::toAudioBookList).flowOn(dispatchers.io)
+        return audioBooksDao.getAudioBooksFlow().map(::toAudioBookList).flowOn(dispatchers.io)
     }
 
     override fun syncWithRemote() {
@@ -60,6 +63,12 @@ class AudioBooksRepositoryImpl @Inject constructor(
             .addOnSuccessListener {
                 val audioBooks = it.documents.map(::toChapterEntity)
                 ioScope.launch { chaptersDao.insertAll(audioBooks) }
+            }
+
+        firebaseFirestore.collection("categories").get()
+            .addOnSuccessListener {
+                val audioBooks = it.documents.map(::toCategoryEntity)
+                ioScope.launch { categoriesDao.insertAll(audioBooks) }
             }
     }
 
@@ -78,6 +87,7 @@ class AudioBooksRepositoryImpl @Inject constructor(
     private fun toAudioBookEntity(snapshot: DocumentSnapshot): AudioBookEntity {
         return AudioBookEntity(
             id = snapshot.id,
+            categoryId = snapshot["categoryId"] as? String,
             name = snapshot["name"] as? String,
             headerImage = snapshot["header_image"] as? String,
         )
@@ -91,6 +101,13 @@ class AudioBooksRepositoryImpl @Inject constructor(
             audioUrl = snapshot["audioUrl"] as? String,
             headerImage = snapshot["header_image"] as? String,
             isDownloaded = downloadManager.isDownloaded(snapshot.id)
+        )
+    }
+
+    private fun toCategoryEntity(snapshot: DocumentSnapshot): CategoryEntity {
+        return CategoryEntity(
+            id = snapshot.id,
+            name = snapshot["name"] as? String
         )
     }
 }

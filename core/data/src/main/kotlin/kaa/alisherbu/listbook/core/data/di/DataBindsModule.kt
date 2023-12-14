@@ -3,8 +3,10 @@ package kaa.alisherbu.listbook.core.data.di
 import dagger.Binds
 import dagger.Module
 import kaa.alisherbu.listbook.core.data.repository.AudioBooksRepositoryImpl
+import kaa.alisherbu.listbook.core.data.repository.CategoriesRepositoryImpl
 import kaa.alisherbu.listbook.core.data.repository.ChaptersRepositoryImpl
 import kaa.alisherbu.listbook.domain.repository.AudioBooksRepository
+import kaa.alisherbu.listbook.domain.repository.CategoriesRepository
 import kaa.alisherbu.listbook.domain.repository.ChaptersRepository
 
 @Module
@@ -15,4 +17,7 @@ interface DataBindsModule {
 
     @Binds
     fun chaptersRepository(impl: ChaptersRepositoryImpl): ChaptersRepository
+
+    @Binds
+    fun categoriesRepository(impl: CategoriesRepositoryImpl): CategoriesRepository
 }

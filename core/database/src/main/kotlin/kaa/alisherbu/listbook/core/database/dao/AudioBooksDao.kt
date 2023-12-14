@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AudioBooksDao {
     @Query("SELECT * FROM audio_books")
-    fun getAudioBooks(): Flow<List<AudioBookEntity>>
+    fun getAudioBooksFlow(): Flow<List<AudioBookEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(audioBooks: List<AudioBookEntity>)

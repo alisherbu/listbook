@@ -13,6 +13,10 @@ internal class HomeReducer @Inject constructor() : Reducer<HomeState, Message> {
             is Message.UpdateRefresh -> {
                 copy(isRefreshing = msg.isRefreshing)
             }
+
+            is Message.UpdateCategories -> {
+                copy(categories = msg.categories)
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import kaa.alisherbu.listbook.core.database.ListbookDatabase
 import kaa.alisherbu.listbook.core.database.dao.AudioBooksDao
+import kaa.alisherbu.listbook.core.database.dao.CategoriesDao
 import kaa.alisherbu.listbook.core.database.dao.ChaptersDao
 import javax.inject.Singleton
 
@@ -28,8 +29,13 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideChapterDao(database: ListbookDatabase): ChaptersDao {
+    fun provideChaptersDao(database: ListbookDatabase): ChaptersDao {
         return database.chaptersDao()
+    }
+
+    @Provides
+    fun provideCategoriesDao(database: ListbookDatabase): CategoriesDao {
+        return database.categoriesDao()
     }
 
     companion object {
