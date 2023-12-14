@@ -19,7 +19,6 @@ allprojects {
 
     detekt {
         parallel = true
-        autoCorrect = true
         config.setFrom("$rootDir/config/detekt/detekt.yml")
         ignoredBuildTypes = listOf("release")
     }
@@ -32,6 +31,14 @@ allprojects {
             sarif.required = false
             md.required = false
         }
+    }
+
+    tasks.register<Detekt>("detektFormat") {
+        autoCorrect = true
+        parallel = true
+        ignoreFailures = true
+        config.setFrom("$rootDir/config/detekt/detekt.yml")
+        setSource(file(projectDir))
     }
 
     dependencies {

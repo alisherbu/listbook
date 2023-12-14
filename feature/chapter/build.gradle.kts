@@ -8,8 +8,7 @@ android {
     namespace = "kaa.alisherbu.listbook.feature.chapter"
 }
 dependencies {
-    
-    
+
     implementation(projects.core.shared)
     implementation(projects.core.database)
 }

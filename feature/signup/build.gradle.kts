@@ -12,7 +12,5 @@ android {
 dependencies {
     implementation(libs.google.firebase.auth)
 
-    
     implementation(projects.core.shared)
-    
 }

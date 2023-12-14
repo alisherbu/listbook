@@ -8,8 +8,7 @@ android {
     namespace = "kaa.alisherbu.listbook.feature.player"
 }
 dependencies {
-    
-    
+
     implementation(projects.core.shared)
     implementation(projects.service.player)
     implementation(projects.feature.chapter)

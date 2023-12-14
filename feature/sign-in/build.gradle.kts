@@ -10,8 +10,8 @@ android {
 }
 
 dependencies {
-    
+
     implementation(projects.core.shared)
-    
+
     implementation(libs.google.firebase.auth)
 }
