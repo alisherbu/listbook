@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey
 data class ChapterEntity(
     @PrimaryKey
     val id: String,
-    @ColumnInfo("bookId")
+    @ColumnInfo(name = "bookId")
     val bookId: String? = null,
-    @ColumnInfo("name")
+    @ColumnInfo(name = "name")
     val name: String? = null,
-    @ColumnInfo("audioUrl")
+    @ColumnInfo(name = "audioUrl")
     val audioUrl: String? = null,
-    @ColumnInfo("headerImage")
+    @ColumnInfo(name = "headerImage")
     val headerImage: String? = null,
     @ColumnInfo(name = "isDownloaded")
     val isDownloaded: Boolean = false

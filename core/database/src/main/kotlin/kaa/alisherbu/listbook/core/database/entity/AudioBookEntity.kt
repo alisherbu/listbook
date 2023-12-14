@@ -8,8 +8,10 @@ import androidx.room.PrimaryKey
 data class AudioBookEntity(
     @PrimaryKey
     val id: String,
-    @ColumnInfo("name")
+    @ColumnInfo(name = "categoryId")
+    val categoryId: String? = null,
+    @ColumnInfo(name = "name")
     val name: String? = null,
-    @ColumnInfo("headerImage")
-    val headerImage: String? = null,
+    @ColumnInfo(name = "headerImage")
+    val headerImage: String? = null
 )
