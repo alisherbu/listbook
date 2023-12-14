@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.feature.home.domain.usecase
+package kaa.alisherbu.listbook.domain.usecase
 
 import kaa.alisherbu.listbook.domain.repository.AudioBooksRepository
 import javax.inject.Inject
