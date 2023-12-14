@@ -14,22 +14,28 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply false
 }
 
-/*
-Allows to run detekt for all files in the Gradle project
-and all subprojects without a need to configure detekt plugin in every subproject.
- */
-tasks.register("detektCheck", Detekt::class) {
-    parallel = true
-    setSource(file(projectDir))
+allprojects {
+    apply(plugin = rootProject.libs.plugins.detekt.get().pluginId)
 
-    config.setFrom("$projectDir/config/detekt/detekt.yml")
+    detekt {
+        parallel = true
+        config.setFrom("$rootDir/config/detekt/detekt.yml")
+        ignoredBuildTypes = listOf("release")
+    }
+    
+    tasks.withType<Detekt>().configureEach {
+        reports {
+            xml.required = false
+            html.required = false
+            txt.required = false
+            sarif.required = false
+            md.required = false
+        }
+    }
 
-    include("**/*.kt", "**/*.kts")
-    exclude("**/resources/**", "**/build/**", "**/generated/**", "**/.gradle/**")
     dependencies {
-        detektPlugins(libs.detekt.formatting)
-        detektPlugins(libs.detekt.compose)
-        detektPlugins(libs.detekt.ruleauthors)
+        detektPlugins(rootProject.libs.detekt.formatting)
+        detektPlugins(rootProject.libs.detekt.compose)
     }
 }
 
