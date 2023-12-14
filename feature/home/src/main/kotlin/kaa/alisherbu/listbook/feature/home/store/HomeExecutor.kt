@@ -10,13 +10,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class HomeExecutor @Inject constructor(
-    getAudioBooks: GetAudioBooksUseCase,
+    private val getAudioBooks: GetAudioBooksUseCase,
     private val refresh: RefreshUseCase,
 ) : CoroutineExecutor<Intent, Action, HomeState, Message, Label>() {
-    init {
-        getAudioBooks().onEach {
-            dispatch(Message.UpdateAudioBooks(it))
-        }.launchIn(scope)
+
+    override fun executeAction(action: Action, getState: () -> HomeState) {
+        when (action) {
+            Action.Init -> init()
+        }
     }
 
     override fun executeIntent(intent: Intent, getState: () -> HomeState) {
@@ -28,5 +29,11 @@ internal class HomeExecutor @Inject constructor(
                 dispatch(Message.UpdateRefresh(isRefreshing = false))
             }
         }
+    }
+
+    private fun init() {
+        getAudioBooks().onEach {
+            dispatch(Message.UpdateAudioBooks(it))
+        }.launchIn(scope)
     }
 }

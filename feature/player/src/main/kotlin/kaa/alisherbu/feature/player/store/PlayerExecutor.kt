@@ -13,34 +13,10 @@ internal class PlayerExecutor @Inject constructor(
 ) : CoroutineExecutor<Intent, Action, PlayerState, Message, Label>() {
     private val formatter = SimpleDateFormat("mm:ss", Locale.getDefault())
 
-    init {
-        audioPlayer.isPlaying.onEach {
-            dispatch(Message.PlayOrPause(it))
-        }.launchIn(scope)
-
-        audioPlayer.currentChapter.onEach {
-            checkNotNull(it) { "Chapter shouldn't be null in the player" }
-            dispatch(Message.UpdateChapter(it))
-        }.launchIn(scope)
-
-        audioPlayer.currentPosition.onEach {
-            dispatch(
-                Message.UpdateCurrentPosition(
-                    position = it,
-                    positionText = formatter.format(it),
-                ),
-            )
-        }.launchIn(scope)
-
-        audioPlayer.duration.onEach {
-            if (it < 0) return@onEach
-            dispatch(
-                Message.UpdateDuration(
-                    duration = it,
-                    durationText = formatter.format(it),
-                ),
-            )
-        }.launchIn(scope)
+    override fun executeAction(action: Action, getState: () -> PlayerState) {
+        when (action) {
+            Action.Init -> init()
+        }
     }
 
     override fun executeIntent(intent: Intent, getState: () -> PlayerState) {
@@ -88,5 +64,35 @@ internal class PlayerExecutor @Inject constructor(
                 dispatch(Message.UpdateAudioBook(intent.audioBook))
             }
         }
+    }
+
+    private fun init() {
+        audioPlayer.isPlaying.onEach {
+            dispatch(Message.PlayOrPause(it))
+        }.launchIn(scope)
+
+        audioPlayer.currentChapter.onEach {
+            checkNotNull(it) { "Chapter shouldn't be null in the player" }
+            dispatch(Message.UpdateChapter(it))
+        }.launchIn(scope)
+
+        audioPlayer.currentPosition.onEach {
+            dispatch(
+                Message.UpdateCurrentPosition(
+                    position = it,
+                    positionText = formatter.format(it),
+                ),
+            )
+        }.launchIn(scope)
+
+        audioPlayer.duration.onEach {
+            if (it < 0) return@onEach
+            dispatch(
+                Message.UpdateDuration(
+                    duration = it,
+                    durationText = formatter.format(it),
+                ),
+            )
+        }.launchIn(scope)
     }
 }

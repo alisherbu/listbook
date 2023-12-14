@@ -1,5 +1,6 @@
 package kaa.alisherbu.feature.player.store
 
+import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import javax.inject.Inject
@@ -15,4 +16,5 @@ internal class PlayerStoreImpl @Inject constructor(
         executorFactory = executorProvider::get,
         initialState = PlayerState(),
         reducer = reducer,
+        bootstrapper = SimpleBootstrapper(Action.Init)
     )

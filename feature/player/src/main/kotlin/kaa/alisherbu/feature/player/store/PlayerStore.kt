@@ -16,7 +16,10 @@ internal sealed interface Intent {
     class UpdateAudioBook(val audioBook: AudioBook) : Intent
 }
 
-internal sealed interface Action
+internal sealed interface Action {
+    data object Init : Action
+}
+
 internal sealed interface Message {
     class UpdateChapter(val chapter: Chapter) : Message
     class PlayOrPause(val isPlaying: Boolean) : Message

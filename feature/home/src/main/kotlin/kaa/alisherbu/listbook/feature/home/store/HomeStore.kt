@@ -8,7 +8,7 @@ internal sealed interface Intent {
 }
 
 internal sealed interface Action {
-    data object LoadAudioBooks : Action
+    data object Init : Action
 }
 
 internal sealed interface Label

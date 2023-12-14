@@ -14,7 +14,10 @@ internal sealed interface Label {
     class OpenPlayer(val audioBook: AudioBook) : Label
 }
 
-internal sealed interface Action
+internal sealed interface Action {
+    data object Init : Action
+}
+
 internal sealed interface Message {
     class PlayOrPause(val isPlaying: Boolean) : Message
     class UpdateChapter(val chapter: Chapter?) : Message

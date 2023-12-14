@@ -14,14 +14,10 @@ internal class MainExecutor @Inject constructor(
     private val getChaptersByBookIdFlow: GetChaptersByBookIdFlowUseCase
 ) : CoroutineExecutor<Intent, Action, MainState, Message, Label>() {
 
-    init {
-        audioPlayer.isPlaying.onEach {
-            dispatch(Message.PlayOrPause(it))
-        }.launchIn(scope)
-
-        audioPlayer.currentChapter.onEach {
-            dispatch(Message.UpdateChapter(it))
-        }.launchIn(scope)
+    override fun executeAction(action: Action, getState: () -> MainState) {
+        when (action) {
+            Action.Init -> init()
+        }
     }
 
     override fun executeIntent(intent: Intent, getState: () -> MainState) {
@@ -46,6 +42,16 @@ internal class MainExecutor @Inject constructor(
     private fun subscribeChaptersFlow(audioBook: AudioBook) {
         getChaptersByBookIdFlow(audioBook.id).onEach {
             audioPlayer.loadChapters(it)
+        }.launchIn(scope)
+    }
+
+    private fun init() {
+        audioPlayer.isPlaying.onEach {
+            dispatch(Message.PlayOrPause(it))
+        }.launchIn(scope)
+
+        audioPlayer.currentChapter.onEach {
+            dispatch(Message.UpdateChapter(it))
         }.launchIn(scope)
     }
 }

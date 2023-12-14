@@ -16,5 +16,5 @@ internal class HomeStoreImpl @Inject constructor(
         executorFactory = executorProvider::get,
         reducer = reducer,
         initialState = HomeState(),
-        bootstrapper = SimpleBootstrapper(Action.LoadAudioBooks),
+        bootstrapper = SimpleBootstrapper(Action.Init),
     )
