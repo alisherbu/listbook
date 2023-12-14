@@ -3,7 +3,6 @@ package kaa.alisherbu.listbook.feature.home.store
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kaa.alisherbu.listbook.domain.usecase.GetAudioBooksUseCase
 import kaa.alisherbu.listbook.feature.home.domain.usecase.RefreshUseCase
-import kaa.alisherbu.service.player.AudioPlayer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -13,7 +12,6 @@ import javax.inject.Inject
 internal class HomeExecutor @Inject constructor(
     getAudioBooks: GetAudioBooksUseCase,
     private val refresh: RefreshUseCase,
-    private val audioPlayer: AudioPlayer,
 ) : CoroutineExecutor<Intent, Action, HomeState, Message, Label>() {
     init {
         getAudioBooks().onEach {

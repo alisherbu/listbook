@@ -16,6 +16,6 @@ class HomeModule {
         refreshUseCase: RefreshUseCase,
         audioPlayer: AudioPlayer,
     ): HomeExecutor {
-        return HomeExecutor(getAudioBooksUseCase, refreshUseCase, audioPlayer)
+        return HomeExecutor(getAudioBooksUseCase, refreshUseCase)
     }
 }
