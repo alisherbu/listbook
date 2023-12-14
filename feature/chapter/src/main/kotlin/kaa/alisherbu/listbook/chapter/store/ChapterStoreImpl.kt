@@ -9,9 +9,10 @@ internal class ChapterStoreImpl @Inject constructor(
     storeFactory: StoreFactory,
     executorProvider: Provider<ChapterExecutor>,
     reducer: ChapterReducer
-) : ChapterStore, Store<Intent, ChapterState, Label> by storeFactory.create(
-    name = ChapterStore::class.simpleName,
-    initialState = ChapterState(),
-    executorFactory = executorProvider::get,
-    reducer = reducer,
-)
+) : ChapterStore,
+    Store<Intent, ChapterState, Label> by storeFactory.create(
+        name = ChapterStore::class.simpleName,
+        initialState = ChapterState(),
+        executorFactory = executorProvider::get,
+        reducer = reducer,
+    )

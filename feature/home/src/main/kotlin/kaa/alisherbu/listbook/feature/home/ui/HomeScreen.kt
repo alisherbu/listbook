@@ -60,7 +60,8 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
     val refreshState = rememberPullRefreshState(
-        refreshing = state.isRefreshing, onRefresh = onRefresh
+        refreshing = state.isRefreshing,
+        onRefresh = onRefresh
     )
     Box(
         modifier = modifier
@@ -135,7 +136,6 @@ private fun HomeContent(
                     }
                 }
             }
-
         }
         PullRefreshIndicator(
             refreshing = state.isRefreshing,
@@ -144,4 +144,3 @@ private fun HomeContent(
         )
     }
 }
-

@@ -3,7 +3,6 @@ package kaa.alisherbu.service.player
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.offline.Download
 import androidx.media3.exoplayer.offline.DownloadHelper
 import androidx.media3.exoplayer.offline.DownloadRequest
 import androidx.media3.exoplayer.offline.DownloadService
@@ -30,7 +29,8 @@ class DownloadTracker(private val context: Context) {
             context,
             AudioDownloadService::class.java,
             id,
-            /* foreground= */ false,
+            /* foreground= */
+            false,
         )
     }
 
@@ -49,10 +49,14 @@ class DownloadTracker(private val context: Context) {
 
         override fun onPrepared(helper: DownloadHelper) {
             DownloadService.sendAddDownload(
-                /* context = */ context,
-                /* clazz = */ AudioDownloadService::class.java,
-                /* downloadRequest = */ buildDownloadRequest(),
-                /* foreground = */ false,
+                /* context = */
+                context,
+                /* clazz = */
+                AudioDownloadService::class.java,
+                /* downloadRequest = */
+                buildDownloadRequest(),
+                /* foreground = */
+                false,
             )
             helper.release()
         }

@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 internal class ChaptersRepositoryImpl @Inject constructor(
     private val chaptersDao: ChaptersDao,
     private val dispatchers: AppDispatchers

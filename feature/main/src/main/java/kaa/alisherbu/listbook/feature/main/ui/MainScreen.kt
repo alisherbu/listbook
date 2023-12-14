@@ -41,7 +41,8 @@ fun MainScreen(component: MainComponent) {
                         modifier = Modifier.clickable(
                             onClick = {
                                 component.onPlayerClicked(state.currentAudioBook)
-                            }),
+                            }
+                        ),
                     )
                 }
 

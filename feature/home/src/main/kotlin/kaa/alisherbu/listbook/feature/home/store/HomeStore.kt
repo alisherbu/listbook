@@ -2,7 +2,6 @@ package kaa.alisherbu.listbook.feature.home.store
 
 import com.arkivanov.mvikotlin.core.store.Store
 import kaa.alisherbu.listbook.core.shared.model.AudioBook
-import kaa.alisherbu.listbook.core.shared.model.Chapter
 
 internal sealed interface Intent {
     data object Refresh : Intent

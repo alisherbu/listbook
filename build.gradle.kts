@@ -19,10 +19,11 @@ allprojects {
 
     detekt {
         parallel = true
+        autoCorrect = true
         config.setFrom("$rootDir/config/detekt/detekt.yml")
         ignoredBuildTypes = listOf("release")
     }
-    
+
     tasks.withType<Detekt>().configureEach {
         reports {
             xml.required = false

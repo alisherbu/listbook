@@ -41,7 +41,6 @@ internal class PlayerExecutor @Inject constructor(
                 ),
             )
         }.launchIn(scope)
-
     }
 
     override fun executeIntent(intent: Intent, getState: () -> PlayerState) {

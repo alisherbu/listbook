@@ -14,7 +14,6 @@ import androidx.media3.exoplayer.scheduler.PlatformScheduler
 import androidx.media3.exoplayer.scheduler.Scheduler
 import kaa.alisherbu.listbook.core.shared.R
 
-
 @UnstableApi
 class AudioDownloadService : DownloadService(
     FOREGROUND_NOTIFICATION_ID,
@@ -45,12 +44,18 @@ class AudioDownloadService : DownloadService(
     ): Notification {
         return DownloadUtil.getDownloadNotificationHelper(this)
             .buildProgressNotification(
-                /* context = */ this,
-                /* smallIcon = */ R.drawable.ic_download_24,
-                /* contentIntent = */ null,
-                /* message = */ null,
-                /* downloads = */ downloads,
-                /* notMetRequirements = */ notMetRequirements
+                /* context = */
+                this,
+                /* smallIcon = */
+                R.drawable.ic_download_24,
+                /* contentIntent = */
+                null,
+                /* message = */
+                null,
+                /* downloads = */
+                downloads,
+                /* notMetRequirements = */
+                notMetRequirements
             )
     }
 
@@ -68,7 +73,7 @@ class AudioDownloadService : DownloadService(
                 Download.STATE_COMPLETED -> {
                     downloadNotificationHelper.buildDownloadCompletedNotification(
                         context,
-                        R.drawable.ic_download_done_24,  /* contentIntent= */
+                        R.drawable.ic_download_done_24, /* contentIntent= */
                         null,
                         Util.fromUtf8Bytes(download.request.data)
                     )
@@ -77,7 +82,7 @@ class AudioDownloadService : DownloadService(
                 Download.STATE_FAILED -> {
                     downloadNotificationHelper.buildDownloadFailedNotification(
                         context,
-                        R.drawable.ic_download_done_24,  /* contentIntent= */
+                        R.drawable.ic_download_done_24, /* contentIntent= */
                         null,
                         Util.fromUtf8Bytes(download.request.data)
                     )

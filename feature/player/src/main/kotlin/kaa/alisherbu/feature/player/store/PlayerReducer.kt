@@ -29,7 +29,6 @@ internal class PlayerReducer @Inject constructor() : Reducer<PlayerState, Messag
             is Message.UpdateAudioBook -> {
                 copy(currentAudioBook = msg.audioBook)
             }
-
         }
     }
 }
