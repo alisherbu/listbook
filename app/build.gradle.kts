@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.exoplayer)
     implementation(libs.timber)
 
-    implementation(projects.core.util)
+    
     implementation(projects.core.shared)
     implementation(projects.core.database)
     implementation(projects.core.data)

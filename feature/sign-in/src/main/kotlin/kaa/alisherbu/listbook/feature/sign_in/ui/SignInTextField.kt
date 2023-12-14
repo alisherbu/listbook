@@ -13,8 +13,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.core.util.theme.Hint
-import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.core.shared.theme.Hint
+import kaa.alisherbu.listbook.core.shared.theme.Orange
 
 @Composable
 internal fun SignInTextField(

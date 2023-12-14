@@ -8,6 +8,7 @@ android {
     namespace = "kaa.alisherbu.listbook.feature.auth"
 }
 dependencies {
-    implementation(projects.core.util)
+    
+    implementation(projects.core.shared)
     implementation(projects.core.resource)
 }

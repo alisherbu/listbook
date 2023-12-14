@@ -2,7 +2,6 @@
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-include(":core:util")
 include(":core:shared")
 include(":core:resource")
 include(":core:domain")

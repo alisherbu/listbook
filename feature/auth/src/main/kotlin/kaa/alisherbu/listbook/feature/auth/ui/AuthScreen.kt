@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.core.shared.theme.Orange
 import kaa.alisherbu.listbook.feature.auth.component.AuthComponent
 
 @Composable
@@ -24,7 +24,7 @@ fun AuthScreen(component: AuthComponent) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(Orange),
+            .background(kaa.alisherbu.listbook.core.shared.theme.Orange),
     ) {
         Button(
             onClick = component::onSignupClicked,

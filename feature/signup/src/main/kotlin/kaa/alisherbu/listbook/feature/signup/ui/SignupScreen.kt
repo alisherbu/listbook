@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import kaa.alisherbu.listbook.core.resource.R
-import kaa.alisherbu.listbook.core.util.theme.MineShaft
-import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.core.shared.theme.MineShaft
+import kaa.alisherbu.listbook.core.shared.theme.Orange
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponent
 import kaa.alisherbu.listbook.feature.signup.component.SignupComponentImpl
 import kaa.alisherbu.listbook.feature.signup.store.SignupState

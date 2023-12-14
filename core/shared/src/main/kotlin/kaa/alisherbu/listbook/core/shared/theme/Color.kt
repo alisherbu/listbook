@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.core.util.theme
+package kaa.alisherbu.listbook.core.shared.theme
 
 import androidx.compose.ui.graphics.Color
 

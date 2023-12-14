@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.core.shared.theme.Orange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

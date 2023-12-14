@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kaa.alisherbu.listbook.core.resource.R
-import kaa.alisherbu.listbook.core.util.theme.Orange
+import kaa.alisherbu.listbook.core.shared.theme.Orange
 import kaa.alisherbu.listbook.feature.sign_in.component.SignInComponent
 import kaa.alisherbu.listbook.feature.sign_in.store.SignInState
 

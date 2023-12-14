@@ -19,7 +19,7 @@ dependencies {
     implementation(projects.feature.player)
     implementation(projects.feature.dialog)
 
-    implementation(projects.core.util)
+    
     implementation(projects.core.resource)
     implementation(projects.core.shared)
 }
