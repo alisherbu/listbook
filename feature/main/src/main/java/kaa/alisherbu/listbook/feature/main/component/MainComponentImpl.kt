@@ -47,6 +47,17 @@ class MainComponentImpl @AssistedInject internal constructor(
             .launchIn(mainScope)
     }
 
+    private val screenNavigation = StackNavigation<ScreenConfig>()
+
+    override val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
+        source = screenNavigation,
+        initialConfiguration = ScreenConfig.Home,
+        handleBackButton = false,
+        childFactory = ::createChildScreen,
+    )
+
+    override val state: StateFlow<MainState> = store.stateFlow
+
     private fun handleLabel(label: Label) {
         when (label) {
             is Label.OpenPlayer -> {
@@ -54,17 +65,6 @@ class MainComponentImpl @AssistedInject internal constructor(
             }
         }
     }
-
-    private val screenNavigation = StackNavigation<ScreenConfig>()
-
-    override val screenStack: Value<ChildStack<*, ChildScreen>> = childStack(
-        screenNavigation,
-        initialConfiguration = ScreenConfig.Home,
-        handleBackButton = false,
-        childFactory = ::createChildScreen,
-    )
-
-    override val state: StateFlow<MainState> = store.stateFlow
 
     private fun createChildScreen(
         config: ScreenConfig,

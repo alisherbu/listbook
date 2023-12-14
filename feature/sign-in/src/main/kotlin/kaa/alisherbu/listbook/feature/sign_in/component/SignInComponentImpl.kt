@@ -37,6 +37,9 @@ class SignInComponentImpl @AssistedInject internal constructor(
             .launchIn(mainScope)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override val state: StateFlow<SignInState> = store.stateFlow
+
     private fun handleLabel(label: Label) {
         when (label) {
             is Label.ErrorOccurred -> {
@@ -49,9 +52,6 @@ class SignInComponentImpl @AssistedInject internal constructor(
         }
         lifecycle.doOnDestroy(mainScope::cancel)
     }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override val state: StateFlow<SignInState> = store.stateFlow
 
     override fun onBackClicked() {
         output(Output.Back)

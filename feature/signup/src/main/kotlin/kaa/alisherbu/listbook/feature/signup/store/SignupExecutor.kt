@@ -14,40 +14,40 @@ internal class SignupExecutor @Inject constructor(
         when (intent) {
             is Intent.EmailTextChanged -> {
                 val isCreateAccountButtonEnabled = isNotBlank(
-                    state.name,
-                    state.surname,
-                    intent.text,
-                    state.password,
+                    name = state.name,
+                    surname = state.surname,
+                    email = intent.text,
+                    password = state.password,
                 )
                 dispatch(Message.EmailTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
 
             is Intent.NameTextChanged -> {
                 val isCreateAccountButtonEnabled = isNotBlank(
-                    intent.text,
-                    state.surname,
-                    state.email,
-                    state.password,
+                    name = intent.text,
+                    surname = state.surname,
+                    email = state.email,
+                    password = state.password,
                 )
                 dispatch(Message.NameTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
 
             is Intent.PasswordTextChanged -> {
                 val isCreateAccountButtonEnabled = isNotBlank(
-                    state.name,
-                    state.surname,
-                    state.email,
-                    intent.text,
+                    name = state.name,
+                    surname = state.surname,
+                    email = state.email,
+                    password = intent.text,
                 )
                 dispatch(Message.PasswordTextChanged(intent.text, isCreateAccountButtonEnabled))
             }
 
             is Intent.SurnameTextChanged -> {
                 val isCreateAccountButtonEnabled = isNotBlank(
-                    state.name,
-                    intent.text,
-                    state.email,
-                    state.password,
+                    name = state.name,
+                    surname = intent.text,
+                    email = state.email,
+                    password = state.password,
                 )
                 dispatch(Message.SurnameTextChanged(intent.text, isCreateAccountButtonEnabled))
             }

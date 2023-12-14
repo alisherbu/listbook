@@ -22,10 +22,6 @@ class DatabaseModule {
         ).build()
     }
 
-    companion object {
-        private const val DATABASE_NAME = "listbook_database"
-    }
-
     @Provides
     fun provideAudioBooksDao(database: ListbookDatabase): AudioBooksDao {
         return database.audioBooksDao()
@@ -34,5 +30,9 @@ class DatabaseModule {
     @Provides
     fun provideChapterDao(database: ListbookDatabase): ChaptersDao {
         return database.chaptersDao()
+    }
+
+    companion object {
+        private const val DATABASE_NAME = "listbook_database"
     }
 }
