@@ -42,7 +42,6 @@ class AudioBooksRepositoryImpl @Inject constructor(
                     chaptersDao.update(entity.copy(isDownloaded = false))
                 }
             }
-
         })
     }
 
