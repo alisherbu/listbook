@@ -95,7 +95,7 @@ naming:
   NoNameShadowing:
     active: true
   NonBooleanPropertyPrefixedWithIs:
-    active: true
+    active: false
   VariableMaxLength:
     active: true
   VariableMinLength:

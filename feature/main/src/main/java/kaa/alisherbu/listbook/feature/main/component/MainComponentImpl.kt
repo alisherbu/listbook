@@ -97,7 +97,7 @@ class MainComponentImpl @AssistedInject internal constructor(
         store.accept(Intent.OpenPlayer)
     }
 
-    private fun onHomeOutput(output: HomeComponent.Output) = when (output) {
+    private fun onHomeOutput(output: HomeComponent.Output): Unit = when (output) {
         is HomeComponent.Output.AudioBookItemClick -> {
             store.accept(Intent.Play(output.audioBook))
         }

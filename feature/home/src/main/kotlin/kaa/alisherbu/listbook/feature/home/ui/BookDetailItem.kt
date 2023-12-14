@@ -22,13 +22,11 @@ import kaa.alisherbu.listbook.core.shared.model.AudioBook
 @Composable
 internal fun BookDetailItem(
     audioBook: AudioBook,
-    onAudioBookClick: (book: AudioBook) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = {
-            onAudioBookClick(audioBook)
-        },
+        onClick = onClick,
         modifier = modifier
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(

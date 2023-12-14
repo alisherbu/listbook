@@ -134,7 +134,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onAuthOutput(output: AuthComponent.Output) = when (output) {
+    private fun onAuthOutput(output: AuthComponent.Output): Unit = when (output) {
         AuthComponent.Output.Signup -> {
             screenNavigation.push(ScreenConfig.Signup)
         }
@@ -144,7 +144,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onSignupOutput(output: SignupComponent.Output) = when (output) {
+    private fun onSignupOutput(output: SignupComponent.Output): Unit = when (output) {
         SignupComponent.Output.Back -> {
             screenNavigation.pop()
         }
@@ -154,7 +154,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onSignInOutput(output: SignInComponent.Output) = when (output) {
+    private fun onSignInOutput(output: SignInComponent.Output): Unit = when (output) {
         SignInComponent.Output.Back -> {
             screenNavigation.pop()
         }
@@ -168,7 +168,7 @@ class RootComponentImpl @AssistedInject internal constructor(
         }
     }
 
-    private fun onMainOutput(output: MainComponent.Output) = when (output) {
+    private fun onMainOutput(output: MainComponent.Output): Unit = when (output) {
         is MainComponent.Output.OpenPlayer -> {
             screenNavigation.push(ScreenConfig.Player(output.audioBook))
         }

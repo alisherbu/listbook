@@ -23,10 +23,10 @@ import kaa.alisherbu.listbook.core.shared.model.Chapter
 @Composable
 fun ChapterItem(
     chapter: Chapter,
-    onClick: (book: Chapter) -> Unit,
+    onClick: () -> Unit,
 ) {
     Card(
-        onClick = { onClick(chapter) },
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)

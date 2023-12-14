@@ -34,7 +34,9 @@ private fun ChapterContent(
         contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
         items(state.chapters) {
-            ChapterItem(chapter = it, onClick = onChapterClick)
+            ChapterItem(chapter = it) {
+                onChapterClick(it)
+            }
         }
     }
 }
