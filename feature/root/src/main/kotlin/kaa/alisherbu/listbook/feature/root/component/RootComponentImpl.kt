@@ -43,6 +43,7 @@ import kotlinx.parcelize.Parcelize
 import javax.inject.Provider
 import kotlin.time.Duration.Companion.milliseconds
 
+@Suppress("LongParameterList")
 class RootComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     private val authFactory: AuthComponent.Factory,

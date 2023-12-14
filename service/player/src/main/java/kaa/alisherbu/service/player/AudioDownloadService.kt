@@ -73,7 +73,7 @@ class AudioDownloadService : DownloadService(
                 Download.STATE_COMPLETED -> {
                     downloadNotificationHelper.buildDownloadCompletedNotification(
                         context,
-                        R.drawable.ic_download_done_24, /* contentIntent= */
+                        R.drawable.ic_download_done_24,
                         null,
                         Util.fromUtf8Bytes(download.request.data)
                     )
@@ -82,7 +82,7 @@ class AudioDownloadService : DownloadService(
                 Download.STATE_FAILED -> {
                     downloadNotificationHelper.buildDownloadFailedNotification(
                         context,
-                        R.drawable.ic_download_done_24, /* contentIntent= */
+                        R.drawable.ic_download_done_24,
                         null,
                         Util.fromUtf8Bytes(download.request.data)
                     )

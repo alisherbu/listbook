@@ -14,11 +14,11 @@ class GetChaptersByBookIdUseCase @Inject constructor(
 
     private fun toChapter(response: ChapterResponse): Chapter {
         return Chapter(
-            id = response.id!!,
-            bookId = response.bookId!!,
-            audioUrl = response.audioUrl!!,
-            name = response.name!!,
-            isDownloaded = response.isDownloaded!!
+            id = response.id.toString(),
+            bookId = response.bookId.toString(),
+            audioUrl = response.audioUrl.toString(),
+            name = response.name.toString(),
+            isDownloaded = response.isDownloaded ?: false
         )
     }
 }

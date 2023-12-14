@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
+@Suppress("LongParameterList")
 fun PlayerSlider(
     position: Long,
     positionText: String,

@@ -79,6 +79,7 @@ fun PlayerScreen(component: PlayerComponent) {
 }
 
 @Composable
+@Suppress("LongParameterList")
 private fun PlayerContent(
     state: PlayerState,
     onPreviousAudio: () -> Unit,
@@ -95,7 +96,8 @@ private fun PlayerContent(
         modifier = modifier
             .fillMaxSize()
     ) {
-        val (playerController, playerSlider, bookName, chapterName, download, chapter) = createRefs()
+        val (playerController, playerSlider, bookName) = createRefs()
+        val (chapterName, download, chapter) = createRefs()
 
         state.currentChapter?.let {
             Text(

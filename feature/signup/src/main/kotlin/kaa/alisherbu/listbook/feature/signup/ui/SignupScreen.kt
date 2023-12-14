@@ -65,6 +65,7 @@ fun SignupScreen(component: SignupComponent) {
 }
 
 @Composable
+@Suppress("LongParameterList")
 private fun SignupContent(
     state: SignupState,
     onNameTextChange: (String) -> Unit,

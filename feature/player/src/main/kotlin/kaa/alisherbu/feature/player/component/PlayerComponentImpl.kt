@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 import javax.inject.Provider
 
+@Suppress("LongParameterList", "TooManyFunctions")
 class PlayerComponentImpl @AssistedInject internal constructor(
     @Assisted componentContext: ComponentContext,
     @Assisted private val output: (Output) -> Unit,
