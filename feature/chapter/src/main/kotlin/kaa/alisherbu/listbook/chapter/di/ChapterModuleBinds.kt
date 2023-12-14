@@ -4,8 +4,6 @@ import dagger.Binds
 import dagger.Module
 import kaa.alisherbu.listbook.chapter.component.ChapterComponent
 import kaa.alisherbu.listbook.chapter.component.ChapterComponentImpl
-import kaa.alisherbu.listbook.chapter.data.repository.ChaptersRepositoryImpl
-import kaa.alisherbu.listbook.chapter.domain.repository.ChaptersRepository
 import kaa.alisherbu.listbook.chapter.store.ChapterStore
 import kaa.alisherbu.listbook.chapter.store.ChapterStoreImpl
 
@@ -17,7 +15,4 @@ internal interface ChapterModuleBinds {
 
     @Binds
     fun chapterStore(impl: ChapterStoreImpl): ChapterStore
-
-    @Binds
-    fun chaptersRepository(impl: ChaptersRepositoryImpl): ChaptersRepository
 }

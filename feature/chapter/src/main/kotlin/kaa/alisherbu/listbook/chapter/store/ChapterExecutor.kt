@@ -1,7 +1,7 @@
 package kaa.alisherbu.listbook.chapter.store
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kaa.alisherbu.listbook.chapter.domain.usecase.GetChaptersByBookIdUseCase
+import kaa.alisherbu.listbook.domain.usecase.GetChaptersByBookIdUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

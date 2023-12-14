@@ -1,4 +1,4 @@
-package kaa.alisherbu.listbook.chapter.domain.model
+package kaa.alisherbu.listbook.domain.model
 
 class ChapterResponse(
     val id: String? = null,

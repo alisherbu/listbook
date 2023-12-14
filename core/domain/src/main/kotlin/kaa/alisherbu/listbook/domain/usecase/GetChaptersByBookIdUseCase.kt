@@ -1,8 +1,8 @@
-package kaa.alisherbu.listbook.chapter.domain.usecase
+package kaa.alisherbu.listbook.domain.usecase
 
-import kaa.alisherbu.listbook.chapter.domain.model.ChapterResponse
-import kaa.alisherbu.listbook.chapter.domain.repository.ChaptersRepository
 import kaa.alisherbu.listbook.core.shared.model.Chapter
+import kaa.alisherbu.listbook.domain.model.ChapterResponse
+import kaa.alisherbu.listbook.domain.repository.ChaptersRepository
 import javax.inject.Inject
 
 class GetChaptersByBookIdUseCase @Inject constructor(

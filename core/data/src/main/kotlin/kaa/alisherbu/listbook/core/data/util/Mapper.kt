@@ -1,7 +1,7 @@
-package kaa.alisherbu.listbook.chapter.data.util
+package kaa.alisherbu.listbook.core.data.util
 
-import kaa.alisherbu.listbook.chapter.domain.model.ChapterResponse
 import kaa.alisherbu.listbook.core.database.entity.ChapterEntity
+import kaa.alisherbu.listbook.domain.model.ChapterResponse
 
 internal fun toChapterResponse(entity: ChapterEntity): ChapterResponse {
     return ChapterResponse(

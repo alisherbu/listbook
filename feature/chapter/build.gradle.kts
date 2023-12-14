@@ -11,4 +11,5 @@ dependencies {
 
     implementation(projects.core.shared)
     implementation(projects.core.database)
+    implementation(projects.core.domain)
 }
