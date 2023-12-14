@@ -24,6 +24,7 @@ allprojects {
     }
 
     tasks.withType<Detekt>().configureEach {
+        include("**/*.kt", "**/*.kts")
         reports {
             xml.required = false
             html.required = false
@@ -38,6 +39,7 @@ allprojects {
         parallel = true
         ignoreFailures = true
         config.setFrom("$rootDir/config/detekt/detekt.yml")
+        include("**/*.kt", "**/*.kts")
         setSource(file(projectDir))
     }
 
@@ -49,4 +51,35 @@ allprojects {
 
 tasks.register("clean").configure {
     delete("build")
+}
+
+tasks.register<Copy>("copyGitHooks") {
+    description = "Copies the git hooks from /config/hooks to the .git folder."
+    group = "git hooks"
+    from("$rootDir/config/hooks/pre-commit")
+    into("$rootDir/.git/hooks/")
+}
+
+tasks.register<Exec>("installGitHooks") {
+    description = "Installs git hooks from /config/hooks."
+    group = "git hooks"
+    workingDir = rootDir
+    commandLine = listOf("chmod")
+    args("-R", "+x", ".git/hooks/")
+    dependsOn("copyGitHooks")
+    doLast {
+        logger.info("Git hook installed successfully.")
+    }
+}
+
+tasks.register<Delete>("deleteGitHooks") {
+    description = "Delete the pre-commit git hooks."
+    group = "git hooks"
+    delete(fileTree(".git/hooks/"))
+}
+
+afterEvaluate {
+    tasks.getByPath(":app:assembleDebug")
+        .dependsOn(":installGitHooks")
+        .dependsOn(":detektFormat")
 }
