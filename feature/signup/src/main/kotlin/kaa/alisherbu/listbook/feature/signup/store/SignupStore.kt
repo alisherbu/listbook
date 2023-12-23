@@ -8,11 +8,11 @@ internal sealed interface Intent {
     class EmailTextChanged(val text: String) : Intent
     class PasswordTextChanged(val text: String) : Intent
 
-    object CreateAccountClicked : Intent
+    data object CreateAccountClicked : Intent
 }
 
 internal sealed interface Label {
-    object AccountSuccessfullyCreated : Label
+    data object AccountSuccessfullyCreated : Label
     class ErrorOccurred(val message: String) : Label
 }
 

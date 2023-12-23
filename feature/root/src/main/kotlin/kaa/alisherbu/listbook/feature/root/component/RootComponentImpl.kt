@@ -149,6 +149,9 @@ class RootComponentImpl @AssistedInject internal constructor(
         SignupComponent.Output.Back -> {
             screenNavigation.pop()
         }
+        SignupComponent.Output.Main -> {
+            screenNavigation.replaceAll(ScreenConfig.Main)
+        }
 
         is SignupComponent.Output.Error -> {
             dialogNavigation.activate(DialogConfig.Message(output.message))

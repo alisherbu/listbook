@@ -1,14 +1,7 @@
 package kaa.alisherbu.listbook.feature.signup.component
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.slot.ChildSlot
-import com.arkivanov.decompose.router.slot.SlotNavigation
-import com.arkivanov.decompose.router.slot.activate
-import com.arkivanov.decompose.router.slot.childSlot
-import com.arkivanov.decompose.router.slot.dismiss
-import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.lifecycle.doOnDestroy
-import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
@@ -27,7 +20,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.parcelize.Parcelize
 import javax.inject.Provider
 
 class SignupComponentImpl @AssistedInject internal constructor(
@@ -42,12 +34,6 @@ class SignupComponentImpl @AssistedInject internal constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val state: StateFlow<SignupState> = store.stateFlow
-    private val dialogNavigation = SlotNavigation<DialogConfig>()
-    override val dialogSlot: Value<ChildSlot<*, ChildDialog>> = childSlot(
-        source = dialogNavigation,
-        handleBackButton = true,
-        childFactory = ::createChildDialog,
-    )
 
     init {
         store.labels
@@ -59,7 +45,7 @@ class SignupComponentImpl @AssistedInject internal constructor(
     private fun handleLabel(label: Label) {
         when (label) {
             Label.AccountSuccessfullyCreated -> {
-                dialogNavigation.activate(DialogConfig.SuccessDialogConfig("Account successfully created"))
+                output(Output.Main)
             }
 
             is Label.ErrorOccurred -> {
@@ -90,35 +76,6 @@ class SignupComponentImpl @AssistedInject internal constructor(
 
     override fun onCreateAccountClicked() {
         store.accept(Intent.CreateAccountClicked)
-    }
-
-    private fun createChildDialog(
-        config: DialogConfig,
-        componentContext: ComponentContext,
-    ): ChildDialog = when (config) {
-        is DialogConfig.SuccessDialogConfig -> {
-            ChildDialog.Success(
-                SuccessDialogComponent(
-                    componentContext,
-                    config.message,
-                    onDismissed = {
-                        dialogNavigation.dismiss()
-                        output(Output.Back)
-                    },
-                ),
-            )
-        }
-    }
-
-    sealed interface ChildDialog {
-        class Success(val component: SuccessDialogComponent) : ChildDialog
-    }
-
-    private sealed interface DialogConfig : Parcelable {
-        @Parcelize
-        class SuccessDialogConfig(
-            val message: String,
-        ) : DialogConfig
     }
 
     @AssistedFactory

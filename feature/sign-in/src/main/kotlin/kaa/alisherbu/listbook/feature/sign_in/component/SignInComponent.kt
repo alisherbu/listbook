@@ -17,8 +17,8 @@ interface SignInComponent {
     fun onLogInClicked()
 
     sealed interface Output {
-        object Back : Output
-        object Main : Output
+        data object Back : Output
+        data object Main : Output
         class Error(val message: String) : Output
     }
 
